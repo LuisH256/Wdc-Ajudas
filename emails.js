@@ -44,8 +44,7 @@ Aguardamos a nota fiscal emitida para prosseguimento.
         `,
         pdaf: `
 Favor verificar entrada no {{tipo}} RMA que virou devolução,
-seguir também com as notas de serviço, ref as NFs {{nfs}}
-
+seguir também com {{notas_servico}}, ref {{nfs}}.
 {{swqt}}
 
 EAN {{ean}}
@@ -117,13 +116,27 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
         const tipo = tipoSelect.value || 'PD';
         const nfs = nfsInput.value || '...';
         const ean = eanInput.value || '...';
-        const swqt = swqtInput.value.split(',').map(item => item.trim()).join('\n') || '...';
 
+        // Processar notas fiscais (NFs)
+        const nfsArray = nfs.split(',').map(item => item.trim());
+        const nfsMessage = nfsArray.length === 1 
+            ? `a nota fiscal ${nfsArray[0]}`
+            : `as notas fiscais ${nfsArray.join(', ')}`;
+
+        // Processar notas de serviço (SW/QT) e formatar cada item em uma nova linha
+        const swqtArray = swqtInput.value.split(',').map(item => item.trim());
+        const notasServicoMessage = swqtArray.length === 1 
+            ? 'a nota de serviço' 
+            : 'as notas de serviço';
+        const swqtMessage = swqtArray.join('\n'); // Cada SW/QT em uma nova linha
+
+        // Montar o texto final
         const emailText = emailTemplates.pdaf
             .replace('{{tipo}}', tipo)
-            .replace('{{nfs}}', nfs)
-            .replace('{{ean}}', ean)
-            .replace('{{swqt}}', swqt);
+            .replace('{{notas_servico}}', notasServicoMessage)
+            .replace('{{nfs}}', nfsMessage)
+            .replace('{{swqt}}', swqtMessage)
+            .replace('{{ean}}', ean);
 
         emailContent.textContent = emailText.trim();
         emailPreview.classList.remove('hidden');
