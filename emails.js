@@ -117,8 +117,9 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
 
     function updatePdAfEmail() {
         const tipo = tipoSelect.value || 'PD';
-        const nfs = nfsInput.value || '...';
         const ean = eanInput.value || '...';
+        const nfs = nfsInput.value || '...';
+        
 
         // Processar notas fiscais (NFs)
         const nfsArray = nfs.split(',').map(item => item.trim());
