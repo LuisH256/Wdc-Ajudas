@@ -45,9 +45,12 @@ Aguardamos a nota fiscal emitida para prosseguimento.
         pdaf: `
 Favor verificar entrada no {{tipo}} RMA que virou devolução,
 seguir também com {{notas_servico}}, ref {{nfs}}.
-{{swqt}}
 
 EAN {{ean}}
+
+{{swqt}}
+
+
         `
     };
 
@@ -135,8 +138,9 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
             .replace('{{tipo}}', tipo)
             .replace('{{notas_servico}}', notasServicoMessage)
             .replace('{{nfs}}', nfsMessage)
-            .replace('{{swqt}}', swqtMessage)
-            .replace('{{ean}}', ean);
+            .replace('{{ean}}', ean)
+            .replace('{{swqt}}', swqtMessage);
+           
 
         emailContent.textContent = emailText.trim();
         emailPreview.classList.remove('hidden');
