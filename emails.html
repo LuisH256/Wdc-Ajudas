@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de E-mails Automáticos</title>
+    <link rel="stylesheet" href="emails.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <div class="sidebar">
+            <!-- Campo de pesquisa -->
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+
+            <!-- Navegação -->
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="atalhos.html">Atalhos</a></li>
+                    <li><a href="emails.html" class="active">Emails Automáticos</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <h3>Gerador de E-mails Automáticos</h3>
+            <div class="email-configuration">
+                <label for="email-template">Escolha o template de e-mail:</label>
+                <select id="email-template">
+                    <option value="">Selecione</option>
+                    <option value="fiberhome">Fiberhome</option>
+                    <option value="devolucao">Devolução</option>
+                    <option value="pdaf">PD/AF</option>
+                </select>
+
+                <div id="destinatario-container" class="hidden">
+                    <label for="destinatario">Destinatário:</label>
+                    <select id="destinatario">
+                        <option value="">Selecione</option>
+                        <option value="matriz">Matriz</option>
+                        <option value="simoes">Simões Filho</option>
+                    </select>
+                </div>
+
+                <div id="tipo-operacao-container" class="hidden">
+                    <label for="tipo-operacao">Tipo de Operação:</label>
+                    <select id="tipo-operacao">
+                        <option value="">Selecione</option>
+                        <option value="locacao">Locação</option>
+                        <option value="devolucao">Devolução</option>
+                    </select>
+                </div>
+
+                <div id="pdaf-options" class="hidden">
+                    <label for="tipo-select">Tipo:</label>
+                    <select id="tipo-select">
+                        <option value="PD">PD</option>
+                        <option value="AF">AF</option>
+                    </select>
+                    <label for="nfs-input">NFs:</label>
+                    <input type="text" id="nfs-input">
+                    <label for="ean-input">EAN:</label>
+                    <input type="text" id="ean-input">
+                    <label for="swqt-input">SW/QT:</label>
+                    <input type="text" id="swqt-input">
+                </div>
+            </div>
+
+            <!-- Pré-visualização do email -->
+            <div id="email-preview" class="hidden">
+                <h3>Pré-visualização do E-mail:</h3>
+                <pre id="email-content"></pre>
+                <button id="copy-email">Copiar E-mail</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="emails.js"></script>
+</body>
+</html>
