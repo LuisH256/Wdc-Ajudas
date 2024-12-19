@@ -28,12 +28,9 @@ Importante: Os produtos remetidos para retorno devem ser embalados de forma que 
 Segue abaixo a instrução para emissão da Nota Fiscal de devolução:
 O envio do anexo da NF em resposta a este e-mail é obrigatório para validação antes do envio do material.
 
-**Destinatário**:  
-{{destinatario}}
-
-Natureza de Operação: {{operacao}}
-
-CFOP: {{cfop}}
+<b>Natureza de Operação: {{operacao}}</b><br>
+<b>CFOP:</b> {{cfop}}<br>
+<b>Destinatário:</b><br>{{destinatario}}<br><br>
 
 A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota original. Não é necessário devolver a NF inteira, considerando que se trata de devolução parcial.
 
@@ -49,8 +46,6 @@ seguir também com {{notas_servico}}, ref {{nfs}}.
 EAN {{ean}}
 
 {{swqt}}
-
-
         `
     };
 
@@ -110,7 +105,7 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
                 .replace('{{operacao}}', operacaoInfo.operacao)
                 .replace('{{cfop}}', operacaoInfo.cfop)
                 .replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
-            emailContent.textContent = emailText.trim();
+            emailContent.innerHTML = emailText.trim(); // Renderizar HTML com formatação
             emailPreview.classList.remove('hidden');
         }
     }
@@ -119,7 +114,6 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
         const tipo = tipoSelect.value || 'PD';
         const ean = eanInput.value || '...';
         const nfs = nfsInput.value || '...';
-        
 
         // Processar notas fiscais (NFs)
         const nfsArray = nfs.split(',').map(item => item.trim());
@@ -141,9 +135,8 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
             .replace('{{nfs}}', nfsMessage)
             .replace('{{ean}}', ean)
             .replace('{{swqt}}', swqtMessage);
-           
 
-        emailContent.textContent = emailText.trim();
+        emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
 
@@ -171,8 +164,23 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
     swqtInput.addEventListener('input', updatePdAfEmail);
 
     copyEmailButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(emailContent.textContent)
-            .then(() => alert('E-mail copiado com sucesso!'))
-            .catch(() => alert('Erro ao copiar o e-mail.'));
+        const range = document.createRange();
+        range.selectNode(emailContent); // Seleciona o conteúdo do e-mail com HTML
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            const successful = document.execCommand('copy'); // Copia o conteúdo com formatação
+            if (successful) {
+                alert('E-mail copiado com sucesso!');
+            } else {
+                alert('Erro ao copiar o e-mail.');
+            }
+        } catch (err) {
+            alert('Erro ao copiar o e-mail.');
+        }
+
+        selection.removeAllRanges(); // Remove a seleção após a cópia
     });
 });
