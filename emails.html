@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de E-mails Automáticos</title>
-    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
     <link rel="stylesheet" href="emails.css">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+
 </head>
 <body>
     <div class="container">
@@ -19,7 +20,10 @@
                 <ul>
                     <li><a href="index.html">Página Principal</a></li>
                     <li><a href="atalhos.html">Atalhos</a></li>
-                    <li><a href="emails.html" class="active">Emails Automáticos</a></li>
+                    <li><a href="emails.html">Emails Automáticos</a></li>
+                    <li><a href="pesquisas.html">Pesquisas</a></li>
+
+
                 </ul>
             </nav>
         </div>
@@ -66,7 +70,14 @@
                     <input type="text" id="ean-input">
                     <label for="swqt-input">SW/QT:</label>
                     <input type="text" id="swqt-input">
+                    <h4>Precisa enviar o e-mail para:</h4>
+                    <h5>Renata</h5>
+                    <h4>Precisa esta em copia:</h4>
+                    <h5>Cobranca - WDCNET, Bancada, Marcos Pinheiro, Carla Paixao, Joelma, Fiscal
+                       <p> OBS: Caso seja locação precisa adicionar Jaquellyne Santos e WDC_Contratos</p>
+                    </h5>
                 </div>
+
             </div>
 
             <!-- Pré-visualização do email -->
@@ -75,6 +86,11 @@
                 <pre id="email-content"></pre>
                 <button id="copy-email">Copiar E-mail</button>
             </div>
+
+        </div>
+        <div id="pdaf-options" class="hidden">
+
+            
         </div>
     </div>
 
