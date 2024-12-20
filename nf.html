@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Nota Fiscal</title>
+    <link rel="stylesheet" href="serial.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="serial.html">Pesquisa Serial</a></li>
+                    <li><a href="os.html">Abrir OS</a></li>
+                    <li><a href="nf.html">Baixar NF</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="content">
+            <section id="nota-fiscal">
+                <h1>Baixar Nota Fiscal - Passo a Passo</h1>
+
+                <!-- Passos para baixar NF -->
+                <div class="step">
+                    <h2>Passos para Baixar a Nota Fiscal (Módulo 05)</h2>
+                    <ul>
+                        <li>Acesse: <strong>Atualizações &gt; NF-e e NFS-e &gt; NF-e Sefaz</strong>.</li>
+                        <li>Se aparecer uma janela pedindo para dar <strong>OK</strong> ou <strong>Cancelar</strong>, clique em <strong>OK</strong> (isso ocorrerá duas vezes).</li>
+                    </ul>
+                </div>
+
+                <!-- Configurações de impressão -->
+                <div class="step">
+                    <h2>Configurações de Impressão</h2>
+                    <ul>
+                        <li>Clique em <strong>Outras Ações</strong>.</li>
+                        <li>Selecione: <strong>DANFE &gt; Imp. Padrão</strong>.</li>
+                        <li>Verifique as seguintes configurações:
+                            <ul>
+                                <li><strong>Exporta para PDF:</strong> Deve estar ativado.</li>
+                                <li><strong>Orientações do Formato:</strong> Defina como <strong>Retrato</strong>.</li>
+                                <li><strong>Destino:</strong> Escolha <strong>Local</strong>.</li>
+                            </ul>
+                        </li>
+                        <li>Role a tela para baixo e clique em <strong>OK</strong>.</li>
+                    </ul>
+                </div>
+
+                <!-- Preenchimento dos campos -->
+                <div class="step">
+                    <h2>Preenchimento dos Campos</h2>
+                    <ul>
+                        <li>No campo <strong>Da Nota Fiscal?</strong>:
+                            <ul>
+                                <li>Se a nota não tiver zeros à esquerda, adicione-os manualmente.</li>
+                                <li>Exemplo: Nota <strong>25455</strong> deve ser preenchida como <strong>00025455</strong>.</li>
+                            </ul>
+                        </li>
+                        <li>No campo <strong>Até a Nota Fiscal?</strong>, insira novamente o mesmo número com a mesma quantidade de zeros.</li>
+                        <li>Em <strong>Tipo de Operação</strong>, escolha <strong>NF. Saída</strong>.</li>
+                    </ul>
+                </div>
+
+                <!-- Conclusão -->
+                <div class="step">
+                    <h2>Conclusão</h2>
+                    <ul>
+                        <li>Clique em <strong>OK</strong> e aguarde o download da Nota Fiscal.</li>
+                        <li>Caso não ache na filial <strong>01</strong> vá ate a filial <strong>08</strong> e repita o processo.</li>
+
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
