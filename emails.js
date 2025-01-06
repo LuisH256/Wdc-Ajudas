@@ -15,11 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const swqtInput = document.getElementById('swqt-input');
 
     const emailTemplates = {
-        fiberhome: `
-Informamos que as exceções para atendimento dos produtos Fiberhome, modelo HG6143D3 - ONU GPON WI-FI AC1200 fora de garantia, 
-encerrou-se em 01/12/24 em alinhamento junto ao fabricante. 
-Solicitações preenchidas após a respectiva data não terão atendimento caso esteja fora de garantia.
-        `,
         devolucao: `
 Informamos que a sua solicitação de devolução da NF foi aprovada.
 
@@ -114,31 +109,37 @@ Devolução recebida por meio da NF nº ......., emitida em ....../....../......
         const tipo = tipoSelect.value || 'PD';
         const ean = eanInput.value || '...';
         const nfs = nfsInput.value || '...';
-
+    
         // Processar notas fiscais (NFs)
         const nfsArray = nfs.split(',').map(item => item.trim());
         const nfsMessage = nfsArray.length === 1 
-            ? `a nota fiscal ${nfsArray[0]}`
+            ? `a nota fiscal ${nfsArray[0]}` 
             : `as notas fiscais ${nfsArray.join(', ')}`;
-
+    
         // Processar notas de serviço (SW/QT) e formatar cada item em uma nova linha
         const swqtArray = swqtInput.value.split(',').map(item => item.trim());
         const notasServicoMessage = swqtArray.length === 1 
             ? 'a nota de serviço' 
             : 'as notas de serviço';
         const swqtMessage = swqtArray.join('\n'); // Cada SW/QT em uma nova linha
-
+    
         // Montar o texto final
-        const emailText = emailTemplates.pdaf
+        let emailText = emailTemplates.pdaf
             .replace('{{tipo}}', tipo)
             .replace('{{notas_servico}}', notasServicoMessage)
             .replace('{{nfs}}', nfsMessage)
             .replace('{{ean}}', ean)
             .replace('{{swqt}}', swqtMessage);
-
+    
+        // Remover a frase "seguir também com a nota de serviço," se o tipo for AF
+        if (tipo === 'AF') {
+            emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '');
+        }
+    
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
+    
 
     emailTemplate.addEventListener('change', () => {
         resetFields();
