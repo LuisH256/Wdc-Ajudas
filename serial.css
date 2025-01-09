@@ -158,3 +158,57 @@ body {
         margin: 0;
     }
 }
+.carousel-wrapper {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.carousel {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.carousel-images img {
+    width: 100%;
+    height: auto;
+    display: none;
+    object-fit: cover; /* Ajusta a imagem para preencher o espaço */
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.carousel-button:hover {
+    opacity: 1; /* Apenas altera a opacidade */
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.carousel-button:disabled {
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+}
+
