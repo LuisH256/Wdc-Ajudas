@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romaneio Visão</title>
+    <link rel="stylesheet" href="serial.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="serial.html">Pesquisa Serial</a></li>
+                    <li><a href="os.html">Abrir OS</a></li>
+                    <li><a href="nf.html">Baixar NF</a></li>
+                    <li><a href="romaneio.html">Romaneio Visão</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="content">
+            <section id="romaneio-visao">
+                <h1>Romaneio Visão - Passo a Passo</h1>
+
+                <!-- Instruções -->
+                <div class="step">
+                    <h2>Como Puxar Notas no Visão</h2>
+                    <ul>
+                        <li>1. Solicite ao Visão enviando uma mensagem com <strong>"Oi"</strong> ou <strong>"Olá"</strong> no chat.</li>
+                        <li>2. Quando o Visão responder com as opções, clique em <strong>"Pesquisar Seriais de NF"</strong>.</li>
+                        <li>3. Escolha a modalidade da nota:
+                            <ul>
+                                <li><strong>Venda:</strong> Notas seguem normalmente.</li>
+                                <li><strong>Ativação:</strong> Essas são notas de baixa.</li>
+                                <li><strong>Locação:</strong>
+                                    <ul>
+                                        <li>Informe a nota de locação.</li>
+                                        <li>Colete a nota de baixa que o Visão informar.</li>
+                                        <li>Cole novamente a nota de baixa no chat e selecione o local (<strong>Matriz</strong> ou <strong>Simões Filho</strong>).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>4. Após informar a modalidade, insira o número da nota fiscal.</li>
+                        <li>5. Informe a filial:
+                            <ul>
+                                <li><strong>01:</strong> Matriz</li>
+                                <li><strong>08:</strong> Simões Filho</li>
+                            </ul>
+                        </li>
+                        <li>6. Aguarde o Visão retornar e clique no link fornecido.</li>
+                    </ul>
+                </div>
+
+                <!-- Carrossel de Imagens -->
+                <div class="carousel-wrapper">
+                    <h2>Passo a Passo com Imagens</h2>
+                    <div class="carousel">
+                        <button class="carousel-button prev" disabled>❮</button>
+                        <div class="carousel-images">
+                            <img src="imgs/pesquisa.png" alt="Passo 1">
+                            <img src="imgs/modalidade.png" alt="Passo 2">
+                            <img src="imgs/filial.png" alt="Passo 3">
+                        </div>
+                        <button class="carousel-button next">❯</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Script para o Carrossel
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Atualiza o estado das imagens
+            images.forEach((img, index) => {
+                img.style.display = index === currentIndex ? 'block' : 'none';
+            });
+
+            // Desabilita os botões no início e no fim
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === images.length - 1;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+        // Inicializa o carrossel
+        updateCarousel();
+    </script>
+</body>
+</html>
