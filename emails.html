@@ -6,7 +6,6 @@
     <title>Gerador de E-mails Automáticos</title>
     <link rel="stylesheet" href="emails.css">
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
     <div class="container">
@@ -22,8 +21,6 @@
                     <li><a href="atalhos.html">Atalhos</a></li>
                     <li><a href="emails.html">Emails Automáticos</a></li>
                     <li><a href="pesquisas.html">Pesquisas</a></li>
-
-
                 </ul>
             </nav>
         </div>
@@ -35,10 +32,44 @@
                 <label for="email-template">Escolha o template de e-mail:</label>
                 <select id="email-template">
                     <option value="">Selecione</option>
-                    <option value="devolucao">Devolução</option>
-                    <option value="pdaf">PD/AF</option>
+                    <option value="sac">SAC</option>
+                    <option value="apoio_vendas">Apoio a Vendas</option>
                 </select>
 
+                <!-- Sub-seleção para SAC -->
+                <div id="sac-options" class="hidden">
+                    <label for="sac-template">Escolha o tipo de SAC:</label>
+                    <select id="sac-template">
+                        <option value="">Selecione</option>
+                        <option value="devolucao">Devolução</option>
+                        <option value="pdaf">PD/AF</option>
+                        <option value="troca_solar">Troca em garantia - Solar</option>
+                        <option value="substituicao_componentes">Substituição de componentes-Solar</option>
+                        <option value="envio_material_devolucao">ENVIO DE MATERIAL - DEVOLUÇÃO</option>
+                        <option value="postagem_correios_produtos_solar">SCRIPT - POSTAGEM CORREIOS PRODUTOS SOLAR</option>
+                    </select>
+                </div>
+
+                <!-- Sub-seleção para Apoio a Vendas -->
+                <div id="apoio-vendas-options" class="hidden">
+                    <label for="apoio-vendas-template">Escolha o tipo de Apoio a Vendas:</label>
+                    <select id="apoio-vendas-template">
+                        <option value="">Selecione</option>
+                        <option value="atrasos">Transportadoras - Atrasos em entregas</option>
+                        <option value="pendencias">Transportadoras - Pendencias</option>
+                        <option value="pendencias_lista">Pendencias com lista</option>
+                    </select>
+                </div>
+
+                <!-- Opções para Transportadoras - Pendencias -->
+                <div id="pendencias-options" class="hidden">
+                    <label for="edi-select">EDI:</label>
+                    <input type="text" id="edi-select">
+                    <label for="nf-select">NF:</label>
+                    <input type="text" id="nf-select">
+                </div>
+
+                <!-- Opções específicas de SAC -->
                 <div id="destinatario-container" class="hidden">
                     <label for="destinatario">Destinatário:</label>
                     <select id="destinatario">
@@ -69,31 +100,64 @@
                     <input type="text" id="ean-input">
                     <label for="swqt-input">SW/QT:</label>
                     <input type="text" id="swqt-input">
-                    <h4>Precisa enviar o e-mail para:</h4>
-                    <h5>Renata</h5>
-                    <h4>Precisa esta em copia:</h4>
-                    <h5>Cobranca - WDCNET, Bancada, Marcos Pinheiro, Carla Paixao, Joelma, Fiscal
-                       <p> OBS: Caso seja locação precisa adicionar Jaquellyne Santos e WDC_Contratos</p>
-                    </h5>
+                </div>
+
+                <div id="solar-options" class="hidden">
+                    <label for="nf-input">NF:</label>
+                    <input type="text" id="nf-input">
+                    <label for="valor-unitario-input">Valor Unitário:</label>
+                    <input type="text" id="valor-unitario-input">
+                    <label for="quantidade-input">Quantidade:</label>
+                    <input type="text" id="quantidade-input">
+                    <label for="ncm-input">NCM:</label>
+                    <input type="text" id="ncm-input">
+                    <label for="descricao-input">Descrição:</label>
+                    <input type="text" id="descricao-input">
+                </div>
+
+                <div id="postagem-correios-produtos-solar-options" class="hidden">
+                    <label>Selecione o tipo de ticket:</label>
+                    <select id="postagem-correios-template">
+                        <option value="">Selecione</option>
+                        <option value="primeiro_ticket">Primeiro ticket</option>
+                        <option value="ticket_expirado">Ticket expirado</option>
+                    </select>
+                    <div id="primeiro-ticket-options" class="hidden">
+                        <label for="produto-desc-input">Descrição do Produto:</label>
+                        <input type="text" id="produto-desc-input">
+                        <label for="ticket-input">Ticket:</label>
+                        <input type="text" id="ticket-input">
+                        <label for="data-emissao-input">Data de Emissão:</label>
+                        <input type="text" id="data-emissao-input">
+                        <label for="data-validade-input">Data de Validade:</label>
+                        <input type="text" id="data-validade-input">
+                    </div>
+                    <div id="ticket-expirado-options" class="hidden">
+                        <label for="ticket-expirado-input">Ticket Expirado:</label>
+                        <input type="text" id="ticket-expirado-input">
+                        <label for="ticket-input">Ticket:</label>
+                        <input type="text" id="ticket-input-expired">
+                        <label for="data-emissao-input">Data de Emissão:</label>
+                        <input type="text" id="data-emissao-input-expired">
+                        <label for="data-validade-input">Data de Validade:</label>
+                        <input type="text" id="data-validade-input-expired">
+                    </div>
+                </div>
+
+                <!-- Pré-visualização do e-mail -->
+                <div id="email-preview" class="email-box hidden">
+                    <h3>Pré-visualização do E-mail</h3>
+                    <pre id="email-content"></pre>
+                    <button id="copy-email">Copiar E-mail</button>
                 </div>
 
             </div>
-
-            <!-- Pré-visualização do email -->
-            <div id="email-preview" class="hidden">
-                <h3>Pré-visualização do E-mail:</h3>
-                <pre id="email-content"></pre>
-                <button id="copy-email">Copiar E-mail</button>
-            </div>
-
-        </div>
-        <div id="pdaf-options" class="hidden">
-
-            
         </div>
     </div>
-
+    <script src="sac.js"></script>
+    <script src="apoio_vendas.js"></script>
     <script src="emails.js"></script>
     <script src="scripts.js"></script>
+
 </body>
 </html>
