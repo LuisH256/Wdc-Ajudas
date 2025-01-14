@@ -56,18 +56,28 @@
                     <select id="apoio-vendas-template">
                         <option value="">Selecione</option>
                         <option value="atrasos">Transportadoras - Atrasos em entregas</option>
-                        <option value="pendencias">Transportadoras - Pendencias</option>
-                        <option value="pendencias_lista">Pendencias com lista</option>
+                        <option value="pendencias">Transportadoras - Pendências</option>
+                        <option value="pendencias_lista">Pendências com lista</option>
+                        <option value="recusa_nf">Recusa de NF</option>
+                        <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
                     </select>
                 </div>
-
-                <!-- Opções para Transportadoras - Pendencias -->
+                
+                <!-- Opções adicionais para "Apoio a Vendas" -->
                 <div id="pendencias-options" class="hidden">
                     <label for="edi-select">EDI:</label>
                     <input type="text" id="edi-select">
                     <label for="nf-select">NF:</label>
                     <input type="text" id="nf-select">
                 </div>
+
+                <div id="recusa-nf-options" class="hidden">
+                    <label for="nf-recusa-input">NF:</label>
+                    <input type="text" id="nf-recusa-input">
+                    <label for="descricao-recusa-input">Descreva a situação:</label>
+                    <input type="text" id="descricao-recusa-input">
+                </div>
+
 
                 <!-- Opções específicas de SAC -->
                 <div id="destinatario-container" class="hidden">
@@ -125,6 +135,8 @@
                     <div id="primeiro-ticket-options" class="hidden">
                         <label for="produto-desc-input">Descrição do Produto:</label>
                         <input type="text" id="produto-desc-input">
+                        <label for="nf-input-postagem">NF:</label>
+                        <input type="text" id="nf-input-postagem">
                         <label for="ticket-input">Ticket:</label>
                         <input type="text" id="ticket-input">
                         <label for="data-emissao-input">Data de Emissão:</label>
@@ -135,11 +147,11 @@
                     <div id="ticket-expirado-options" class="hidden">
                         <label for="ticket-expirado-input">Ticket Expirado:</label>
                         <input type="text" id="ticket-expirado-input">
-                        <label for="ticket-input">Ticket:</label>
+                        <label for="ticket-input-expired">Novo Ticket:</label>
                         <input type="text" id="ticket-input-expired">
-                        <label for="data-emissao-input">Data de Emissão:</label>
+                        <label for="data-emissao-input-expired">Data de Emissão:</label>
                         <input type="text" id="data-emissao-input-expired">
-                        <label for="data-validade-input">Data de Validade:</label>
+                        <label for="data-validade-input-expired">Data de Validade:</label>
                         <input type="text" id="data-validade-input-expired">
                     </div>
                 </div>
@@ -150,7 +162,6 @@
                     <pre id="email-content"></pre>
                     <button id="copy-email">Copiar E-mail</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -158,6 +169,5 @@
     <script src="apoio_vendas.js"></script>
     <script src="emails.js"></script>
     <script src="scripts.js"></script>
-
 </body>
 </html>
