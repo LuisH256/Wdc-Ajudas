@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const dataEmissaoInput = document.getElementById('data-emissao-input');
     const dataValidadeInput = document.getElementById('data-validade-input');
     const ticketExpiradoInput = document.getElementById('ticket-expirado-input');
+    const ticketInputExpired = document.getElementById('ticket-input-expired');
+    const dataEmissaoInputExpired = document.getElementById('data-emissao-input-expired');
+    const dataValidadeInputExpired = document.getElementById('data-validade-input-expired');
 
     const emailTemplates = {
         devolucao: `Informamos que a sua solicitação de devolução da NF foi aprovada.
@@ -117,12 +120,12 @@ Cep: 43700-000 SIMOES FILHO/BA`
             dados_adicionais: `Devolução recebida por meio da NF nº ......., emitida em ....../....../........`
         }
     };
-
+    
     function getSaudacao() {
         const horaAtual = new Date().getHours();
         return horaAtual < 12 ? "Bom dia!" : "Boa tarde!";
     }
-
+    
     function resetFields() {
         destinatarioContainer.classList.add('hidden');
         tipoOperacaoContainer.classList.add('hidden');
@@ -132,7 +135,7 @@ Cep: 43700-000 SIMOES FILHO/BA`
         emailContent.textContent = '';
         emailPreview.classList.add('hidden');
     }
-
+    
     function resetSacFields() {
         destinatarioSelect.value = '';
         tipoOperacaoSelect.value = '';
@@ -150,12 +153,15 @@ Cep: 43700-000 SIMOES FILHO/BA`
         dataEmissaoInput.value = '';
         dataValidadeInput.value = '';
         ticketExpiradoInput.value = '';
+        ticketInputExpired.value = '';
+        dataEmissaoInputExpired.value = '';
+        dataValidadeInputExpired.value = '';
     }
-
+    
     function updateDevolucaoEmail() {
         const destinatario = destinatarios[destinatarioSelect.value] || '';
         const operacaoInfo = operacoes[tipoOperacaoSelect.value] || {};
-
+    
         if (destinatario && operacaoInfo.operacao) {
             const emailText = emailTemplates.devolucao
                 .replace('{{destinatario}}', destinatario)
@@ -166,7 +172,7 @@ Cep: 43700-000 SIMOES FILHO/BA`
             emailPreview.classList.remove('hidden');
         }
     }
-
+    
     function updatePdAfEmail() {
         const tipo = tipoSelect.value || 'PD';
         const ean = eanInput.value || '...';
@@ -201,19 +207,19 @@ Cep: 43700-000 SIMOES FILHO/BA`
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-
+    
     function updateSolarEmail(templateKey) {
         const nf = nfInput.value || '...';
         const valorUnitario = valorUnitarioInput.value || '...';
         const quantidade = quantidadeInput.value || '...';
         const ncm = ncmInput.value || '...';
         const descricao = descricaoInput.value || '...';
-
+    
         // Verifica se há uma vírgula e ajusta o texto da NF
         const nfText = nf.includes(',')
             ? `das NFs ${nf}`
             : `da NF ${nf}`;
-
+    
         const emailText = emailTemplates[templateKey]
             .replace('{{saudacao}}', getSaudacao())
             .replace('{{nfText}}', nfText)
@@ -221,29 +227,37 @@ Cep: 43700-000 SIMOES FILHO/BA`
             .replace('{{quantidade}}', quantidade)
             .replace('{{ncm}}', ncm)
             .replace('{{descricao}}', descricao);
-
+    
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-
+    
     function updateEnvioMaterialEmail() {
         const destinatario = destinatarios[destinatarioSelect.value] || '...';
-
+    
         const emailText = emailTemplates.envio_material_devolucao
             .replace('{{endereco}}', destinatario);
-
+    
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-
+    
     function updatePostagemCorreiosEmail(templateKey) {
         const produtoDesc = produtoDescInput.value || '...';
         const nf = nfInput.value || '...';
-        const ticket = ticketInput.value || '...';
-        const dataEmissao = dataEmissaoInput.value || '...';
-        const dataValidade = dataValidadeInput.value || '...';
+        const ticket = templateKey === 'primeiro_ticket' ? ticketInput.value : ticketInputExpired.value;
+        const dataEmissao = templateKey === 'primeiro_ticket' ? dataEmissaoInput.value : dataEmissaoInputExpired.value;
+        const dataValidade = templateKey === 'primeiro_ticket' ? dataValidadeInput.value : dataValidadeInputExpired.value;
         const ticketExpirado = ticketExpiradoInput.value || '...';
-
+    
+        console.log(`Updating email template: ${templateKey}`);
+        console.log(`Produto Desc: ${produtoDesc}`);
+        console.log(`NF: ${nf}`);
+        console.log(`Ticket: ${ticket}`);
+        console.log(`Data Emissao: ${dataEmissao}`);
+        console.log(`Data Validade: ${dataValidade}`);
+        console.log(`Ticket Expirado: ${ticketExpirado}`);
+    
         const emailText = emailTemplates.postagem_correios_produtos_solar[templateKey]
             .replace('{{produtoDesc}}', produtoDesc)
             .replace('{{nf}}', nf)
@@ -251,69 +265,145 @@ Cep: 43700-000 SIMOES FILHO/BA`
             .replace('{{dataEmissao}}', dataEmissao)
             .replace('{{dataValidade}}', dataValidade)
             .replace('{{ticketExpirado}}', ticketExpirado);
-
+    
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-
-    emailTemplate.addEventListener('change', () => {
-        resetFields();
-        sacOptions.classList.add('hidden');
-        apoioVendasOptions.classList.add('hidden');
-
-        const selectedTemplate = emailTemplate.value;
-
-        if (selectedTemplate === 'sac') {
-            sacOptions.classList.remove('hidden');
-        } else if (selectedTemplate === 'apoio_vendas') {
-            apoioVendasOptions.classList.remove('hidden');
-        }
-    });
-
-    sacTemplate.addEventListener('change', () => {
-        resetFields();
-        resetSacFields();
-
-        const selectedTemplate = sacTemplate.value;
-
-        if (selectedTemplate === 'devolucao') {
-            destinatarioContainer.classList.remove('hidden');
-            tipoOperacaoContainer.classList.remove('hidden');
-        } else if (selectedTemplate === 'pdaf') {
-            pdafOptions.classList.remove('hidden');
-        } else if (selectedTemplate === 'troca_solar' || selectedTemplate === 'substituicao_componentes') {
-            solarOptions.classList.remove('hidden');
-        } else if (selectedTemplate === 'envio_material_devolucao') {
-            destinatarioContainer.classList.remove('hidden');
-            updateEnvioMaterialEmail();
-        } else if (selectedTemplate === 'postagem_correios_produtos_solar') {
-            postagemCorreiosOptions.classList.remove('hidden');
-        }
-    });
-
-    destinatarioSelect.addEventListener('change', () => {
-        if (sacTemplate.value === 'envio_material_devolucao') {
-            updateEnvioMaterialEmail();
-        } else {
-            updateDevolucaoEmail();
-        }
-    });
     
-    tipoOperacaoSelect.addEventListener('change', updateDevolucaoEmail);
-    tipoSelect.addEventListener('change', updatePdAfEmail);
-    nfsInput.addEventListener('input', updatePdAfEmail);
-    eanInput.addEventListener('input', updatePdAfEmail);
-    swqtInput.addEventListener('input', updatePdAfEmail);
+    if (emailTemplate) {
+        emailTemplate.addEventListener('change', () => {
+            resetFields();
+            sacOptions.classList.add('hidden');
+            apoioVendasOptions.classList.add('hidden');
+        
+            const selectedTemplate = emailTemplate.value;
+        
+            if (selectedTemplate === 'sac') {
+                sacOptions.classList.remove('hidden');
+            } else if (selectedTemplate === 'apoio_vendas') {
+                apoioVendasOptions.classList.remove('hidden');
+            }
+        });
+    }
+    
+    if (sacTemplate) {
+        sacTemplate.addEventListener('change', () => {
+            resetFields();
+            resetSacFields();
+        
+            const selectedTemplate = sacTemplate.value;
+        
+            if (selectedTemplate === 'devolucao') {
+                destinatarioContainer.classList.remove('hidden');
+                tipoOperacaoContainer.classList.remove('hidden');
+            } else if (selectedTemplate === 'pdaf') {
+                pdafOptions.classList.remove('hidden');
+            } else if (selectedTemplate === 'troca_solar' || selectedTemplate === 'substituicao_componentes') {
+                solarOptions.classList.remove('hidden');
+            } else if (selectedTemplate === 'envio_material_devolucao') {
+                destinatarioContainer.classList.remove('hidden');
+                updateEnvioMaterialEmail();
+            } else if (selectedTemplate === 'postagem_correios_produtos_solar') {
+                postagemCorreiosOptions.classList.remove('hidden');
+            }
+        });
+    }
 
-    nfInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
-    valorUnitarioInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
-    quantidadeInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
-    ncmInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
-    descricaoInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    if (destinatarioSelect) {
+        destinatarioSelect.addEventListener('change', () => {
+            if (sacTemplate.value === 'envio_material_devolucao') {
+                updateEnvioMaterialEmail();
+            } else {
+                updateDevolucaoEmail();
+            }
+        });
+    }
 
-    produtoDescInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
-    ticketInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
-    dataEmissaoInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
-    dataValidadeInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
-    ticketExpiradoInput.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    if (tipoOperacaoSelect) {
+        tipoOperacaoSelect.addEventListener('change', updateDevolucaoEmail);
+    }
+
+    if (tipoSelect) {
+        tipoSelect.addEventListener('change', updatePdAfEmail);
+    }
+
+    if (nfsInput) {
+        nfsInput.addEventListener('input', updatePdAfEmail);
+    }
+
+    if (eanInput) {
+        eanInput.addEventListener('input', updatePdAfEmail);
+    }
+
+    if (swqtInput) {
+        swqtInput.addEventListener('input', updatePdAfEmail);
+    }
+
+    if (nfInput) {
+        nfInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    }
+
+    if (valorUnitarioInput) {
+        valorUnitarioInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    }
+
+    if (quantidadeInput) {
+        quantidadeInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    }
+
+    if (ncmInput) {
+        ncmInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    }
+
+    if (descricaoInput) {
+        descricaoInput.addEventListener('input', () => updateSolarEmail(sacTemplate.value));
+    }
+
+    if (document.getElementById('postagem-correios-template')) {
+        document.getElementById('postagem-correios-template').addEventListener('change', () => {
+            const selectedOption = document.getElementById('postagem-correios-template').value;
+            document.getElementById('primeiro-ticket-options').classList.toggle('hidden', selectedOption !== 'primeiro_ticket');
+            document.getElementById('ticket-expirado-options').classList.toggle('hidden', selectedOption !== 'ticket_expirado');
+            
+            if (selectedOption) {
+                updatePostagemCorreiosEmail(selectedOption);
+            }
+        });
+    }
+
+    if (produtoDescInput) {
+        produtoDescInput.addEventListener('input', () => updatePostagemCorreiosEmail(document.getElementById('postagem-correios-template').value));
+    }
+
+    if (nfInput) {
+        nfInput.addEventListener('input', () => updatePostagemCorreiosEmail(document.getElementById('postagem-correios-template').value));
+    }
+
+    if (ticketInput) {
+        ticketInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
+    }
+
+    if (dataEmissaoInput) {
+        dataEmissaoInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
+    }
+
+    if (dataValidadeInput) {
+        dataValidadeInput.addEventListener('input', () => updatePostagemCorreiosEmail('primeiro_ticket'));
+    }
+
+    if (ticketExpiradoInput) {
+        ticketExpiradoInput.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    }
+
+    if (ticketInputExpired) {
+        ticketInputExpired.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    }
+
+    if (dataEmissaoInputExpired) {
+        dataEmissaoInputExpired.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    }
+
+    if (dataValidadeInputExpired) {
+        dataValidadeInputExpired.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    }
 });
