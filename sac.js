@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Captura dos elementos HTML
     const emailTemplate = document.getElementById('email-template');
     const sacTemplate = document.getElementById('sac-template');
     const sacOptions = document.getElementById('sac-options');
@@ -10,6 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const postagemCorreiosOptions = document.getElementById('postagem-correios-produtos-solar-options');
     const emailPreview = document.getElementById('email-preview');
     const emailContent = document.getElementById('email-content');
+
+
+
+    const recusaNfOptions = document.getElementById('recusa-nf-options');
 
     const destinatarioSelect = document.getElementById('destinatario');
     const tipoOperacaoSelect = document.getElementById('tipo-operacao');
@@ -24,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ncmInput = document.getElementById('ncm-input');
     const descricaoInput = document.getElementById('descricao-input');
 
+    const nfRecusaInput = document.getElementById('nf-recusa-input');
+    const descricaoRecusaInput = document.getElementById('descricao-recusa-input');
     const produtoDescInput = document.getElementById('produto-desc-input');
     const ticketInput = document.getElementById('ticket-input');
     const dataEmissaoInput = document.getElementById('data-emissao-input');
@@ -34,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const dataValidadeInputExpired = document.getElementById('data-validade-input-expired');
 
     const emailTemplates = {
-        devolucao: `Informamos que a sua solicitação de devolução da NF foi aprovada.
+        recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
+        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto  substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
+                devolucao: `Informamos que a sua solicitação de devolução da NF foi aprovada.
         
 Importante: Os produtos remetidos para retorno devem ser embalados de forma que garantam sua integridade física, permitindo a conferência do Número de Série e/ou MAC Address. Os produtos serão vistoriados no recebimento para assegurar que correspondem aos da NF de compra.
 
@@ -120,22 +129,60 @@ Cep: 43700-000 SIMOES FILHO/BA`
             dados_adicionais: `Devolução recebida por meio da NF nº ......., emitida em ....../....../........`
         }
     };
-    
-    function getSaudacao() {
-        const horaAtual = new Date().getHours();
-        return horaAtual < 12 ? "Bom dia!" : "Boa tarde!";
+
+   // Função para resetar todos os campos e exibir novas opções
+function resetFields() {
+    // Limpa as seleções e esconde todas as opções
+    document.getElementById('destinatario-container').classList.add('hidden');
+    document.getElementById('tipo-operacao-container').classList.add('hidden');
+    document.getElementById('pdaf-options').classList.add('hidden');
+    document.getElementById('solar-options').classList.add('hidden');
+    document.getElementById('postagem-correios-produtos-solar-options').classList.add('hidden');
+    document.getElementById('email-preview').classList.add('hidden');
+    document.getElementById('recusa-nf-options').classList.add('hidden');
+    document.getElementById('nfs-retidas-options').classList.add('hidden');
+
+    // Limpa os campos de entrada de texto
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+        input.value = ''; // Limpa o valor dos campos de texto
+    });
+
+    // Lógica para verificar a seleção e exibir novas opções
+    const emailTemplateValue = document.getElementById('email-template').value;
+    const sacTemplateValue = document.getElementById('sac-template').value;
+
+    // Verifica se o template de email é SAC
+    if (emailTemplateValue === 'sac') {
+        document.getElementById('sac-options').classList.remove('hidden');
+        
+        // Verifica se o tipo de SAC selecionado é "Recusa NF"
+        if (sacTemplateValue === 'recusa_nf') {
+            document.getElementById('recusa-nf-options').classList.remove('hidden');
+        } else {
+            document.getElementById('recusa-nf-options').classList.add('hidden');
+        }
+        
+    } else {
+        document.getElementById('sac-options').classList.add('hidden');
     }
-    
-    function resetFields() {
-        destinatarioContainer.classList.add('hidden');
-        tipoOperacaoContainer.classList.add('hidden');
-        pdafOptions.classList.add('hidden');
-        solarOptions.classList.add('hidden');
-        postagemCorreiosOptions.classList.add('hidden');
-        emailContent.textContent = '';
-        emailPreview.classList.add('hidden');
+
+    // Adiciona as opções de Apoio a Vendas, caso o template de email seja 'apoio_vendas'
+    if (emailTemplateValue === 'apoio_vendas') {
+        document.getElementById('apoio-vendas-options').classList.remove('hidden');
+    } else {
+        document.getElementById('apoio-vendas-options').classList.add('hidden');
     }
+}
+
+// Evento para chamar resetFields quando a seleção de template de e-mail for alterada
+document.getElementById('email-template').addEventListener('change', resetFields);
+
+// Evento para chamar resetFields quando a seleção do tipo SAC for alterada
+document.getElementById('sac-template').addEventListener('change', resetFields);
+
     
+
     function resetSacFields() {
         destinatarioSelect.value = '';
         tipoOperacaoSelect.value = '';
@@ -157,11 +204,19 @@ Cep: 43700-000 SIMOES FILHO/BA`
         dataEmissaoInputExpired.value = '';
         dataValidadeInputExpired.value = '';
     }
+
     
+
+    function getSaudacao() {
+        const horaAtual = new Date().getHours();
+        return horaAtual < 12 ? "Bom dia!" : "Boa tarde!";
+    }
+
+    // Funções para atualizar o conteúdo dos emails
     function updateDevolucaoEmail() {
         const destinatario = destinatarios[destinatarioSelect.value] || '';
         const operacaoInfo = operacoes[tipoOperacaoSelect.value] || {};
-    
+
         if (destinatario && operacaoInfo.operacao) {
             const emailText = emailTemplates.devolucao
                 .replace('{{destinatario}}', destinatario)
@@ -172,25 +227,25 @@ Cep: 43700-000 SIMOES FILHO/BA`
             emailPreview.classList.remove('hidden');
         }
     }
-    
+
     function updatePdAfEmail() {
         const tipo = tipoSelect.value || 'PD';
         const ean = eanInput.value || '...';
         const nfs = nfsInput.value || '...';
-    
+
         // Processar notas fiscais (NFs)
         const nfsArray = nfs.split(',').map(item => item.trim());
         const nfsMessage = nfsArray.length === 1 
             ? `a nota fiscal ${nfsArray[0]}` 
             : `as notas fiscais ${nfsArray.join(', ')}`;
-    
+
         // Processar notas de serviço (SW/QT) e formatar cada item em uma nova linha
         const swqtArray = swqtInput.value.split(',').map(item => item.trim());
         const notasServicoMessage = swqtArray.length === 1 
             ? 'a nota de serviço' 
             : 'as notas de serviço';
         const swqtMessage = swqtArray.join('\n'); // Cada SW/QT em uma nova linha
-    
+
         // Montar o texto final
         let emailText = emailTemplates.pdaf
             .replace('{{tipo}}', tipo)
@@ -198,28 +253,28 @@ Cep: 43700-000 SIMOES FILHO/BA`
             .replace('{{nfs}}', nfsMessage)
             .replace('{{ean}}', ean)
             .replace('{{swqt}}', swqtMessage);
-    
+
         // Remover a frase "seguir também com a nota de serviço," se o tipo for AF
         if (tipo === 'AF') {
             emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '');
         }
-    
+
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-    
+
     function updateSolarEmail(templateKey) {
         const nf = nfInput.value || '...';
         const valorUnitario = valorUnitarioInput.value || '...';
         const quantidade = quantidadeInput.value || '...';
         const ncm = ncmInput.value || '...';
         const descricao = descricaoInput.value || '...';
-    
+
         // Verifica se há uma vírgula e ajusta o texto da NF
         const nfText = nf.includes(',')
             ? `das NFs ${nf}`
             : `da NF ${nf}`;
-    
+
         const emailText = emailTemplates[templateKey]
             .replace('{{saudacao}}', getSaudacao())
             .replace('{{nfText}}', nfText)
@@ -227,21 +282,21 @@ Cep: 43700-000 SIMOES FILHO/BA`
             .replace('{{quantidade}}', quantidade)
             .replace('{{ncm}}', ncm)
             .replace('{{descricao}}', descricao);
-    
+
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-    
+
     function updateEnvioMaterialEmail() {
         const destinatario = destinatarios[destinatarioSelect.value] || '...';
-    
+
         const emailText = emailTemplates.envio_material_devolucao
             .replace('{{endereco}}', destinatario);
-    
+
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-    
+
     function updatePostagemCorreiosEmail(templateKey) {
         const produtoDesc = produtoDescInput.value || '...';
         const nf = nfInput.value || '...';
@@ -249,15 +304,7 @@ Cep: 43700-000 SIMOES FILHO/BA`
         const dataEmissao = templateKey === 'primeiro_ticket' ? dataEmissaoInput.value : dataEmissaoInputExpired.value;
         const dataValidade = templateKey === 'primeiro_ticket' ? dataValidadeInput.value : dataValidadeInputExpired.value;
         const ticketExpirado = ticketExpiradoInput.value || '...';
-    
-        console.log(`Updating email template: ${templateKey}`);
-        console.log(`Produto Desc: ${produtoDesc}`);
-        console.log(`NF: ${nf}`);
-        console.log(`Ticket: ${ticket}`);
-        console.log(`Data Emissao: ${dataEmissao}`);
-        console.log(`Data Validade: ${dataValidade}`);
-        console.log(`Ticket Expirado: ${ticketExpirado}`);
-    
+
         const emailText = emailTemplates.postagem_correios_produtos_solar[templateKey]
             .replace('{{produtoDesc}}', produtoDesc)
             .replace('{{nf}}', nf)
@@ -265,19 +312,37 @@ Cep: 43700-000 SIMOES FILHO/BA`
             .replace('{{dataEmissao}}', dataEmissao)
             .replace('{{dataValidade}}', dataValidade)
             .replace('{{ticketExpirado}}', ticketExpirado);
-    
+
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
-    
+
+    function updateRecusaNfEmail() {
+        const nf = nfRecusaInput.value || '...';
+        const descricao = descricaoRecusaInput.value || '...';
+
+        const emailText = emailTemplates.recusa_nf
+            .replace('{{saudacao}}', getSaudacao())
+            .replace('{{nf}}', nf)
+            .replace('{{descricao}}', descricao);
+
+        emailContent.innerHTML = emailText.trim();
+        emailPreview.classList.remove('hidden');
+    }
+
+
+        
+
+
+    // Event listeners
     if (emailTemplate) {
         emailTemplate.addEventListener('change', () => {
             resetFields();
             sacOptions.classList.add('hidden');
             apoioVendasOptions.classList.add('hidden');
-        
+
             const selectedTemplate = emailTemplate.value;
-        
+
             if (selectedTemplate === 'sac') {
                 sacOptions.classList.remove('hidden');
             } else if (selectedTemplate === 'apoio_vendas') {
@@ -285,14 +350,14 @@ Cep: 43700-000 SIMOES FILHO/BA`
             }
         });
     }
-    
+
     if (sacTemplate) {
         sacTemplate.addEventListener('change', () => {
             resetFields();
             resetSacFields();
-        
+
             const selectedTemplate = sacTemplate.value;
-        
+
             if (selectedTemplate === 'devolucao') {
                 destinatarioContainer.classList.remove('hidden');
                 tipoOperacaoContainer.classList.remove('hidden');
@@ -405,5 +470,14 @@ Cep: 43700-000 SIMOES FILHO/BA`
 
     if (dataValidadeInputExpired) {
         dataValidadeInputExpired.addEventListener('input', () => updatePostagemCorreiosEmail('ticket_expirado'));
+    }
+
+    // Adicionar listener ao botão ou evento de atualização
+    if (nfRecusaInput) {
+        nfRecusaInput.addEventListener('input', updateRecusaNfEmail);
+    }
+
+    if (descricaoRecusaInput) {
+        descricaoRecusaInput.addEventListener('input', updateRecusaNfEmail);
     }
 });
