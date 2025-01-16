@@ -37,6 +37,7 @@
                 </select>
 
                 <!-- Sub-seleção para SAC -->
+                 
                 <div id="sac-options" class="hidden">
                     <label for="sac-template">Escolha o tipo de SAC:</label>
                     <select id="sac-template">
@@ -46,7 +47,10 @@
                         <option value="troca_solar">Troca em garantia - Solar</option>
                         <option value="substituicao_componentes">Substituição de componentes-Solar</option>
                         <option value="envio_material_devolucao">ENVIO DE MATERIAL - DEVOLUÇÃO</option>
-                        <option value="postagem_correios_produtos_solar">SCRIPT - POSTAGEM CORREIOS PRODUTOS SOLAR</option>
+                        <option value="postagem_correios_produtos_solar">POSTAGEM CORREIOS PRODUTOS SOLAR</option>
+                        <option value="recusa_nf">Recusa NF</option>
+
+
                     </select>
                 </div>
 
@@ -58,7 +62,6 @@
                         <option value="atrasos">Transportadoras - Atrasos em entregas</option>
                         <option value="pendencias">Transportadoras - Pendências</option>
                         <option value="pendencias_lista">Pendências com lista</option>
-                        <option value="recusa_nf">Recusa de NF</option>
                         <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
                     </select>
                 </div>
@@ -71,12 +74,20 @@
                     <input type="text" id="nf-select">
                 </div>
 
+                <!-- Remover a duplicação da seção "Recusa NF" -->
                 <div id="recusa-nf-options" class="hidden">
-                    <label for="nf-recusa-input">NF:</label>
-                    <input type="text" id="nf-recusa-input">
-                    <label for="descricao-recusa-input">Descreva a situação:</label>
-                    <input type="text" id="descricao-recusa-input">
-                </div>
+    <label for="nf-recusa-input">NF:</label>
+    <input type="text" id="nf-recusa-input">
+    <label for="descricao-recusa-input">Descreva a situação:</label>
+    <input type="text" id="descricao-recusa-input">
+</div>
+
+
+<!-- Adicionar a nova seção de NFs retidas -->
+<div id="nfs-retidas-options" class="hidden">
+    <label for="nf-retida-input">NF:</label>
+    <input type="text" id="nf-retida-input">
+</div>
 
 
                 <!-- Opções específicas de SAC -->
