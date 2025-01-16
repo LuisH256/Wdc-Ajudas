@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ticketExpiradoOptions = document.getElementById('ticket-expirado-options');
     const emailPreview = document.getElementById('email-preview');
     const emailContent = document.getElementById('email-content');
-
+    const nfsRetidasOptions = document.getElementById('nfs-retidas-options');
+    const nfRetidaInput = document.getElementById('nf-retida-input');
+    
     const ediSelect = document.getElementById('edi-select');
     const nfSelect = document.getElementById('nf-select');
     const nfRecusaInput = document.getElementById('nf-recusa-input');
@@ -28,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pendencias_plural: `{{saudacao}}\n\nRecebemos EDI de {{edi}} das NFs {{nf}}. Favor nos posicionar urgente quanto ao status dessas entregas e se possuem alguma pendencia que poderiamos intervir para que as entregas sejam realizadas no prazo.\n`,
         pendencias_lista: `{{saudacao}}\n\nRecebemos EDI de pendencias das NFs listadas abaixo. Favor nos posicionar urgente quanto aos status dessas entregas e se poderiamos intervir para que as entregas sejam realizadas no prazo.\n\n[Lista de NFs]`,
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
-        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto  substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
         ticket_expirado: `{{saudacao}}\n\nInformamos que devido a expiração do ticket {{ticket_expirado}} anteriormente emitido, emitimos um novo e enviamos um  email a parte junto aos correios com uma nova Autorização de Postagem do item substituído, você deverá se dirigir a uma Agência Própria Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto em questão.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
         nfs_retidas: `Prezado cliente,
 
@@ -184,10 +185,11 @@ Desde já agradeço.`
             ticketExpiradoOptions.classList.remove('hidden');
             updateTicketExpiradoEmail();
         } else if (selectedTemplate === 'nfs_retidas') {
-            nfRecusaInput.classList.remove('hidden');
-            descricaoRecusaInput.classList.add('hidden'); // Esconder descricaoRecusaInput especificamente para nfs_retidas
+            nfRecusaInput.classList.remove('hidden');  // Mostrar campo NF
+            descricaoRecusaInput.classList.add('hidden'); // Esconder campo de descrição
             updateNfsRetidasEmail();
         }
+        
     });
 
     // Listeners para inputs de Pendencias
@@ -217,6 +219,7 @@ Desde já agradeço.`
     ticketInput.addEventListener('input', updatePrimeiroTicketEmail);
     dataEmissaoInput.addEventListener('input', updatePrimeiroTicketEmail);
     dataValidadeInput.addEventListener('input', updatePrimeiroTicketEmail);
+    nfRetidaInput.addEventListener('input', updateNfsRetidasEmail);
 
     // Listeners para inputs de Ticket Expirado
     ticketExpiradoInput.addEventListener('input', updateTicketExpiradoEmail);
