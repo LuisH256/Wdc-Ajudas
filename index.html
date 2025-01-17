@@ -3,182 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de E-mails Automáticos</title>
-    <link rel="stylesheet" href="emails.css">
+    <title>Emails Automáticos</title>
+    <link rel="stylesheet" href="serial.css">
+    <link rel="stylesheet" href="styles.css">
+
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+
 </head>
 <body>
     <div class="container">
         <!-- Barra lateral esquerda -->
-        <div class="sidebar">
-            <!-- Campo de pesquisa -->
+        <aside class="sidebar">
             <input type="text" placeholder="Pesquisar..." class="search-bar">
-
-            <!-- Navegação -->
             <nav class="nav">
                 <ul>
                     <li><a href="index.html">Página Principal</a></li>
                     <li><a href="atalhos.html">Atalhos</a></li>
                     <li><a href="emails.html">Emails Automáticos</a></li>
                     <li><a href="pesquisas.html">Pesquisas</a></li>
+
+
                 </ul>
             </nav>
-        </div>
+        </aside>
 
         <!-- Conteúdo principal -->
-        <div class="content">
-            <h3>Gerador de E-mails Automáticos</h3>
-            <div class="email-configuration">
-                <label for="email-template">Escolha o template de e-mail:</label>
-                <select id="email-template">
-                    <option value="">Selecione</option>
-                    <option value="sac">SAC</option>
-                    <option value="apoio_vendas">Apoio a Vendas</option>
-                </select>
-
-                <!-- Sub-seleção para SAC -->
-                 
-                <div id="sac-options" class="hidden">
-                    <label for="sac-template">Escolha o tipo de SAC:</label>
-                    <select id="sac-template">
-                        <option value="">Selecione</option>
-                        <option value="devolucao">Devolução</option>
-                        <option value="pdaf">PD/AF</option>
-                        <option value="troca_solar">Troca em garantia - Solar</option>
-                        <option value="substituicao_componentes">Substituição de componentes-Solar</option>
-                        <option value="envio_material_devolucao">ENVIO DE MATERIAL - DEVOLUÇÃO</option>
-                        <option value="postagem_correios_produtos_solar">POSTAGEM CORREIOS PRODUTOS SOLAR</option>
-                        <option value="recusa_nf">Recusa NF</option>
-
-
-                    </select>
-                </div>
-
-                <!-- Sub-seleção para Apoio a Vendas -->
-                <div id="apoio-vendas-options" class="hidden">
-                    <label for="apoio-vendas-template">Escolha o tipo de Apoio a Vendas:</label>
-                    <select id="apoio-vendas-template">
-                        <option value="">Selecione</option>
-                        <option value="atrasos">Transportadoras - Atrasos em entregas</option>
-                        <option value="pendencias">Transportadoras - Pendências</option>
-                        <option value="pendencias_lista">Pendências com lista</option>
-                        <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
-                    </select>
-                </div>
+        <main class="content">
+            <section id="emails">
+                <h1>Bem vindo(a) WDC Ajudas</h1>
+                <p>Criado para auxiliar os membros da equipe, focado principalmente no SAC.</p>
                 
-                <!-- Opções adicionais para "Apoio a Vendas" -->
-                <div id="pendencias-options" class="hidden">
-                    <label for="edi-select">EDI:</label>
-                    <input type="text" id="edi-select">
-                    <label for="nf-select">NF:</label>
-                    <input type="text" id="nf-select">
+                
+                
+
+
+
+                <!-- Aqui você pode incluir o formulário ou conteúdo do gerador de e-mails -->
+                <div id="email-template-container">
+                    <!-- Template de e-mails aparecerão aqui conforme a seleção -->
                 </div>
-
-                <!-- Remover a duplicação da seção "Recusa NF" -->
-                <div id="recusa-nf-options" class="hidden">
-    <label for="nf-recusa-input">NF:</label>
-    <input type="text" id="nf-recusa-input">
-    <label for="descricao-recusa-input">Descreva a situação:</label>
-    <input type="text" id="descricao-recusa-input">
-</div>
-
-
-<!-- Adicionar a nova seção de NFs retidas -->
-<div id="nfs-retidas-options" class="hidden">
-    <label for="nf-retida-input">NF:</label>
-    <input type="text" id="nf-retida-input">
-</div>
-
-
-                <!-- Opções específicas de SAC -->
-                <div id="destinatario-container" class="hidden">
-                    <label for="destinatario">Destinatário:</label>
-                    <select id="destinatario">
-                        <option value="">Selecione</option>
-                        <option value="matriz">Matriz</option>
-                        <option value="simoes">Simões Filho</option>
-                    </select>
-                </div>
-
-                <div id="tipo-operacao-container" class="hidden">
-                    <label for="tipo-operacao">Tipo de Operação:</label>
-                    <select id="tipo-operacao">
-                        <option value="">Selecione</option>
-                        <option value="locacao">Locação</option>
-                        <option value="devolucao">Devolução</option>
-                    </select>
-                </div>
-
-                <div id="pdaf-options" class="hidden">
-                    <label for="tipo-select">Tipo:</label>
-                    <select id="tipo-select">
-                        <option value="PD">PD</option>
-                        <option value="AF">AF</option>
-                    </select>
-                    <label for="nfs-input">NFs:</label>
-                    <input type="text" id="nfs-input">
-                    <label for="ean-input">EAN:</label>
-                    <input type="text" id="ean-input">
-                    <label for="swqt-input">SW/QT:</label>
-                    <input type="text" id="swqt-input">
-                </div>
-
-                <div id="solar-options" class="hidden">
-                    <label for="nf-input">NF:</label>
-                    <input type="text" id="nf-input">
-                    <label for="valor-unitario-input">Valor Unitário:</label>
-                    <input type="text" id="valor-unitario-input">
-                    <label for="quantidade-input">Quantidade:</label>
-                    <input type="text" id="quantidade-input">
-                    <label for="ncm-input">NCM:</label>
-                    <input type="text" id="ncm-input">
-                    <label for="descricao-input">Descrição:</label>
-                    <input type="text" id="descricao-input">
-                </div>
-
-                <div id="postagem-correios-produtos-solar-options" class="hidden">
-                    <label>Selecione o tipo de ticket:</label>
-                    <select id="postagem-correios-template">
-                        <option value="">Selecione</option>
-                        <option value="primeiro_ticket">Primeiro ticket</option>
-                        <option value="ticket_expirado">Ticket expirado</option>
-                    </select>
-                    <div id="primeiro-ticket-options" class="hidden">
-                        <label for="produto-desc-input">Descrição do Produto:</label>
-                        <input type="text" id="produto-desc-input">
-                        <label for="nf-input-postagem">NF:</label>
-                        <input type="text" id="nf-input-postagem">
-                        <label for="ticket-input">Ticket:</label>
-                        <input type="text" id="ticket-input">
-                        <label for="data-emissao-input">Data de Emissão:</label>
-                        <input type="text" id="data-emissao-input">
-                        <label for="data-validade-input">Data de Validade:</label>
-                        <input type="text" id="data-validade-input">
-                    </div>
-                    <div id="ticket-expirado-options" class="hidden">
-                        <label for="ticket-expirado-input">Ticket Expirado:</label>
-                        <input type="text" id="ticket-expirado-input">
-                        <label for="ticket-input-expired">Novo Ticket:</label>
-                        <input type="text" id="ticket-input-expired">
-                        <label for="data-emissao-input-expired">Data de Emissão:</label>
-                        <input type="text" id="data-emissao-input-expired">
-                        <label for="data-validade-input-expired">Data de Validade:</label>
-                        <input type="text" id="data-validade-input-expired">
-                    </div>
-                </div>
-
-                <!-- Pré-visualização do e-mail -->
-                <div id="email-preview" class="email-box hidden">
-                    <h3>Pré-visualização do E-mail</h3>
-                    <pre id="email-content"></pre>
-                    <button id="copy-email">Copiar E-mail</button>
-                </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
-    <script src="sac.js"></script>
-    <script src="apoio_vendas.js"></script>
-    <script src="emails.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
