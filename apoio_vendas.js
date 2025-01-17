@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const dataValidadeInputExpired = document.getElementById('data-validade-input-expired');
 
     const emailTemplates = {
+        atrasos2: `{{saudacao}}
+
+        Favor nos posicionar quanto as entregas das NFs abaixo que estão em atraso ou estão no prazo e não recebemos atualizações de EDI.
+        Verificar também se as NFs que recebemos ocorrências precisarão da nossa intervenção para resolução.`,
+        atrasos_detalhado: `{{saudacao}}\n\nFavor nos posicionar urgente quanto as entregas das NFs abaixo que constam em atraso, não recebemos EDI de entrega ou estão com algum tipo de pendência que poderiamos intervir para que a entrega seja realizada no prazo.\n`,
         atrasos: `{{saudacao}}\n\nFavor nos posicionar quanto as entregas das NFs abaixo que estão em atraso ou não recebemos EDI de entrega.\n`,
         pendencias_singular: `{{saudacao}}\n\nRecebemos EDI de {{edi}} da NF {{nf}}. Favor nos posicionar urgente quanto ao status dessa entrega e se possui alguma pendencia que poderiamos intervir para que a entrega seja realizada no prazo.\n`,
         pendencias_plural: `{{saudacao}}\n\nRecebemos EDI de {{edi}} das NFs {{nf}}. Favor nos posicionar urgente quanto ao status dessas entregas e se possuem alguma pendencia que poderiamos intervir para que as entregas sejam realizadas no prazo.\n`,
@@ -73,6 +78,11 @@ Desde já agradeço.`
         // Esconde a prévia do email
         emailContent.textContent = '';
         emailPreview.classList.add('hidden');
+    }
+    function updateAtrasosDetalhadoEmail() {
+        const emailText = emailTemplates.atrasos_detalhado.replace('{{saudacao}}', getSaudacao());
+        emailContent.textContent = emailText.trim();
+        emailPreview.classList.remove('hidden');
     }
     
 
@@ -156,9 +166,9 @@ Desde já agradeço.`
     apoioVendasTemplate.addEventListener('change', () => {
         // Reseta os campos ao mudar de seleção
         resetFields();
-
+    
         const selectedTemplate = apoioVendasTemplate.value;
-
+    
         // Oculta todas as opções específicas
         pendenciasOptions.classList.add('hidden');
         recusaNfOptions.classList.add('hidden');
@@ -166,7 +176,13 @@ Desde já agradeço.`
         ticketExpiradoOptions.classList.add('hidden');
         nfRecusaInput.classList.add('hidden');
         descricaoRecusaInput.classList.add('hidden');
+    
 
+        if (selectedTemplate === 'atrasos2') {
+            const emailText = emailTemplates.atrasos.replace('{{saudacao}}', getSaudacao());
+            emailContent.textContent = emailText.trim();
+            emailPreview.classList.remove('hidden');
+        }
         if (selectedTemplate === 'atrasos') {
             const emailText = emailTemplates.atrasos.replace('{{saudacao}}', getSaudacao());
             emailContent.textContent = emailText.trim();
@@ -189,9 +205,11 @@ Desde já agradeço.`
             nfRecusaInput.classList.remove('hidden');  // Mostrar campo NF
             descricaoRecusaInput.classList.add('hidden'); // Esconder campo de descrição
             updateNfsRetidasEmail();
+        } else if (selectedTemplate === 'atrasos_detalhado') {
+            updateAtrasosDetalhadoEmail();
         }
-        
     });
+    
 
     // Listeners para inputs de Pendencias
     ediSelect.addEventListener('input', updatePendenciasEmail);
@@ -214,6 +232,7 @@ Desde já agradeço.`
         }
     });
 
+    
     // Listeners para inputs de Primeiro Ticket
     produtoDescInput.addEventListener('input', updatePrimeiroTicketEmail);
     nfInput.addEventListener('input', updatePrimeiroTicketEmail);
