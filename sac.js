@@ -232,20 +232,20 @@ document.getElementById('sac-template').addEventListener('change', resetFields);
         const tipo = tipoSelect.value || 'PD';
         const ean = eanInput.value || '...';
         const nfs = nfsInput.value || '...';
-
+        
         // Processar notas fiscais (NFs)
         const nfsArray = nfs.split(',').map(item => item.trim());
         const nfsMessage = nfsArray.length === 1 
             ? `a nota fiscal ${nfsArray[0]}` 
             : `as notas fiscais ${nfsArray.join(', ')}`;
-
+        
         // Processar notas de serviço (SW/QT) e formatar cada item em uma nova linha
         const swqtArray = swqtInput.value.split(',').map(item => item.trim());
         const notasServicoMessage = swqtArray.length === 1 
             ? 'a nota de serviço' 
             : 'as notas de serviço';
         const swqtMessage = swqtArray.join('\n'); // Cada SW/QT em uma nova linha
-
+        
         // Montar o texto final
         let emailText = emailTemplates.pdaf
             .replace('{{tipo}}', tipo)
@@ -253,12 +253,21 @@ document.getElementById('sac-template').addEventListener('change', resetFields);
             .replace('{{nfs}}', nfsMessage)
             .replace('{{ean}}', ean)
             .replace('{{swqt}}', swqtMessage);
-
+        
         // Remover a frase "seguir também com a nota de serviço," se o tipo for AF
         if (tipo === 'AF') {
             emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '');
+            // Esconder campos EAN e SW/QT
+            document.getElementById('ean-input').style.display = 'none';
+            document.getElementById('swqt-input').style.display = 'none';
+            // Remover a linha de EAN do emailText
+            emailText = emailText.replace(/EAN .*\n/g, '');
+        } else {
+            // Mostrar campos EAN e SW/QT
+            document.getElementById('ean-input').style.display = 'block';
+            document.getElementById('swqt-input').style.display = 'block';
         }
-
+        
         emailContent.innerHTML = emailText.trim();
         emailPreview.classList.remove('hidden');
     }
