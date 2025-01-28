@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="comparar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="comprar-lista.html">Comprar lista</a></li>
+                    <li><a href="atalhos.html">Atalhos</a></li>
+                    <li><a href="emails.html">Emails Automáticos</a></li>
+                    <li><a href="pesquisas.html">Pesquisas</a></li>
+                  
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <h3>List Comparison</h3>
+            <label for="list1">Primeira lista:</label>
+            <textarea id="list1" rows="10" placeholder="Insira os itens da primeira lista, um por linha"></textarea>
+
+            <label for="list2">Segunda lista:</label>
+            <textarea id="list2" rows="10" placeholder="Insira os itens da segunda lista, um por linha"></textarea>
+
+            <button id="compare-btn">Compare Lists</button>
+
+            <div id="result" class="result-box">
+                <p>Itens que estão na primeira lista mais não estão na segunda lista:</p>
+                <textarea id="unique-items" rows="10" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('compare-btn').addEventListener('click', function () {
+            // Get input values
+            const list1 = document.getElementById('list1').value.split('\n').map(item => item.trim()).filter(Boolean);
+            const list2 = document.getElementById('list2').value.split('\n').map(item => item.trim()).filter(Boolean);
+
+            // Find unique items in List 1 not in List 2
+            const uniqueItems = list1.filter(item => !list2.includes(item));
+
+            // Display results
+            document.getElementById('unique-items').value = uniqueItems.join('\n');
+        });
+    </script>
+</body>
+</html>
