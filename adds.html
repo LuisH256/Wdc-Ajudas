@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar 'S' aos Itens</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/comparar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="comprar-lista.html">Comprar lista</a></li>
+                    <li><a href="adds.html">Adicionar S</a></li>
+                    <li><a href="garantia.html">Definir garantia</a></li>
+
+
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <h3>Adicionar 'S' aos Itens</h3>
+            <label for="item-list">Lista de itens:</label>
+            <textarea id="item-list" rows="10" placeholder="Insira os itens, um por linha"></textarea>
+
+            <button id="add-s-btn">Adicionar 'S'</button>
+
+            <div id="result" class="result-box">
+                <p>Itens com 'S' adicionados:</p>
+                <textarea id="modified-items" rows="10" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-s-btn').addEventListener('click', function () {
+            // Obter os valores de entrada
+            const items = document.getElementById('item-list').value.split('\n').map(item => item.trim()).filter(Boolean);
+
+            // Adicionar 'S' ao início de cada item
+            const modifiedItems = items.map(item => 'S' + item);
+
+            // Exibir os resultados
+            document.getElementById('modified-items').value = modifiedItems.join('\n');
+        });
+    </script>
+        <script src="JS/scripts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Garantias</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/comparar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="comprar-lista.html">Comprar lista</a></li>
+                    <li><a href="adds.html">Adicionar S</a></li>
+                    <li><a href="garantia.html">Definir garantia</a></li>
+
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <h3>Verificar Garantias</h3>
+            <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
+            <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
+
+            <button id="check-warranty-btn">Verificar Garantia</button>
+
+            <div id="result" class="result-box">
+                <p>Resultados:</p>
+                <textarea id="warranty-results" rows="10" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('check-warranty-btn').addEventListener('click', function () {
+            // Obter a data atual
+            const currentDate = new Date();
+
+            // Função para converter string de data no formato DD/MM/AAAA para um objeto Date
+            function parseDate(dateString) {
+                const [day, month, year] = dateString.split('/').map(Number);
+                return new Date(year, month - 1, day);
+            }
+
+            // Obter as datas de entrada
+            const dates = document.getElementById('date-list').value.split('\n').map(date => date.trim()).filter(Boolean);
+
+            // Verificar se cada data está em garantia
+            const results = dates.map(date => {
+                const parsedDate = parseDate(date);
+                const warrantyStatus = parsedDate >= currentDate ? 'SIM' : 'NÃO';
+                return `${date}\t${warrantyStatus}`;
+            });
+
+            // Exibir os resultados
+            document.getElementById('warranty-results').value = results.join('\n');
+        });
+    </script>
+        <script src="JS/scripts.js"></script>
+
+
+</body>
+</html>
