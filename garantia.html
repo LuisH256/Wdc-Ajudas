@@ -6,7 +6,7 @@
     <title>Verificar Garantias</title>
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/comparar.css">
-        <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 
 </head>
 <body>
@@ -21,7 +21,6 @@
                     <li><a href="adds.html">Adicionar S</a></li>
                     <li><a href="garantia.html">Definir garantia</a></li>
                     <li><a href="verificarnf.html">Verificar NF</a></li>
-
                 </ul>
             </nav>
         </aside>
@@ -43,13 +42,13 @@
 
     <script>
         document.getElementById('check-warranty-btn').addEventListener('click', function () {
-            // Obter a data atual
-            const currentDate = new Date();
+            // Obter a data atual, sem a parte do tempo
+            const currentDate = new Date().setHours(0, 0, 0, 0);
 
             // Função para converter string de data no formato DD/MM/AAAA para um objeto Date
             function parseDate(dateString) {
                 const [day, month, year] = dateString.split('/').map(Number);
-                return new Date(year, month - 1, day);
+                return new Date(year, month - 1, day).setHours(0, 0, 0, 0);
             }
 
             // Obter as datas de entrada
@@ -66,8 +65,6 @@
             document.getElementById('warranty-results').value = results.join('\n');
         });
     </script>
-        <script src="JS/scripts.js"></script>
-
-
+    <script src="JS/scripts.js"></script>
 </body>
 </html>
