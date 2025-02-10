@@ -35,6 +35,7 @@
             <div id="result" class="result-box">
                 <p>Resultados:</p>
                 <textarea id="nota-results" rows="10" readonly></textarea>
+                <p>Total de notas pesquisadas: <span id="nota-count">0</span></p>
             </div>
         </div>
     </div>
@@ -49,6 +50,9 @@
 
             // Exibir os resultados, separados por vírgulas
             document.getElementById('nota-results').value = uniqueNotas.join(', ');
+
+            // Atualizar o contador de notas
+            document.getElementById('nota-count').textContent = uniqueNotas.length;
         });
     </script>
     <script src="JS/scripts.js"></script>
