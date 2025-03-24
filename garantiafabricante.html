@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa Garantia dos Fabricantes</title>
+    <link rel="stylesheet" href="CSS/garantiafabricante.css">
+    <link rel="stylesheet" href="CSS/serial.css"> 
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="atalhos.html">Atalhos</a></li>
+                    <li><a href="emails.html">Emails Automáticos</a></li>
+                    <li><a href="automacoes.html">Automações</a></li>
+                    <li><a href="pesquisas.html">Pesquisas</a></li>
+                    <li><a href="garantiafabricante.html">Pesquisa Fabricante</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="content">
+            <section id="pesquisa-garantia">
+                <h1>Pesquisa de Garantia dos Fabricantes</h1>
+                <form id="garantia-form">
+                    <label for="fabricante">Selecione o Fabricante:</label>
+                    <select id="fabricante" name="fabricante">
+                        <option value="x">Selecione o fabricante</option>
+                        <option value="Fujikura">Fujikura</option>
+                        <option value="MERCUSYS">MERCUSYS</option>
+                        <option value="Easy4Link">Easy4 Link</option>
+                        <option value="Grandstream">Grandstream</option>
+                        <option value="Hikvision">Hikvision</option>
+                        <option value="Huawei">Huawei</option>
+                        <option value="IDEMIA">IDEMIA</option>
+                        <option value="ISS">ISS</option>
+                        <option value="JinkoSolar">Jinko Solar</option>
+                        <option value="Logitech">Logitech</option>
+                        <option value="LG">LG</option>
+                        <option value="Leyard">Leyard</option>
+                        <option value="Nokia">Nokia</option>
+                        <!-- Adicione mais fabricantes conforme necessário -->
+                    </select>
+                    <button type="button" onclick="pesquisarGarantia()">Pesquisar</button>
+                </form>
+                <div id="resultado-garantia">
+                    <p id="tempo-garantia" data-tempo-garantia="Tempo de Garantia:"></p>
+                    <p id="rma-fabricante" data-rma-fabricante="RMA:"></p>
+                    <p id="mensagem-erro" style="display: none;" data-mensagem-erro="Informações de garantia não encontradas para o fabricante selecionado.">Informações de garantia não encontradas para o fabricante selecionado.</p>
+                    <div id="mensagem-adicional" class="mensagem-box"></div>
+                    <button id="copiar-informacoes" style="display: none;" onclick="copiarInformacoes()">Copiar Informações</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="JS/garantiafabricante.js"></script>
+</body>
+</html>
