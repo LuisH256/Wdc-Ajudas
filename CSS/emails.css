@@ -25,18 +25,23 @@ body {
     flex-direction: column;
 }
 
-.search-bar {
+.sidebar .search-bar {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #34495e;
     border-radius: 5px;
-    background-color: #34495e;
-    color: #ecf0f1;
+    background-color: #ffffff;
+    color: #000000;
     margin-bottom: 20px;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.search-bar:focus {
+.sidebar .search-bar::placeholder {
+    color: #000000;
+    opacity: 0.8;
+}
+
+.sidebar .search-bar:focus {
     border-color: #1abc9c;
     box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
     outline: none;
@@ -88,7 +93,7 @@ body {
 }
 
 /* Estilo dos campos de entrada e seletores */
-input[type="text"], select {
+.content input[type="text"], .content select {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -100,7 +105,7 @@ input[type="text"], select {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-input[type="text"]:focus, select:focus {
+.content input[type="text"]:focus, .content select:focus {
     border-color: #3498db;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
     outline: none;
