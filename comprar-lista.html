@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar 'S' aos Itens</title>
+    <title>Comparar Listas</title>
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/comparar.css">
     
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
     <div class="container">
@@ -18,9 +17,9 @@
             <nav class="nav">
                 <ul>
                     <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="comprar-lista.html">Comparar lista</a></li>
+                    <li><a href="comprar-lista.html">Comparar Lista</a></li>
                     <li><a href="adds.html">Adicionar S</a></li>
-                    <li><a href="garantia.html">Definir garantia</a></li>
+                    <li><a href="garantia.html">Definir Garantia</a></li>
                     <li><a href="verificarnf.html">Verificar NF</a></li>
                     <li><a href="revendagarantia.html">Definir Garantia Revenda</a></li>
                 </ul>
@@ -29,32 +28,35 @@
 
         <!-- Conteúdo principal -->
         <div class="content">
-            <h3>Adicionar 'S' aos Itens</h3>
-            <label for="item-list">Lista de itens:</label>
-            <textarea id="item-list" rows="10" placeholder="Insira os itens, um por linha"></textarea>
+            <h3>Comparar Listas</h3>
+            <label for="lista1">Lista 1:</label>
+            <textarea id="lista1" rows="10" placeholder="Insira os itens da lista 1, um por linha"></textarea>
 
-            <button id="add-s-btn">Adicionar 'S'</button>
+            <label for="lista2">Lista 2:</label>
+            <textarea id="lista2" rows="10" placeholder="Insira os itens da lista 2, um por linha"></textarea>
+
+            <button id="comparar-btn">Comparar Listas</button>
 
             <div id="result" class="result-box">
-                <p>Itens com 'S' adicionados:</p>
-                <textarea id="modified-items" rows="10" readonly></textarea>
+                <p>Itens presentes na Lista 1, mas não na Lista 2:</p>
+                <textarea id="diferenca-itens" rows="10" readonly></textarea>
             </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('add-s-btn').addEventListener('click', function () {
-            // Get input values
-            const items = document.getElementById('item-list').value.split('\n').map(item => item.trim()).filter(Boolean);
+        document.getElementById('comparar-btn').addEventListener('click', function () {
+            // Obter os valores de entrada
+            const lista1 = document.getElementById('lista1').value.split('\n').map(item => item.trim()).filter(Boolean);
+            const lista2 = document.getElementById('lista2').value.split('\n').map(item => item.trim()).filter(Boolean);
 
-            // Add 'S' to the beginning of each item
-            const modifiedItems = items.map(item => 'S' + item);
+            // Encontrar itens presentes na lista 1, mas não na lista 2
+            const diferencaItens = lista1.filter(item => !lista2.includes(item));
 
-            // Display results
-            document.getElementById('modified-items').value = modifiedItems.join('\n');
+            // Exibir os resultados
+            document.getElementById('diferenca-itens').value = diferencaItens.join('\n');
         });
     </script>
-<script src="JS/scripts.js"></script>
-
+    <script src="JS/scripts.js"></script>
 </body>
 </html>
