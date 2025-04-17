@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferência de Valores</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/conferencia-valores.css">
+    <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="comprar-lista.html">Comparar Lista</a></li>
+                    <li><a href="adds.html">Adicionar S</a></li>
+                    <li><a href="garantia.html">Definir Garantia</a></li>
+                    <li><a href="verificarnf.html">Verificar NF</a></li>
+                    <li><a href="revendagarantia.html">Definir Garantia Revenda</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <h3>Conferência de Valores</h3>
+            <label for="valores">Valores:</label>
+            <textarea id="valores" rows="10" placeholder="Insira os valores, um por linha"></textarea>
+
+            <button id="conferencia-valores-btn">Conferência de valores</button>
+            <button id="conferencia-total-btn">Conferência total</button>
+
+            <div id="result" class="result-box">
+                <p>Resultado:</p>
+                <textarea id="resultado" rows="10" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('conferencia-valores-btn').addEventListener('click', function () {
+            // Obter os valores de entrada
+            const valores = document.getElementById('valores').value.split('\n').map(item => item.trim()).filter(Boolean);
+
+            // Substituir pontos por vírgulas e obter valores únicos
+            const valoresUnicos = [...new Set(valores.map(item => item.replace(/\./g, ',')))];
+
+            // Exibir os resultados
+            document.getElementById('resultado').value = valoresUnicos.join('\n');
+        });
+
+        document.getElementById('conferencia-total-btn').addEventListener('click', function () {
+            // Obter os valores de entrada
+            const valores = document.getElementById('valores').value.split('\n').map(item => item.trim()).filter(Boolean);
+
+            // Substituir pontos por vírgulas
+            const valoresCorrigidos = valores.map(item => item.replace(/\./g, ','));
+
+            // Exibir os resultados
+            document.getElementById('resultado').value = valoresCorrigidos.join('\n');
+        });
+    </script>
+    <script src="JS/scripts.js"></script>
+</body>
+</html>
