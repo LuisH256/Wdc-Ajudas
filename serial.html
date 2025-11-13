@@ -10,67 +10,81 @@
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="serial.html">Pesquisa Serial</a></li>
-                    <li><a href="lvp.html">Pesquisa PA (LVP)</a></li>
-                    <li><a href="os.html">Abrir OS</a></li>
-                    <li><a href="nf.html">Baixar NF</a></li>
-                    <li><a href="visao.html">Romaneio Visão</a></li>
-
-
-
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Conteúdo principal -->
-        <main class="content">
-            <section id="pesquisa-serial">
-                <h1>Pesquisa Serial - Passo a Passo</h1>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
                 
-                <div class="step">
-                    <h2>Modulo 04 - Atualizações</h2>
-                    <p><strong>Hardwate</strong></p>
-                    <ul class="nested">
-                        <li><strong>Consultas</strong></li>
-                        <ul>
-                            <li><strong>(c) Componentes</strong></li>
-                        </ul>
-                    </ul>
-                </div>
+                <li><a href="emails.html">Script de E-mails</a></li>
 
-                <div class="step">
-                    <h3>Dentro de Componentes:</h3>
-                    <p>1. Vá nas 3 barrinhas e selecione <strong>Número de Série</strong>.</p>
-                    <p>2. Cole o número de série e faça a pesquisa.</p>
-                    <p>2.1 Caso você não tenha permissão é nescessario utilizar a filial 01 ou 08 para fazer a pesquisa (Deve colar antes do Numero de Serie)</p>
-                </div>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
 
-                <div class="step">
-                    <h3>Regras Especiais de Pesquisa:</h3>
+    <main class="content">
+        <section id="pesquisa-serial">
+            <h1>Pesquisa Serial - Passo a Passo</h1>
+            
+            <div class="step">
+                <h2>Modulo 04 - Atualizações</h2>
+                <p><strong>Hardwate</strong></p>
+                <ul class="nested">
+                    <li><strong>Consultas</strong></li>
                     <ul>
-                        <li><strong>Nokia:</strong> Precisa ter um <strong>'S'</strong> na frente do número de série.</li>
-                        <li><strong>Fibaro:</strong> Precisa ter <strong>9 zeros</strong> na frente do número de série (exemplo: 000000000).</li>
+                        <li><strong>(c) Componentes</strong></li>
                     </ul>
-                </div>
+                </ul>
+            </div>
 
-                <div class="step">
-                    <h3>Pesquisa por Filiais:</h3>
-                    <ul>
-                        <li>Se não encontrar na filial 01, tente na filial 08.</li>
-                        <li>Se não encontrar em nenhuma das filiais, entre em contato com o <strong>SAC</strong> para realizar a pesquisa.</li>
-                    </ul>
-                </div>
-            </section>
-        </main>
-    </div>
+            <div class="step">
+                <h3>Dentro de Componentes:</h3>
+                <p>1. Vá nas 3 barrinhas e selecione <strong>Número de Série</strong>.</p>
+                <p>2. Cole o número de série e faça a pesquisa.</p>
+                <p>2.1 Caso você não tenha permissão é nescessario utilizar a filial 01 ou 08 para fazer a pesquisa (Deve colar antes do Numero de Serie)</p>
+            </div>
+
+            <div class="step">
+                <h3>Regras Especiais de Pesquisa:</h3>
+                <ul>
+                    <li><strong>Nokia:</strong> Precisa ter um <strong>'S'</strong> na frente do número de série.</li>
+                    <li><strong>Fibaro:</strong> Precisa ter <strong>9 zeros</strong> na frente do número de série (exemplo: 000000000).</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Pesquisa por Filiais:</h3>
+                <ul>
+                    <li>Se não encontrar na filial 01, tente na filial 08.</li>
+                    <li>Se não encontrar em nenhuma das filiais, entre em contato com o <strong>SAC</strong> para realizar a pesquisa.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
     <script src="JS/scripts.js"></script>
-
 </body>
 </html>
