@@ -3,87 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificar Garantias</title>
+    <title>Pesquisa Garantia dos Fabricantes</title>
+    <link rel="stylesheet" href="CSS/garantiafabricante.css">
+    <link rel="stylesheet" href="CSS/serial.css"> 
     <link rel="stylesheet" href="CSS/styles.css">
-    <link rel="stylesheet" href="CSS/comparar.css">
-    
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
-    <header class="main-header">
-        <div class="logo">WDC AJUDAS</div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Página Principal</a></li>
-                
-                <li><a href="emails.html">Script de E-mails</a></li>
+    <div class="container">
+        <!-- Barra lateral esquerda -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="atalhos.html">Atalhos</a></li>
+                    <li><a href="emails.html">Emails Automáticos</a></li>
+                    <li><a href="automacoes.html">Automações</a></li>
+                    <li><a href="pesquisas.html">Pesquisas</a></li>
+                    <li><a href="garantiafabricante.html">Pesquisa Fabricante</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-                <li class="dropdown">
-                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
-                    <div class="dropdown-content">
-                        <a href="atalhos.html">Atalhos</a>
-                        <a href="comprar-lista.html">Comparar Lista</a>
-                        <a href="adds.html">Adicionar S</a>
-                        <a href="garantia.html">Definir Garantia</a>
-                        <a href="verificarnf.html">Verificar NF</a>
-                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
-                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Pesquisas</a>
-                    <div class="dropdown-content">
-                        <a href="serial.html">Pesquisa Serial</a>
-                        <a href="lvp.html">Pesquisa PA (LVP)</a>
-                        <a href="os.html">Abrir OS</a>
-                        <a href="nf.html">Baixar NF</a>
-                        <a href="visao.html">Romaneio Visão</a>
-                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-        <input type="text" placeholder="Pesquisar..." class="search-bar">
-    </header>
-
-    <main class="content">
-        <h3>Verificar Garantias</h3>
-        <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
-        <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
-
-        <button id="check-warranty-btn">Verificar Garantia</button>
-
-        <div id="result" class="result-box">
-            <p>Resultados:</p>
-            <textarea id="warranty-results" rows="10" readonly></textarea>
-        </div>
-    </main>
-
-    <script>
-        document.getElementById('check-warranty-btn').addEventListener('click', function () {
-            // Obter a data atual, sem a parte do tempo
-            const currentDate = new Date().setHours(0, 0, 0, 0);
-
-            // Função para converter string de data no formato DD/MM/AAAA para um objeto Date
-            function parseDate(dateString) {
-                const [day, month, year] = dateString.split('/').map(Number);
-                return new Date(year, month - 1, day).setHours(0, 0, 0, 0);
-            }
-
-            // Obter as datas de entrada
-            const dates = document.getElementById('date-list').value.split('\n').map(date => date.trim()).filter(Boolean);
-
-            // Verificar se cada data está em garantia
-            const results = dates.map(date => {
-                const parsedDate = parseDate(date);
-                const warrantyStatus = parsedDate >= currentDate ? 'SIM' : 'NÃO';
-                return `${date}\t${warrantyStatus}`;
-            });
-
-            // Exibir os resultados
-            document.getElementById('warranty-results').value = results.join('\n');
-        });
-    </script>
-    <script src="JS/scripts.js"></script>
+        <!-- Conteúdo principal -->
+        <main class="content">
+            <section id="pesquisa-garantia">
+                <h1>Pesquisa de Garantia dos Fabricantes</h1>
+                <form id="garantia-form">
+                    <label for="fabricante">Selecione o Fabricante:</label>
+                    <select id="fabricante" name="fabricante">
+                        <option value="x">Selecione o fabricante</option>
+                        <option value="Fujikura">Fujikura</option>
+                        <option value="MERCUSYS">MERCUSYS</option>
+                        <option value="Easy4Link">Easy4 Link</option>
+                        <option value="Grandstream">Grandstream</option>
+                        <option value="Hikvision">Hikvision</option>
+                        <option value="Huawei">Huawei</option>
+                        <option value="IDEMIA">IDEMIA</option>
+                        <option value="ISS">ISS</option>
+                        <option value="JinkoSolar">Jinko Solar</option>
+                        <option value="Logitech">Logitech</option>
+                        <option value="LG">LG</option>
+                        <option value="Leyard">Leyard</option>
+                        <option value="Nokia">Nokia</option>
+                        <!-- Adicione mais fabricantes conforme necessário -->
+                    </select>
+                    <button type="button" onclick="pesquisarGarantia()">Pesquisar</button>
+                </form>
+                <div id="resultado-garantia">
+                    <p id="tempo-garantia" data-tempo-garantia="Tempo de Garantia:"></p>
+                    <p id="rma-fabricante" data-rma-fabricante="RMA:"></p>
+                    <p id="mensagem-erro" style="display: none;" data-mensagem-erro="Informações de garantia não encontradas para o fabricante selecionado.">Informações de garantia não encontradas para o fabricante selecionado.</p>
+                    <div id="mensagem-adicional" class="mensagem-box"></div>
+                    <button id="copiar-informacoes" style="display: none;" onclick="copiarInformacoes()">Copiar Informações</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="JS/garantiafabricante.js"></script>
 </body>
 </html>
