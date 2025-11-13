@@ -8,57 +8,73 @@
     <link rel="stylesheet" href="CSS/styles.css">
     
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="atalhos.html">Atalhos</a></li>
-                    <li><a href="emails.html">Emails Automáticos</a></li>
-                    <li><a href="automacoes.html">Automações</a></li>
-                    <li><a href="pesquisas.html">Pesquisas</a></li>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                
+                <li><a href="emails.html">Script de E-mails</a></li>
 
-
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Conteúdo principal -->
-        <main class="content">
-            <section id="atalhos">
-                <h1>Atalhos</h1>
-                <div class="atalhos-container">
-                    <div class="box">
-                        <h2>Atalhos do Computador</h2>
-                        <ul>
-                            <li>Ctrl + C: Copiar</li>
-                            <li>Ctrl + V: Colar</li>
-                            <li>Ctrl + X: Cortar (Você remove o item de um local e cola em outro)</li>
-                            <li>Ctrl + y: Volta itens removidos pelo Ctrl + Z</li>
-                            <li>Alt + Tab: Alternar entre janelas</li>
-                            <li>Ctrl + Shift + Esc: Abrir o Gerenciador de Tarefas</li>
-                            <li>Windows + D: Mostrar área de trabalho</li>
-                        </ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
                     </div>
-                    <div class="box">
-                        <h2>Atalhos do Excel</h2>
-                        <ul>
-                            <li>Shift + Scroll (Bolinha do mouse): Move a planilha para esquerda ou direita</li>
-                            <li>Ctrl + S: Salvar</li>
-                            <li>F4: Repetir última ação</li>
-                            <li>Ctrl + Shift + L: Aplicar/Remover filtros</li>
-                            <li>Alt + =: AutoSoma</li>
-                        </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
                     </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+    
+    <main class="content">
+        <section id="atalhos">
+            <h1>Atalhos</h1>
+            <div class="atalhos-container">
+                <div class="box">
+                    <h2>Atalhos do Computador</h2>
+                    <ul>
+                        <li>Ctrl + C: Copiar</li>
+                        <li>Ctrl + V: Colar</li>
+                        <li>Ctrl + X: Cortar (Você remove o item de um local e cola em outro)</li>
+                        <li>Ctrl + y: Volta itens removidos pelo Ctrl + Z</li>
+                        <li>Alt + Tab: Alternar entre janelas</li>
+                        <li>Ctrl + Shift + Esc: Abrir o Gerenciador de Tarefas</li>
+                        <li>Windows + D: Mostrar área de trabalho</li>
+                    </ul>
                 </div>
-            </section>
-        </main>
-    </div>
+                <div class="box">
+                    <h2>Atalhos do Excel</h2>
+                    <ul>
+                        <li>Shift + Scroll (Bolinha do mouse): Move a planilha para esquerda ou direita</li>
+                        <li>Ctrl + S: Salvar</li>
+                        <li>F4: Repetir última ação</li>
+                        <li>Ctrl + Shift + L: Aplicar/Remover filtros</li>
+                        <li>Alt + =: AutoSoma</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
     <script src="JS/scripts.js"></script>
 </body>
 </html>
