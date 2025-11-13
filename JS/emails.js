@@ -1,3 +1,5 @@
+// emails.js (CÓDIGO COMPLETO)
+
 document.addEventListener('DOMContentLoaded', () => {
     const emailTemplate = document.getElementById('email-template');
     const sacOptions = document.getElementById('sac-options');
@@ -10,55 +12,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Resetar campos de exibição
         resetFields();
-        sacOptions.classList.add('hidden');
+        // Ocultar todas as sub-opções
+        document.getElementById('sac-options').classList.add('hidden');
+        document.getElementById('apoio-vendas-options').classList.add('hidden');
+        
         emailPreview.classList.add('hidden');
+        copyEmailButton.classList.add('hidden'); // Ocultar o botão de copiar
         emailContent.textContent = '';
 
         if (selectedTemplate === 'sac') {
-            sacOptions.classList.remove('hidden');
+            document.getElementById('sac-options').classList.remove('hidden');
+        } else if (selectedTemplate === 'apoio_vendas') {
+            document.getElementById('apoio-vendas-options').classList.remove('hidden');
         }
     });
 
-    copyEmailButton.addEventListener('click', () => {
-        const range = document.createRange();
-        range.selectNode(emailContent); // Seleciona o conteúdo do e-mail com HTML
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        try {
-            const successful = document.execCommand('copy'); // Copia o conteúdo com formatação
-            if (successful) {
-                alert('E-mail copiado com sucesso!');
-            } else {
-                alert('Erro ao copiar o e-mail.');
-            }
-        } catch (err) {
-            alert('Erro ao copiar o e-mail.');
-        }
-
-        selection.removeAllRanges(); // Remove a seleção após a cópia
-    });
-});
-
-function resetFields() {
-    document.getElementById('sac-template').value = '';
-    document.getElementById('destinatario-container').classList.add('hidden');
-    document.getElementById('tipo-operacao-container').classList.add('hidden');
-    document.getElementById('pdaf-options').classList.add('hidden');
-    document.getElementById('destinatario').value = '';
-    document.getElementById('tipo-operacao').value = '';
-    document.getElementById('tipo-select').value = '';
-    document.getElementById('nfs-input').value = '';
-    document.getElementById('ean-input').value = '';
-    document.getElementById('swqt-input').value = '';
-}
-    // Função para copiar o conteúdo do e-mail
+    // Função de copiar com feedback visual
     copyEmailButton.addEventListener('click', () => {
         const emailText = emailContent.textContent;
+        
         navigator.clipboard.writeText(emailText).then(() => {
-            alert('E-mail copiado para a área de transferência!');
+            // Feedback visual: Mudar cor e texto do botão
+            const originalText = copyEmailButton.textContent;
+            copyEmailButton.textContent = 'Copiado! ✅';
+            copyEmailButton.classList.add('copy-success');
+
+            setTimeout(() => {
+                copyEmailButton.textContent = originalText;
+                copyEmailButton.classList.remove('copy-success');
+            }, 1500); // 1.5 segundos de feedback
+            
         }).catch(err => {
             console.error('Erro ao copiar o e-mail: ', err);
+            alert('Erro ao copiar o e-mail. Por favor, tente novamente ou copie manualmente.');
         });
     });
+
+    // A função de resetar deve ser capaz de resetar todos os campos de input/select
+    function resetFields() {
+        // Campos de seleção principais
+        document.getElementById('sac-template').value = '';
+        document.getElementById('apoio-vendas-template').value = '';
+
+        // Ocultar todos os containers de opções
+        const optionContainers = [
+            'destinatario-container', 'tipo-operacao-container', 'pdaf-options', 'solar-options',
+            'postagem-correios-produtos-solar-options', 'pendencias-options', 
+            'recusa-nf-options', 'nfs-retidas-options', 'primeiro-ticket-options', 'ticket-expirado-options'
+        ];
+        
+        optionContainers.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+        });
+
+        // Resetar valores dos inputs
+        const inputsToReset = [
+            'destinatario', 'tipo-operacao', 'tipo-select', 'nfs-input', 'ean-input', 'swqt-input', 
+            'nf-input', 'valor-unitario-input', 'quantidade-input', 'ncm-input', 'descricao-input',
+            'postagem-correios-template', 'produto-desc-input', 'nf-input-postagem', 'ticket-input',
+            'data-emissao-input', 'data-validade-input', 'ticket-expirado-input', 'ticket-input-expired',
+            'data-emissao-input-expired', 'data-validade-input-expired', 'edi-select', 'nf-select',
+            'nf-recusa-input', 'descricao-recusa-input', 'nf-retida-input'
+        ];
+
+        inputsToReset.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+    }
+
+    // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
+    window.resetFields = resetFields;
+});
