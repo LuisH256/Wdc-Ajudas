@@ -10,81 +10,94 @@
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                
+                <li><a href="emails.html">Script de E-mails</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+
+    <main class="content">
+        <section id="abrir-os">
+            <h1>Abrir OS - Passo a Passo</h1>
+
+            <div class="step">
+                <h2>Cadastrar Serial na Base (Módulo 28)</h2>
                 <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="serial.html">Pesquisa Serial</a></li>
-                    <li><a href="lvp.html">Pesquisa PA (LVP)</a></li>
-                    <li><a href="os.html">Abrir OS</a></li>
-                    <li><a href="nf.html">Baixar NF</a></li>
-                    <li><a href="visao.html">Romaneio Visão</a></li>
-
-
+                    <li>Acesse: <strong>Atualizações > Cadastro > Equipamento > Base de Atendimento</strong>.</li>
+                    <li>Preencha os campos:
+                        <ul>
+                            <li><strong>Código do Cliente:</strong> Insira o código correspondente.</li>
+                            <li><strong>Em Loja:</strong> Coloque <strong>01</strong>.</li>
+                            <li><strong>Produto/Eqto:</strong> Insira o código PA.</li>
+                            <li><strong>Id. Único:</strong> Insira o LVP (PA).</li>
+                        </ul>
+                    </li>
+                    <li>Exemplo:
+                        <ul>
+                            <li><strong>Código PA:</strong> 3000026800066</li>
+                            <li><strong>LVP (PA):</strong> LVP220239C957</li>
+                        </ul>
+                    </li>
+                    <li>Clique em <strong>Salvar</strong>.</li>
                 </ul>
-            </nav>
-        </aside>
+            </div>
 
-        <!-- Conteúdo principal -->
-        <main class="content">
-            <section id="abrir-os">
-                <h1>Abrir OS - Passo a Passo</h1>
-
-                <!-- Cadastro do Serial na Base -->
-                <div class="step">
-                    <h2>Cadastrar Serial na Base (Módulo 28)</h2>
-                    <ul>
-                        <li>Acesse: <strong>Atualizações &gt; Cadastro &gt; Equipamento &gt; Base de Atendimento</strong>.</li>
-                        <li>Preencha os campos:
-                            <ul>
-                                <li><strong>Código do Cliente:</strong> Insira o código correspondente.</li>
-                                <li><strong>Em Loja:</strong> Coloque <strong>01</strong>.</li>
-                                <li><strong>Produto/Eqto:</strong> Insira o código PA.</li>
-                                <li><strong>Id. Único:</strong> Insira o LVP (PA).</li>
-                            </ul>
-                        </li>
-                        <li>Exemplo:
-                            <ul>
-                                <li><strong>Código PA:</strong> 3000026800066</li>
-                                <li><strong>LVP (PA):</strong> LVP220239C957</li>
-                            </ul>
-                        </li>
-                        <li>Clique em <strong>Salvar</strong>.</li>
-                    </ul>
-                </div>
-
-                <!-- Abrir OS -->
-                <div class="step">
-                    <h2>Abrir OS (Módulo 28)</h2>
-                    <ul>
-                        <li>Acesse: <strong>Atualizações &gt; Field Service &gt; Ordem de Serviço</strong>.</li>
-                        <li>Preencha os campos:
-                            <ul>
-                                <li><strong>Código do Cliente:</strong> Insira o código correspondente.</li>
-                                <li><strong>Loja:</strong> Coloque <strong>01</strong>.</li>
-                                <li><strong>Cond. Pagto:</strong> Coloque <strong>049</strong>.</li>
-                            </ul>
-                        </li>
-                        <li>Na lista exibida abaixo, clique na célula sob o nome <strong>Produto/Eqto</strong>.</li>
-                        <li>Na nova janela:
-                            <ul>
-                                <li><strong>Produto/Eqto:</strong> Insira o código PA.</li>
-                                <li><strong>Id. Único:</strong> Insira o LVP (PA).</li>
-                                <li><strong>Ocorrência:</strong> Coloque <strong>000061</strong>.</li>
-                            </ul>
-                        </li>
-                        <li>Clique em <strong>Salvar</strong> e anote o número da OS exibido no canto superior esquerdo.</li>
-                        <li>Exemplo de OS: <strong>023941</strong>.</li>
-                        <li>Finalize clicando em <strong>Salvar</strong>.</li>
-                    </ul>
-                </div>
-            </section>
-        </main>
-    </div>
+            <div class="step">
+                <h2>Abrir OS (Módulo 28)</h2>
+                <ul>
+                    <li>Acesse: <strong>Atualizações > Field Service > Ordem de Serviço</strong>.</li>
+                    <li>Preencha os campos:
+                        <ul>
+                            <li><strong>Código do Cliente:</strong> Insira o código correspondente.</li>
+                            <li><strong>Loja:</strong> Coloque <strong>01</strong>.</li>
+                            <li><strong>Cond. Pagto:</strong> Coloque <strong>049</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Na lista exibida abaixo, clique na célula sob o nome <strong>Produto/Eqto</strong>.</li>
+                    <li>Na nova janela:
+                        <ul>
+                            <li><strong>Produto/Eqto:</strong> Insira o código PA.</li>
+                            <li><strong>Id. Único:</strong> Insira o LVP (PA).</li>
+                            <li><strong>Ocorrência:</strong> Coloque <strong>000061</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Clique em <strong>Salvar</strong> e anote o número da OS exibido no canto superior esquerdo.</li>
+                    <li>Exemplo de OS: <strong>023941</strong>.</li>
+                    <li>Finalize clicando em <strong>Salvar</strong>.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
     <script src="JS/scripts.js"></script>
-
 </body>
 </html>
