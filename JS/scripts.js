@@ -18,3 +18,84 @@ function filterPages() {
 
 // Adicionando um ouvinte de evento para a pesquisa
 searchBar.addEventListener('input', filterPages);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchBar = document.querySelector('.search-bar');
+    const mainHeader = document.querySelector('.main-header');
+    
+    if (!searchBar || !mainHeader) return;
+
+    // 1. Mapeamento de todos os links do seu site
+    // (Usamos os links do cabeçalho como base para a pesquisa)
+    const siteLinks = [
+        // Links Principais e de E-mails
+        { title: "Página Principal", url: "index.html" },
+        { title: "Script de E-mails", url: "emails.html" },
+        
+        // Links de Automação/Atalhos
+        { title: "Atalhos", url: "atalhos.html" },
+        { title: "Comparar Lista", url: "comprar-lista.html" },
+        { title: "Adicionar S", url: "adds.html" },
+        { title: "Definir Garantia", url: "garantia.html" },
+        { title: "Verificar NF", url: "verificarnf.html" },
+        { title: "Definir Garantia Revenda", url: "revendagarantia.html" },
+        { title: "Conferir Valores Unitário", url: "conferencia-valores.html" },
+        
+        // Links de Pesquisas
+        { title: "Pesquisa Serial", url: "serial.html" },
+        { title: "Pesquisa PA (LVP)", url: "lvp.html" },
+        { title: "Abrir OS", url: "os.html" },
+        { title: "Baixar NF", url: "nf.html" },
+        { title: "Romaneio Visão", url: "visao.html" },
+        { title: "Pesquisa Fabricante", url: "garantiafabricante.html" },
+    ];
+
+    // 2. Cria o contêiner de resultados
+    const resultsContainer = document.createElement('div');
+    resultsContainer.id = 'search-results-container';
+    mainHeader.appendChild(resultsContainer);
+
+    // 3. Adiciona o listener de input para a barra de pesquisa
+    searchBar.addEventListener('input', () => {
+        const searchTerm = searchBar.value.toLowerCase().trim();
+        resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
+
+        if (searchTerm.length === 0) {
+            resultsContainer.style.display = 'none';
+            return;
+        }
+
+        // Filtra os links que contêm o termo de pesquisa
+        const filteredResults = siteLinks.filter(link => 
+            link.title.toLowerCase().includes(searchTerm)
+        ).slice(0, 5); // Limita a 5 resultados
+
+        if (filteredResults.length > 0) {
+            const resultList = document.createElement('ul');
+            
+            filteredResults.forEach(link => {
+                const listItem = document.createElement('li');
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url;
+                linkElement.textContent = link.title;
+                listItem.appendChild(linkElement);
+                resultList.appendChild(listItem);
+            });
+            
+            resultsContainer.appendChild(resultList);
+            resultsContainer.style.display = 'block';
+        } else {
+            const noResults = document.createElement('p');
+            noResults.textContent = 'Nenhum resultado encontrado.';
+            resultsContainer.appendChild(noResults);
+            resultsContainer.style.display = 'block';
+        }
+    });
+
+    // Oculta os resultados ao clicar fora da barra de pesquisa
+    document.addEventListener('click', (event) => {
+        if (!mainHeader.contains(event.target)) {
+            resultsContainer.style.display = 'none';
+        }
+    });
+});
