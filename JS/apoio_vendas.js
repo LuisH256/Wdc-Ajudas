@@ -1,45 +1,92 @@
+// apoio_vendas.js
+
+// Função para aplicar a máscara de data (DD/MM/AAAA)
+function applyDateMask(event) {
+    let input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+
+    // Limita a 8 dígitos (DDMMYYYY)
+    if (value.length > 8) {
+        value = value.substring(0, 8);
+    }
+
+    // Aplica a máscara: DD/MM/YYYY
+    if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2);
+    }
+    if (value.length > 5) {
+        value = value.substring(0, 5) + '/' + value.substring(5);
+    }
+
+    input.value = value;
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    const emailTemplate = document.getElementById('email-template');
-    const apoioVendasTemplate = document.getElementById('apoio-vendas-template');
-    const pendenciasOptions = document.getElementById('pendencias-options');
-    const recusaNfOptions = document.getElementById('recusa-nf-options');
-    const postagemCorreiosTemplate = document.getElementById('postagem-correios-template');
-    const primeiroTicketOptions = document.getElementById('primeiro-ticket-options');
-    const ticketExpiradoOptions = document.getElementById('ticket-expirado-options');
-    const emailPreview = document.getElementById('email-preview');
-    const emailContent = document.getElementById('email-content');
-    const nfsRetidasOptions = document.getElementById('nfs-retidas-options');
-    const nfRetidaInput = document.getElementById('nf-retida-input');
+
+    // 1. OTIMIZAÇÃO: Agrupando todos os elementos DOM em um objeto
+    const elements = {
+        // Containers Principais
+        emailPreview: document.getElementById('email-preview'),
+        emailContent: document.getElementById('email-content'),
+        apoioVendasTemplate: document.getElementById('apoio-vendas-template'),
+
+        // Opções de Campos
+        pendenciasOptions: document.getElementById('pendencias-options'),
+        recusaNfOptions: document.getElementById('recusa-nf-options'),
+        primeiroTicketOptions: document.getElementById('primeiro-ticket-options'), 
+        ticketExpiradoOptions: document.getElementById('ticket-expirado-options'),
+        
+        // Inputs de Pendências
+        ediSelect: document.getElementById('edi-select'),
+        nfSelect: document.getElementById('nf-select'),
+
+        // Inputs de Recusa NF / NF Retida
+        nfRecusaInput: document.getElementById('nf-recusa-input'),
+        descricaoRecusaInput: document.getElementById('descricao-recusa-input'),
+        nfRetidaInput: document.getElementById('nf-retida-input'), 
+
+        // Inputs de Primeiro Ticket (do HTML, que é nf-input-postagem)
+        // REMOVIDO: produtoDescInput
+        nfInputPostagem: document.getElementById('nf-input-postagem'), 
+        ticketInput: document.getElementById('ticket-input'),
+        dataEmissaoInput: document.getElementById('data-emissao-input'),
+        dataValidadeInput: document.getElementById('data-validade-input'),
+
+        // Inputs de Ticket Expirado
+        ticketExpiradoInput: document.getElementById('ticket-expirado-input'),
+        ticketInputExpired: document.getElementById('ticket-input-expired'),
+        dataEmissaoInputExpired: document.getElementById('data-emissao-input-expired'),
+        dataValidadeInputExpired: document.getElementById('data-validade-input-expired'),
+        
+        // Novo seletor do HTML para ticket correios
+        postagemCorreiosTemplate: document.getElementById('postagem-correios-template'),
+    };
     
-    const ediSelect = document.getElementById('edi-select');
-    const nfSelect = document.getElementById('nf-select');
-    const nfRecusaInput = document.getElementById('nf-recusa-input');
-    const descricaoRecusaInput = document.getElementById('descricao-recusa-input');
-    const produtoDescInput = document.getElementById('produto-desc-input');
-    const ticketInput = document.getElementById('ticket-input');
-    const dataEmissaoInput = document.getElementById('data-emissao-input');
-    const dataValidadeInput = document.getElementById('data-validade-input');
-    const ticketExpiradoInput = document.getElementById('ticket-expirado-input');
-    const ticketInputExpired = document.getElementById('ticket-input-expired');
-    const dataEmissaoInputExpired = document.getElementById('data-emissao-input-expired');
-    const dataValidadeInputExpired = document.getElementById('data-validade-input-expired');
+   // Lista de todos os contêineres de opções a serem ocultados no reset
+const optionContainers = [
+    elements.pendenciasOptions,
+    elements.recusaNfOptions,
+    elements.primeiroTicketOptions,
+    elements.ticketExpiradoOptions,
+    elements.ticketCorreiosOptions // Adicionado
+].filter(el => el);
+    
+    // Lista de todos os inputs a serem resetados
+    const allInputs = Object.values(elements).filter(el => el instanceof HTMLInputElement || el instanceof HTMLSelectElement);
 
+    // 2. Templates de E-mail (REVISADO para garantir que {{produto_desc}} seja removido)
     const emailTemplates = {
-        atrasos2: `{{saudacao}}
-
-        Favor nos posicionar quanto as entregas das NFs abaixo que estão em atraso ou estão no prazo e não recebemos atualizações de EDI.
-        Verificar também se as NFs que recebemos ocorrências precisarão da nossa intervenção para resolução.`,
-        atrasos_detalhado: `{{saudacao}}\n\nFavor nos posicionar urgente quanto as entregas das NFs abaixo que constam em atraso, não recebemos EDI de entrega ou estão com algum tipo de pendência que poderiamos intervir para que a entrega seja realizada no prazo.\n`,
-        atrasos: `{{saudacao}}\n\nFavor nos posicionar quanto as entregas das NFs abaixo que estão em atraso ou não recebemos EDI de entrega.\n`,
+        
+        relatorio_geral: `{{saudacao}}\n\nFavor nos posicionar urgente quanto as entregas das NFs abaixo que constam em atraso.(listar NFs atrasadas)\n\nRecebemos EDI de pendencias das NFs listadas abaixo. Favor informar se poderiamos intervir de alguma forma para resolução.(listar NFs com pendencias)\n\nAs NFs listadas abaixo não estão em atraso, porem  não recebemos ocorrencias(atualizações de EDI), precisamos que nos atualize quanto aos status e verifique internamente o envio de e-mails com atualizações de EDI.(listar NFs no prazo e sem ocorrencias)\n\nNão recebemos por email CTEs das NFs listadas abaixo, precisamos do envio urgente para monitoramento de entrega(listar NFs no prazo e sem ocorrencias)`,
+        
         pendencias_singular: `{{saudacao}}\n\nRecebemos EDI de {{edi}} da NF {{nf}}. Favor nos posicionar urgente quanto ao status dessa entrega e se possui alguma pendencia que poderiamos intervir para que a entrega seja realizada no prazo.\n`,
         pendencias_plural: `{{saudacao}}\n\nRecebemos EDI de {{edi}} das NFs {{nf}}. Favor nos posicionar urgente quanto ao status dessas entregas e se possuem alguma pendencia que poderiamos intervir para que as entregas sejam realizadas no prazo.\n`,
         pendencias_lista: `{{saudacao}}\n\nRecebemos EDI de pendencias das NFs listadas abaixo. Favor nos posicionar urgente quanto aos status dessas entregas e se poderiamos intervir para que as entregas sejam realizadas no prazo.\n\n[Lista de NFs]`,
-        recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
-        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto  substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
-        ticket_expirado: `{{saudacao}}\n\nInformamos que devido a expiração do ticket {{ticket_expirado}} anteriormente emitido, emitimos um novo e enviamos um  email a parte junto aos correios com uma nova Autorização de Postagem do item substituído, você deverá se dirigir a uma Agência Própria Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto em questão.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
+        recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf_recusa}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
         nfs_retidas: `Prezado cliente,
 
-Informamos que o material da NF {{nf}} encontra-se retido junto a fiscalização, segue em anexo termo de retenção. Favor nos enviar o comprovante de pagamento assim que for realizado para darmos sequencia no processo de liberação e entrega da carga.
+Informamos que o material da NF {{nf_recusa}} encontra-se retido junto a fiscalização, segue em anexo termo de retenção. Favor nos enviar o comprovante de pagamento assim que for realizado para darmos sequencia no processo de liberação e entrega da carga.
 
 Prezado cliente,
 
@@ -47,203 +94,223 @@ Material da NF em anexo encontra-se retida na fiscalização, gentileza solucion
 
 Segue em anexo comprovante pago, gentileza dar seguimento na liberação e entrega da carga.
 
-Desde já agradeço.`
+Desde já agradeço.`,
+        
+        // TICKET CORREIOS - Primeira Emissão (Texto Revisado)
+        primeiro_ticket: `{{saudacao}}\n\nInformo que geramos junto aos correios uma Autorização de Postagem.\n\nVocê deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, levando consigo, obrigatoriamente, o Número do e-ticket, o(s)item(s) para postagem e a nota fiscal de retorno(a nota deverá acompanhar o produto).\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n*A data de validade do ticket deverá ser respeitada como prazo para postagem.\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
+        
+        // TICKET CORREIOS - Ticket Expirado (Texto Revisado)
+        ticket_expirado: `{{saudacao}}\n\nInformamos que devido à expiração do ticket {{ticket_expirado}} anteriormente emitido, emitimos um novo e enviamos um email a parte junto aos correios com uma nova Autorização de Postagem do item substituído.\n\nVocê deverá se dirigir a uma Agência Própria Franqueada dos Correios, levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).\n\nTicket: {{ticket_input_expired}}\n\nData de emissão: {{data_emissao_expired}}\n\nData de validade: {{data_validade_expired}}\n\nA data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto em questão.\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos à disposição para maiores esclarecimentos.`,
     };
-
-    function resetFields() {
-        // Oculta todas as opções específicas
-        pendenciasOptions.classList.add('hidden');
-        recusaNfOptions.classList.add('hidden');
-        primeiroTicketOptions.classList.add('hidden');
-        ticketExpiradoOptions.classList.add('hidden');
     
-        // Limpa valores dos campos de entrada
-        ediSelect.value = '';
-        nfSelect.value = '';
-        nfRecusaInput.value = '';
-        descricaoRecusaInput.value = '';
-        produtoDescInput.value = '';
-        ticketInput.value = '';
-        dataEmissaoInput.value = '';
-        dataValidadeInput.value = '';
-        ticketExpiradoInput.value = '';
-        ticketInputExpired.value = '';
-        dataEmissaoInputExpired.value = '';
-        dataValidadeInputExpired.value = '';
+    // 3. Funções Auxiliares 
     
-        // Oculta os campos de entrada específicos
-        nfRecusaInput.classList.add('hidden');
-        descricaoRecusaInput.classList.add('hidden');
-    
-        // Esconde a prévia do email
-        emailContent.textContent = '';
-        emailPreview.classList.add('hidden');
-    }
-    function updateAtrasosDetalhadoEmail() {
-        const emailText = emailTemplates.atrasos_detalhado.replace('{{saudacao}}', getSaudacao());
-        emailContent.textContent = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
-    
-
     function getSaudacao() {
         const horaAtual = new Date().getHours();
         return horaAtual < 12 ? "Bom dia!" : "Boa tarde!";
     }
 
-    function updatePendenciasEmail() {
-        const edi = ediSelect.value || '...';
-        const nf = nfSelect.value || '...';
+    function resetFields() {
+        // Oculta todos os contêineres de opções
+        optionContainers.forEach(container => container.classList.add('hidden'));
 
-        const template = nf.includes(',') ? emailTemplates.pendencias_plural : emailTemplates.pendencias_singular;
+        // Limpa todos os inputs
+        allInputs.forEach(input => {
+            if (input.type !== 'select-one') {
+                 input.value = '';
+            }
+        });
 
-        const emailText = template
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{edi}}', edi)
-            .replace('{{nf}}', nf);
-
-        emailContent.textContent = emailText.trim();
-        emailPreview.classList.remove('hidden');
+        // Esconde a prévia do email
+        elements.emailContent.textContent = '';
+        elements.emailPreview.classList.add('hidden');
     }
 
-    function updatePendenciasListaEmail() {
-        const emailText = emailTemplates.pendencias_lista
-            .replace('{{saudacao}}', getSaudacao());
+    /**
+     * Centraliza a lógica de preenchimento e exibição do e-mail.
+     */
+    function updateEmail(templateKey, customReplacements = {}) {
+        let template = emailTemplates[templateKey];
+        if (!template) return;
 
-        emailContent.textContent = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
+        // Substituição básica de Saudação
+        let emailText = template.replace('{{saudacao}}', getSaudacao());
 
-    function updateRecusaNfEmail() {
-        const nf = nfRecusaInput.value || '...';
-        const descricao = descricaoRecusaInput.value || '...';
-
-        const emailText = emailTemplates.recusa_nf
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{nf}}', nf)
-            .replace('{{descricao}}', descricao);
-
-        emailContent.innerHTML = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
-
-    function updatePrimeiroTicketEmail() {
-        const descricaoProduto = produtoDescInput.value || '...';
-        const nf = nfInput.value || '...';
-        const ticket = ticketInput.value || '...';
-        const dataEmissao = dataEmissaoInput.value || '...';
-        const dataValidade = dataValidadeInput.value || '...';
-
-        const emailText = `${getSaudacao()}\n\nO seu produto ${descricaoProduto} trocado referente a NF ${nf} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).\n\nTicket: ${ticket}\n\nData de emissão: ${dataEmissao}\n\nData de validade: ${dataValidade}\n\n*A data de validade do ticket deverá ser respeitada como prazo para postagem.\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.\n`;
-
-        emailContent.textContent = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
-
-    function updateTicketExpiradoEmail() {
-        const ticketExpirado = ticketExpiradoInput.value || '...';
-        const novoTicket = ticketInputExpired.value || '...';
-        const dataEmissao = dataEmissaoInputExpired.value || '...';
-        const dataValidade = dataValidadeInputExpired.value || '...';
-
-        const emailText = `${getSaudacao()}\n\nInformamos que devido a expiração do ticket ${ticketExpirado} anteriormente emitido, emitimos um novo e enviamos um email a parte junto aos correios com uma nova Autorização de Postagem do item substituído, você deverá se dirigir a uma Agência Própria Franqueada dos Correios, levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).\n\nTicket: ${novoTicket}\n\nData de emissão: ${dataEmissao}\n\nData de validade: ${dataValidade}\n\n*A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto em questão.\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.\n`;
-
-        emailContent.textContent = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
-
-    function updateNfsRetidasEmail() {
-        const nf = nfRecusaInput.value || '...';
-
-        const emailText = emailTemplates.nfs_retidas
-            .replace('{{nf}}', nf);
-
-        emailContent.innerHTML = emailText.trim();
-        emailPreview.classList.remove('hidden');
-    }
-
-    // Listener para mudança na seleção de Apoio a Vendas
-    apoioVendasTemplate.addEventListener('change', () => {
-        // Reseta os campos ao mudar de seleção
-        resetFields();
-    
-        const selectedTemplate = apoioVendasTemplate.value;
-    
-        // Oculta todas as opções específicas
-        pendenciasOptions.classList.add('hidden');
-        recusaNfOptions.classList.add('hidden');
-        primeiroTicketOptions.classList.add('hidden');
-        ticketExpiradoOptions.classList.add('hidden');
-        nfRecusaInput.classList.add('hidden');
-        descricaoRecusaInput.classList.add('hidden');
-    
-
-        if (selectedTemplate === 'atrasos2') {
-            const emailText = emailTemplates.atrasos.replace('{{saudacao}}', getSaudacao());
-            emailContent.textContent = emailText.trim();
-            emailPreview.classList.remove('hidden');
+        // Mapeamento de campos para templates
+        const fieldMap = {
+            '{{edi}}': elements.ediSelect,
+            '{{nf}}': elements.nfSelect,
+            '{{nf_recusa}}': elements.nfRecusaInput,
+            '{{descricao}}': elements.descricaoRecusaInput,
+            // REMOVIDO: '{{produto_desc}}'
+            '{{nf_input}}': elements.nfInputPostagem, 
+            '{{ticket}}': elements.ticketInput,
+            '{{data_emissao}}': elements.dataEmissaoInput,
+            '{{data_validade}}': elements.dataValidadeInput,
+            '{{ticket_expirado}}': elements.ticketExpiradoInput,
+            '{{ticket_input_expired}}': elements.ticketInputExpired,
+            '{{data_emissao_expired}}': elements.dataEmissaoInputExpired,
+            '{{data_validade_expired}}': elements.dataValidadeInputExpired,
+        };
+        
+        // Substituições genéricas
+        for (const placeholder in fieldMap) {
+            const element = fieldMap[placeholder];
+            const value = element ? element.value || '...' : '...';
+            emailText = emailText.replace(new RegExp(placeholder, 'g'), value);
         }
-        if (selectedTemplate === 'atrasos') {
-            const emailText = emailTemplates.atrasos.replace('{{saudacao}}', getSaudacao());
-            emailContent.textContent = emailText.trim();
-            emailPreview.classList.remove('hidden');
-        } else if (selectedTemplate === 'pendencias') {
-            pendenciasOptions.classList.remove('hidden');
-        } else if (selectedTemplate === 'pendencias_lista') {
-            updatePendenciasListaEmail();
-        } else if (selectedTemplate === 'recusa_nf') {
-            recusaNfOptions.classList.remove('hidden');
-            nfRecusaInput.classList.remove('hidden');
-            descricaoRecusaInput.classList.remove('hidden');
-        } else if (selectedTemplate === 'primeiro_ticket') {
-            primeiroTicketOptions.classList.remove('hidden');
-            updatePrimeiroTicketEmail();
-        } else if (selectedTemplate === 'ticket_expirado') {
-            ticketExpiradoOptions.classList.remove('hidden');
-            updateTicketExpiradoEmail();
-        } else if (selectedTemplate === 'nfs_retidas') {
-            nfRecusaInput.classList.remove('hidden');  // Mostrar campo NF
-            descricaoRecusaInput.classList.add('hidden'); // Esconder campo de descrição
-            updateNfsRetidasEmail();
-        } else if (selectedTemplate === 'atrasos_detalhado') {
-            updateAtrasosDetalhadoEmail();
+        
+        // Substituições customizadas
+        for (const placeholder in customReplacements) {
+            emailText = emailText.replace(new RegExp(placeholder, 'g'), customReplacements[placeholder]);
+        }
+
+        // Caso Recusa NF (que usa HTML na imagem)
+        if (templateKey === 'recusa_nf' || templateKey === 'nfs_retidas') {
+            elements.emailContent.innerHTML = emailText.trim();
+        } else {
+            elements.emailContent.textContent = emailText.trim();
+        }
+        
+        elements.emailPreview.classList.remove('hidden');
+    }
+
+    // 4. Lógica de Atualização Centralizada
+
+    function handleTemplateChange() {
+        const selectedTemplate = elements.apoioVendasTemplate.value;
+        resetFields(); // Limpa e oculta tudo
+
+        // Mapeamento de template para o container de opções e função de atualização
+        const templateMapping = {
+            'relatorio_geral': () => updateEmail('relatorio_geral'), 
+            
+            'pendencias': () => elements.pendenciasOptions.classList.remove('hidden'),
+            'pendencias_lista': () => updateEmail('pendencias_lista'),
+
+            'recusa_nf': () => {
+                elements.recusaNfOptions.classList.remove('hidden');
+                updateEmail('recusa_nf');
+            },
+            'nfs_retidas': () => {
+                elements.recusaNfOptions.classList.remove('hidden');
+                updateEmail('nfs_retidas');
+            },
+            // NOVO TÓPICO: Ticket correios-Geral
+            'ticket_correios': () => {
+                // Oculta todas as sub-opções
+                elements.primeiroTicketOptions.classList.add('hidden');
+                elements.ticketExpiradoOptions.classList.add('hidden');
+                // Mostra o container pai (ticket-correios-options)
+                const ticketCorreiosContainer = document.getElementById('ticket-correios-options');
+                if (ticketCorreiosContainer) ticketCorreiosContainer.classList.remove('hidden'); 
+                
+                handlePostagemCorreiosChange();
+            }
+        };
+
+        if (templateMapping[selectedTemplate]) {
+            templateMapping[selectedTemplate]();
+        }
+    }
+    
+    // NOVA FUNÇÃO para lidar com o seletor de tickets Correios
+    function handlePostagemCorreiosChange() {
+        const selectedTicketType = elements.postagemCorreiosTemplate.value;
+        
+        // Oculta as sub-opções de ticket
+        elements.primeiroTicketOptions.classList.add('hidden');
+        elements.ticketExpiradoOptions.classList.add('hidden');
+
+        if (selectedTicketType === 'primeiro_ticket') {
+            elements.primeiroTicketOptions.classList.remove('hidden');
+            updateEmail('primeiro_ticket');
+        } else if (selectedTicketType === 'ticket_expirado') {
+            elements.ticketExpiradoOptions.classList.remove('hidden');
+            updateEmail('ticket_expirado');
+        } else {
+            // Limpa a pré-visualização se "Selecione" for escolhido
+            elements.emailContent.textContent = '';
+            elements.emailPreview.classList.add('hidden');
+        }
+    }
+
+    function handlePendenciasUpdate() {
+        const nf = elements.nfSelect.value || '...';
+        const templateKey = nf.includes(',') ? 'pendencias_plural' : 'pendencias_singular';
+        updateEmail(templateKey);
+    }
+    
+    // 5. OTIMIZAÇÃO: Listeners
+
+    // Listener principal para o dropdown de templates
+    elements.apoioVendasTemplate.addEventListener('change', handleTemplateChange);
+    
+    // Listener para o dropdown de tickets Correios
+    if (elements.postagemCorreiosTemplate) elements.postagemCorreiosTemplate.addEventListener('change', handlePostagemCorreiosChange);
+
+    // Listeners agrupados para Pendencias
+    if (elements.ediSelect) elements.ediSelect.addEventListener('input', handlePendenciasUpdate);
+    if (elements.nfSelect) elements.nfSelect.addEventListener('input', handlePendenciasUpdate);
+
+    // Listeners agrupados para Recusa NF e NFs Retidas
+    const recusaUpdate = () => {
+        if (elements.apoioVendasTemplate.value === 'recusa_nf') {
+            updateEmail('recusa_nf');
+        } else if (elements.apoioVendasTemplate.value === 'nfs_retidas') {
+            updateEmail('nfs_retidas');
+        }
+    };
+
+    if (elements.nfRecusaInput) elements.nfRecusaInput.addEventListener('input', recusaUpdate);
+    if (elements.descricaoRecusaInput) elements.descricaoRecusaInput.addEventListener('input', () => {
+        if (elements.apoioVendasTemplate.value === 'recusa_nf') {
+             updateEmail('recusa_nf');
         }
     });
-    
 
-    // Listeners para inputs de Pendencias
-    ediSelect.addEventListener('input', updatePendenciasEmail);
-    nfSelect.addEventListener('input', updatePendenciasEmail);
-    
-    // Listeners para inputs de Recusa de NF e NFs Retidas
-    nfRecusaInput.addEventListener('input', () => {
-        if (apoioVendasTemplate.value === 'recusa_nf') {
-            descricaoRecusaInput.classList.remove('hidden'); // Mostra descricaoRecusaInput para recusa_nf
-            updateRecusaNfEmail();
-        } else if (apoioVendasTemplate.value === 'nfs_retidas') {
-            descricaoRecusaInput.classList.add('hidden'); // Esconder descricaoRecusaInput para nfs_retidas
-            updateNfsRetidasEmail();
-        }
+    // Inputs de data para aplicar a máscara e forçar a atualização do email
+    const dateInputs = [
+        elements.dataEmissaoInput, elements.dataValidadeInput,
+        elements.dataEmissaoInputExpired, elements.dataValidadeInputExpired
+    ].filter(el => el);
+
+    dateInputs.forEach(input => {
+        input.addEventListener('input', (event) => {
+            applyDateMask(event);
+            // Chama o updateEmail após a máscara
+            const selectedTicketType = elements.postagemCorreiosTemplate.value;
+            if (selectedTicketType === 'primeiro_ticket') {
+                updateEmail('primeiro_ticket');
+            } else if (selectedTicketType === 'ticket_expirado') {
+                updateEmail('ticket_expirado');
+            }
+        });
     });
 
-    descricaoRecusaInput.addEventListener('input', () => {
-        if (apoioVendasTemplate.value === 'recusa_nf') {
-            updateRecusaNfEmail();
-        }
+    // Listeners agrupados para Primeiro Ticket (sem o produtoDescInput)
+    const primeiroTicketInputs = [
+        elements.nfInputPostagem, elements.ticketInput,
+    ].filter(el => el);
+
+    primeiroTicketInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (elements.postagemCorreiosTemplate && elements.postagemCorreiosTemplate.value === 'primeiro_ticket') {
+                updateEmail('primeiro_ticket');
+            }
+        });
     });
 
-    
-    // Listeners para inputs de Primeiro Ticket
-    produtoDescInput.addEventListener('input', updatePrimeiroTicketEmail);
-    nfInput.addEventListener('input', updatePrimeiroTicketEmail);
-    ticketInput.addEventListener('input', updatePrimeiroTicketEmail);
-    dataEmissaoInput.addEventListener('input', updatePrimeiroTicketEmail);
-    dataValidadeInput.addEventListener('input', updatePrimeiroTicketEmail);
-    nfRetidaInput.addEventListener('input', updateNfsRetidasEmail);
+    // Listeners agrupados para Ticket Expirado
+    const ticketExpiredInputs = [
+        elements.ticketExpiradoInput, elements.ticketInputExpired,
+    ].filter(el => el);
 
-    // Listeners para inputs de Ticket Expirado
-    ticketExpiradoInput.addEventListener('input', updateTicketExpiradoEmail);
-    ticketInputExpired.addEventListener('input', updateTicketExpiradoEmail);
-    dataEmissaoInputExpired.addEventListener('input', updateTicketExpiradoEmail);
-    dataValidadeInputExpired.addEventListener('input', updateTicketExpiradoEmail);
+    ticketExpiredInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (elements.postagemCorreiosTemplate && elements.postagemCorreiosTemplate.value === 'ticket_expirado') {
+                updateEmail('ticket_expirado');
+            }
+        });
+    });
 });
