@@ -1,12 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
-}
+/* pesquisas.css - Estilos específicos do CONTEÚDO da página de Pesquisas */
 
-h1 {
+.content h1 {
     color: #333;
+    /* Ajuste se precisar de um estilo de título diferente do content h1 em style.css */
 }
 
 div {
@@ -15,20 +11,27 @@ div {
 
 label {
     font-weight: bold;
+    display: block; /* Garante que o label ocupe sua própria linha */
+    margin-bottom: 5px;
 }
 
 select, input {
-    padding: 5px;
-    width: 200px;
+    padding: 8px; /* Aumentado um pouco o padding para melhor toque/clique */
+    width: 250px; /* Aumentado a largura padrão */
     margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para garantir que a largura seja mantida */
 }
 
 button {
-    padding: 10px;
+    padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -44,9 +47,14 @@ button:hover {
     padding: 15px;
     border: 1px solid #ddd;
     margin-top: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 pre {
     white-space: pre-wrap;
     word-wrap: break-word;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 5px;
 }
