@@ -1,44 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificar Garantias</title>
+    <title>Definir Garantia Revenda (3 Meses)</title>
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/comparar.css">
     
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="comprar-lista.html">Comparar lista</a></li>
-                    <li><a href="adds.html">Adicionar S</a></li>
-                    <li><a href="garantia.html">Definir garantia</a></li>
-                    <li><a href="verificarnf.html">Verificar NF</a></li>
-                    <li><a href="revendagarantia.html">Definir Garantia Revenda</a></li>
-                </ul>
-            </nav>
-        </aside>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                
+                <li><a href="emails.html">Script de E-mails</a></li>
 
-        <!-- Conteúdo principal -->
-        <div class="content">
-            <h3>Verificar Garantias</h3>
-            <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
-            <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
 
-            <button id="check-warranty-btn">Verificar Garantia</button>
+    <div class="content">
+        <h3>Definir Garantia de Revenda (3 Meses)</h3>
+        <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
+        <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
 
-            <div id="result" class="result-box">
-                <p>Resultados:</p>
-                <textarea id="warranty-results" rows="10" readonly></textarea>
-            </div>
+        <button id="check-warranty-btn">Verificar Garantia</button>
+
+        <div id="result" class="result-box">
+            <p>Resultados (Nova Data de Garantia e Status):</p>
+            <textarea id="warranty-results" rows="10" readonly></textarea>
         </div>
     </div>
 
@@ -50,7 +67,7 @@
             // Função para converter string de data no formato DD/MM/AAAA para um objeto Date
             function parseDate(dateString) {
                 const [day, month, year] = dateString.split('/').map(Number);
-                return new Date(year, month - 1, day).setHours(0, 0, 0, 0);
+                return new Date(year, month - 1, day);
             }
 
             // Função para adicionar 3 meses a uma data
@@ -75,7 +92,8 @@
             const results = dates.map(date => {
                 const parsedDate = parseDate(date);
                 const newDate = addThreeMonths(parsedDate);
-                const warrantyStatus = newDate >= currentDate ? 'SIM' : 'NÃO';
+                // Comparar a nova data de garantia (após 3 meses) com a data atual
+                const warrantyStatus = newDate.setHours(0, 0, 0, 0) >= currentDate ? 'SIM' : 'NÃO';
                 return `${formatDate(newDate)}\t${warrantyStatus}`;
             });
 
