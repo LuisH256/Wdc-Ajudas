@@ -3,49 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emails Automáticos</title>
+    <title>Automações</title>
     <link rel="stylesheet" href="CSS/serial.css">
     <link rel="stylesheet" href="CSS/styles.css">
     
-
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="comprar-lista.html">Comparar lista</a></li>
-                    <li><a href="adds.html">Adicionar S</a></li>
-                    <li><a href="garantia.html">Definir garantia</a></li>
-                    <li><a href="verificarnf.html">Verificar NF</a></li>
-                    <li><a href="revendagarantia.html">Definir Garantia Revenda</a></li>
-                    <li><a href="conferencia-valores.html">Conferir valores unitario</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Conteúdo principal -->
-        <main class="content">
-            <section id="emails">
-                <h1>Bem vindo(a) WDC Ajudas</h1>
-                <p>Pagina de automações simples.</p>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
                 
-                
-                
+                <li><a href="emails.html">Script de E-mails</a></li>
 
-
-
-                <!-- Aqui você pode incluir o formulário ou conteúdo do gerador de e-mails -->
-                <div id="email-template-container">
-                    <!-- Template de e-mails aparecerão aqui conforme a seleção -->
-                </div>
-            </section>
-        </main>
-    </div>
-    <script src="JS/scripts.js"></script></body>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+    
+    <main class="content">
+        <section id="automacoes">
+            <h1>Bem vindo(a) WDC Ajudas</h1>
+            <p>Página de automações simples.</p>
+            
+            <div id="automacoes-content-container">
+            </div>
+        </section>
+    </main>
+    <script src="JS/scripts.js"></script>
+</body>
 </html>
