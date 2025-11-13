@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de E-mails Automáticos</title>
-    <link rel="stylesheet" href="CSS/emails.css">
+    <title>Verificar Garantias</title>
     <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/comparar.css">
+    
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
@@ -15,10 +16,10 @@
             <ul>
                 <li><a href="index.html">Página Principal</a></li>
                 
-                <li><a href="emails.html" class="active">Script de E-mails</a></li>
+                <li><a href="emails.html">Script de E-mails</a></li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
                     <div class="dropdown-content">
                         <a href="atalhos.html">Atalhos</a>
                         <a href="comprar-lista.html">Comparar Lista</a>
@@ -29,7 +30,6 @@
                         <a href="conferencia-valores.html">Conferir Valores Unitário</a>
                     </div>
                 </li>
-
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Pesquisas</a>
                     <div class="dropdown-content">
@@ -45,152 +45,45 @@
         </nav>
         <input type="text" placeholder="Pesquisar..." class="search-bar">
     </header>
+
     <main class="content">
-        <h3>Gerador de E-mails Automáticos</h3>
-        <div class="email-configuration">
-            <label for="email-template">Escolha o template de e-mail:</label>
-            <select id="email-template">
-                <option value="">Selecione</option>
-                <option value="sac">SAC</option>
-                <option value="apoio_vendas">Apoio a Vendas</option>
-            </select>
+        <h3>Verificar Garantias</h3>
+        <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
+        <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
 
-            <div id="sac-options" class="hidden">
-                <label for="sac-template">Escolha o tipo de SAC:</label>
-                <select id="sac-template">
-                    <option value="">Selecione</option>
-                    <option value="devolucao">Devolução</option>
-                    <option value="solicitar_entrada_nf">Solicitar entrada NF</option>
-                    <option value="troca_solar">Troca em garantia - Solar</option>
-                    <option value="envio_material_devolucao">ENVIO DE MATERIAL - DEVOLUÇÃO</option>
-                    <option value="ticket_para_advanceds">Ticket para advanceds</option>
-                    <option value="recusa_nf">Recusa NF</option>
-                    </select>
-            </div>
+        <button id="check-warranty-btn">Verificar Garantia</button>
 
-            <div id="apoio-vendas-options" class="hidden">
-                <label for="apoio-vendas-template">Escolha o tipo de Apoio a Vendas:</label>
-                <select id="apoio-vendas-template">
-                    <option value="">Selecione</option>
-                    <option value="relatorio_geral">Relatório Geral (Posicionamento de notas)</option>
-                    <option value="pendencias">Transportadoras - Pendências (Singular/Plural)</option>
-                    <option value="pendencias_lista">Transportadoras - Pendências com lista</option>
-                    <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
-                    <option value="ticket_correios">Ticket correios-Geral</option>
-                </select>
-                
-                <div id="ticket-correios-options" class="hidden">
-                    <label>Selecione o tipo de ticket:</label>
-                    <select id="postagem-correios-template">
-                        <option value="">Selecione</option>
-                        <option value="primeiro_ticket">Primeira emissão</option>
-                        <option value="ticket_expirado">Ticket Expirado</option>
-                    </select>
-                    
-                    <div id="primeiro-ticket-options" class="hidden">
-                        <label for="nf-input-postagem">NF de Retorno:</label> 
-                        <input type="text" id="nf-input-postagem">
-                        <label for="ticket-input">Ticket:</label>
-                        <input type="text" id="ticket-input">
-                        
-                        <div class="date-group">
-                            <label for="data-emissao-input">Data de Emissão:</label>
-                            <input type="tel" id="data-emissao-input" maxlength="10" placeholder="DD/MM/AAAA"> 
-                            <label for="data-validade-input">Data de Validade:</label>
-                            <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
-                        </div>
-                    </div>
-
-                    <div id="ticket-expirado-options" class="hidden">
-                        <label for="ticket-expirado-input">Ticket Expirado Anterior:</label>
-                        <input type="text" id="ticket-expirado-input">
-                        <label for="ticket-input-expired">Novo Ticket:</label>
-                        <input type="text" id="ticket-input-expired">
-                        
-                        <div class="date-group">
-                            <label for="data-emissao-input-expired">Nova Data de Emissão:</label>
-                            <input type="tel" id="data-emissao-input-expired" maxlength="10" placeholder="DD/MM/AAAA">
-                            <label for="data-validade-input-expired">Nova Data de Validade:</label>
-                            <input type="tel" id="data-validade-input-expired" maxlength="10" placeholder="DD/MM/AAAA">
-                        </div>
-                    </div>
-                </div>
-            </div> <div id="pendencias-options" class="hidden">
-                <label for="edi-select">EDI:</label>
-                <input type="text" id="edi-select">
-                <label for="nf-select">NF:</label>
-                <input type="text" id="nf-select">
-            </div>
-
-            <div id="recusa-nf-options" class="hidden">
-                <label for="nf-recusa-input">NF:</label>
-                <input type="text" id="nf-recusa-input">
-                <label for="descricao-recusa-input">Descreva a situação:</label>
-                <input type="text" id="descricao-recusa-input">
-            </div>
-
-            <div id="nfs-retidas-options" class="hidden">
-                <label for="nf-retida-input">NF:</label>
-                <input type="text" id="nf-retida-input">
-            </div>
-
-            <div id="destinatario-container" class="hidden">
-                <label for="destinatario">Destinatário:</label>
-                <select id="destinatario">
-                    <option value="">Selecione</option>
-                    <option value="matriz">Matriz</option>
-                    <option value="simoes">Simões Filho</option>
-                </select>
-            </div>
-
-            <div id="tipo-operacao-container" class="hidden">
-                <label for="tipo-operacao">Tipo de Operação:</label>
-                <select id="tipo-operacao">
-                    <option value="">Selecione</option>
-                    <option value="locacao">Locação</option>
-                    <option value="devolucao">Devolução</option>
-                </select>
-            </div>
-
-            <div id="pdaf-options" class="hidden"> 
-                <label for="tipo-select">Tipo:</label>
-                <select id="tipo-select">
-                    <option value="PD">PD</option>
-                    <option value="AF">AF</option>
-                </select>
-                <label for="nfs-input">NFs:</label>
-                <input type="text" id="nfs-input">
-                <label for="ean-input">EAN:</label>
-                <input type="text" id="ean-input">
-                <label for="swqt-input">SW/QT:</label>
-                <input type="text" id="swqt-input">
-            </div>
-
-            <div id="solar-options" class="hidden">
-                <label for="nf-input">NF:</label>
-                <input type="text" id="nf-input">
-                <label for="valor-unitario-input">Valor Unitário:</label>
-                <input type="text" id="valor-unitario-input">
-                <label for="quantidade-input">Quantidade:</label>
-                <input type="text" id="quantidade-input">
-                <label for="ncm-input">NCM:</label>
-                <input type="text" id="ncm-input">
-                <label for="descricao-input">Descrição:</label>
-                <input type="text" id="descricao-input">
-            </div>
-
-            <div id="email-preview" class="email-box hidden">
-                <h3>Pré-visualização do E-mail</h3>
-                <pre id="email-content"></pre>
-            </div>
-            
-            <button id="copy-email" class="hidden">Copiar E-mail</button>
+        <div id="result" class="result-box">
+            <p>Resultados:</p>
+            <textarea id="warranty-results" rows="10" readonly></textarea>
         </div>
     </main>
-    
-    <script src="JS/sac.js"></script>
-    <script src="JS/apoio_vendas.js"></script>
-    <script src="JS/emails.js"></script>
+
+    <script>
+        document.getElementById('check-warranty-btn').addEventListener('click', function () {
+            // Obter a data atual, sem a parte do tempo
+            const currentDate = new Date().setHours(0, 0, 0, 0);
+
+            // Função para converter string de data no formato DD/MM/AAAA para um objeto Date
+            function parseDate(dateString) {
+                const [day, month, year] = dateString.split('/').map(Number);
+                return new Date(year, month - 1, day).setHours(0, 0, 0, 0);
+            }
+
+            // Obter as datas de entrada
+            const dates = document.getElementById('date-list').value.split('\n').map(date => date.trim()).filter(Boolean);
+
+            // Verificar se cada data está em garantia
+            const results = dates.map(date => {
+                const parsedDate = parseDate(date);
+                const warrantyStatus = parsedDate >= currentDate ? 'SIM' : 'NÃO';
+                return `${date}\t${warrantyStatus}`;
+            });
+
+            // Exibir os resultados
+            document.getElementById('warranty-results').value = results.join('\n');
+        });
+    </script>
     <script src="JS/scripts.js"></script>
 </body>
 </html>
