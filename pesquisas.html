@@ -3,45 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emails Automáticos</title>
+    <title>WDC Ajudas - Pesquisas</title>
     <link rel="stylesheet" href="CSS/serial.css">
     <link rel="stylesheet" href="CSS/styles.css">
-    
+    <link rel="stylesheet" href="CSS/pesquisas.css">
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
-
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="serial.html">Pesquisa Serial</a></li>
-                    <li><a href="lvp.html">Pesquisa PA (LVP)</a></li>
-                    <li><a href="os.html">Abrir OS</a></li>
-                    <li><a href="nf.html">Baixar NF</a></li>
-                    <li><a href="visao.html">Romaneio Visão</a></li>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Scripts</a>
+                    <div class="dropdown-content">
+                        <a href="emails.html">Emails Automáticos</a>
+                        <a href="automacoes.html">Automações</a>
+                        <a href="atalhos.html">Atalhos</a>
+                    </div>
+                </li>
 
-
-
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Conteúdo principal -->
-        <main class="content">
-            <section id="emails">
-                <h1>Bem vindo(a) WDC Ajudas em pesquisas</h1>
-                <p>Pesquisas funcionais do setor SAC</p>
-                <!-- Aqui você pode incluir o formulário ou conteúdo do gerador de e-mails -->
-                <div id="email-template-container">
-                    <!-- Template de e-mails aparecerão aqui conforme a seleção -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+    <main class="content">
+        <section id="pesquisas">
+            <h1>Bem vindo(a) WDC Ajudas em Pesquisas</h1>
+            <p>Pesquisas funcionais do setor SAC</p>
+            <div id="email-template-container">
                 </div>
-            </section>
-        </main>
-    </div>
+        </section>
+    </main>
+    
     <script src="JS/scripts.js"></script>
 </body>
 </html>
