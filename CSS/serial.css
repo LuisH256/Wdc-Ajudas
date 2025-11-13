@@ -1,146 +1,391 @@
-/* Estilos específicos para a página serial.css */
+/* styles.css */
 
-/* Estilos para elementos internos da sidebar que NÃO são layout/estrutura */
-.sidebar h1 {
-    font-size: 20px;
-    color: #ecf0f1;
-    text-align: center;
-    margin-bottom: 20px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 70px; /* Adiciona padding para o cabeçalho fixo */
+    background-color: #f4f4f4;
 }
 
-.sidebar label {
-    color: #ecf0f1;
-    font-size: 14px;
+/* --- Cabeçalho Azul Bonito --- */
+.main-header {
+    background-color: #007BFF; /* Azul principal */
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Distribui logo, menu e pesquisa */
+    align-items: center;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 8px;
+    color: #fff;
+}
+
+/* --- Barra de Pesquisa no Cabeçalho --- */
+.search-bar {
+    padding: 8px 15px;
+    border: 1px solid #cce5ff; /* Borda mais clara */
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.2); /* Fundo semi-transparente */
+    color: #fff;
+    box-sizing: border-box;
+    width: 200px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.search-bar::placeholder {
+    color: #cce5ff;
+}
+
+.search-bar:focus {
+    width: 250px;
+    outline: none;
+    background-color: #fff; /* Fundo branco ao focar */
+    color: #333;
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+/* --- Navegação e Menu Dropdown --- */
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.main-nav ul li {
+    margin: 0 10px; /* Reduzido o espaço para um layout mais compacto */
+    position: relative;
+}
+
+.main-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px; /* Adicionado padding lateral */
+    display: block;
+    transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+    border-radius: 4px;
+}
+
+/* EFEITO DE VIDA: Cor de fundo sutil no hover */
+.main-nav ul li a:hover,
+.main-nav ul li a.active {
+    color: #fff; 
+    background-color: #0056b3; /* Cor de fundo no hover/ativo */
+    border-radius: 4px;
+}
+
+/* --- Menu que se Esconde (Dropdown) --- */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0; 
+    top: 100%; /* Garante que comece logo abaixo do item pai */
+    background-color: #0056b3; /* Azul mais escuro para o dropdown */
+    min-width: 220px; /* Aumentado um pouco para caber os textos */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3); /* Sombra mais escura */
+    z-index: 1001; /* Acima do cabeçalho */
+    border-radius: 0 0 4px 4px;
+    padding: 0;
+    overflow: hidden; 
+}
+
+.dropdown-content a {
+    color: #fff;
+    padding: 10px 18px; /* Padding interno aprimorado */
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+/* Remove separador do último item */
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+/* EFEITO DE VIDA: Deslize sutil no hover do item do dropdown */
+.dropdown-content a:hover {
+    background-color: #004085; /* Azul ainda mais escuro no hover do item */
+    padding-left: 22px; /* Pequeno deslize para a direita */
+}
+
+/* Mostra o menu dropdown quando o mouse está sobre o item pai */
+.dropdown:hover .dropdown-content {
     display: block;
 }
 
-.sidebar select {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #34495e;
-    border-radius: 5px;
-    background-color: #34495e;
-    color: #ecf0f1;
-    margin-bottom: 20px;
-}
-
-.sidebar select:focus {
-    border-color: #1abc9c;
-    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
-    outline: none;
-}
-
-/* Navegação - apenas hover/active se for específico desta página (agora padronizado no style.css) */
-/* Se quiser cores diferentes de hover/active SÓ nesta página, você pode redefinir aqui */
-.nav ul li a:hover,
-.nav ul li a.active {
-    background-color: #1abc9c; /* Cor de destaque específica do serial.css */
-    color: #ffffff;
-}
-
-/* Passo a Passo */
-#pesquisa-serial h1 {
-    color: #2c3e50;
-    font-size: 24px;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #1abc9c;
-    padding-bottom: 5px;
-}
-
-.step {
-    margin-bottom: 20px;
-    background-color: #ecf0f1;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.step h2, .step h3 {
-    color: #2c3e50;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.step p, .step ul {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #34495e;
-}
-
-.step ul {
-    margin-left: 20px;
-}
-
-.step ul li {
-    list-style-type: disc;
-}
-
-/* Estilo das listas aninhadas */
-.nested {
-    margin-left: 20px;
-    font-size: 15px;
-    color: #34495e;
-}
-
-.step strong {
-    color: #1abc9c;
-    font-weight: bold;
-}
-
-/* Carrossel */
-.carousel-wrapper {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.carousel {
-    position: relative;
-    max-width: 600px;
-    margin: 0 auto;
-    overflow: hidden;
-    border: 3px solid #ddd;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+/* --- Conteúdo Principal (Main) --- */
+.content {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 20px auto;
     background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra mais suave para a caixa de conteúdo */
+    min-height: calc(100vh - 110px);
+    box-sizing: border-box;
 }
 
-.carousel-images img {
-    width: 100%;
-    height: auto;
-    display: none;
-    object-fit: cover;
+/*
+    Nota: A exibição do conteúdo de pré-visualização de e-mail 
+    (elementos #email-preview, #email-content, #copy-email) 
+    depende de estilos no 'emails.css' para controlar as margens 
+    e paddings internos e afastá-lo da borda, conforme solicitado 
+    anteriormente.
+*/
+
+
+/* --- Responsividade Básica --- */
+@media (max-width: 1024px) {
+    .main-header {
+        flex-direction: column;
+        height: auto;
+        padding-bottom: 10px;
+    }
+    
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .main-nav ul li {
+        margin: 5px 10px;
+    }
+
+    .search-bar {
+        width: 90%;
+        max-width: 400px;
+    }
+    
+    .search-bar:focus {
+        width: 90%;
+    }
+
+    body {
+        padding-top: 140px; /* Ajusta o padding para o novo cabeçalho maior */
+    }
+    
+    .dropdown-content {
+        left: 50%; /* Centraliza o dropdown no meio da tela */
+        transform: translateX(-50%);
+        min-width: 250px;
+    }
 }
 
-.carousel-button {
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .dropdown-content {
+        position: static;
+        transform: none;
+        min-width: 100%;
+        box-shadow: none;
+        background-color: #004085;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+    }
+    
+    .main-nav ul li {
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .main-nav ul li a {
+        padding: 10px 20px;
+        border-radius: 0;
+    }
+}
+
+
+/* Estilo para a barra de pesquisa no cabeçalho */
+.main-header .search-bar {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px; /* Ajuste conforme necessário */
+}
+
+/* Contêiner dos resultados de pesquisa */
+#search-results-container {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
+    top: 60px; /* Abaixo do cabeçalho/barra de pesquisa */
+    right: 20px; /* Alinhado à direita, junto à barra de pesquisa */
+    width: 250px; /* Ligeiramente maior que a barra de pesquisa */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 4px;
+    display: none; /* Começa oculto */
+}
+
+#search-results-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#search-results-container li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#search-results-container li:last-child {
+    border-bottom: none;
+}
+
+#search-results-container a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+#search-results-container a:hover {
+    background-color: #f0f0f0;
+}
+
+#search-results-container p {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+/* --- ESTILOS ESPECÍFICOS PARA A INDEX.HTML (Home/Hub) --- */
+
+.home-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+/* Seção de Boas-Vindas */
+.welcome-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.welcome-title {
+    font-size: 2.5em;
+    color: #007bff; /* Cor principal da marca */
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.welcome-description {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.welcome-description strong {
+    color: #333;
+}
+
+/* Seção de Novidades/Avisos */
+.news-section {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.news-section h2 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.8em;
+}
+
+.news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.news-item {
     padding: 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    opacity: 0.8;
+    border-radius: 8px;
+    line-height: 1.4;
 }
 
-.carousel-button:hover {
-    opacity: 1;
+.news-item strong {
+    font-weight: 600;
 }
 
-.carousel-button.prev {
-    left: 10px;
+/* Tipos de Alerta/Novidade */
+.alert-new {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 5px solid #007bff;
 }
 
-.carousel-button.next {
-    right: 10px;
+.alert-tip {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ffc107;
 }
 
-.carousel-button:disabled {
-    background-color: rgba(0, 0, 0, 0.3);
-    cursor: not-allowed;
+.alert-update {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
 }
+
+/* Linha Divisória */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    /* O bloco abaixo não é mais necessário para a funcionalidade, mas foi mantido limpo */
+    /* Caso ele estivesse ajustando outros elementos, seria relevante.
+       Como os cards foram removidos, esta media query pode ser simplificada
+       ou totalmente removida, pois não afeta mais nada. */
+}
+
+
+
+
+
