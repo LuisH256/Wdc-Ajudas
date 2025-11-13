@@ -9,37 +9,55 @@
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <!-- Barra lateral esquerda -->
-        <aside class="sidebar">
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="comprar-lista.html">Comparar Lista</a></li>
-                    <li><a href="adds.html">Adicionar S</a></li>
-                    <li><a href="garantia.html">Definir Garantia</a></li>
-                    <li><a href="verificarnf.html">Verificar NF</a></li>
-                    <li><a href="revendagarantia.html">Definir Garantia Revenda</a></li>
-                </ul>
-            </nav>
-        </aside>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                
+                <li><a href="emails.html">Script de E-mails</a></li>
 
-        <!-- Conteúdo principal -->
-        <div class="content">
-            <h3>Conferência de Valores</h3>
-            <label for="valores">Valores:</label>
-            <textarea id="valores" rows="10" placeholder="Insira os valores, um por linha"></textarea>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn active">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="atalhos.html">Atalhos</a>
+                        <a href="comprar-lista.html">Comparar Lista</a>
+                        <a href="adds.html">Adicionar S</a>
+                        <a href="garantia.html">Definir Garantia</a>
+                        <a href="verificarnf.html">Verificar NF</a>
+                        <a href="revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="serial.html">Pesquisa Serial</a>
+                        <a href="lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="os.html">Abrir OS</a>
+                        <a href="nf.html">Baixar NF</a>
+                        <a href="visao.html">Romaneio Visão</a>
+                        <a href="garantiafabricante.html">Pesquisa Fabricante</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
 
-            <button id="conferencia-valores-btn">Conferência de valores</button>
-            <button id="conferencia-total-btn">Conferência total</button>
+    <main class="content">
+        <h3>Conferência de Valores</h3>
+        <label for="valores">Valores:</label>
+        <textarea id="valores" rows="10" placeholder="Insira os valores, um por linha"></textarea>
 
-            <div id="result" class="result-box">
-                <p>Resultado:</p>
-                <textarea id="resultado" rows="10" readonly></textarea>
-            </div>
+        <button id="conferencia-valores-btn">Conferência de valores</button>
+        <button id="conferencia-total-btn">Conferência total</button>
+
+        <div id="result" class="result-box">
+            <p>Resultado:</p>
+            <textarea id="resultado" rows="10" readonly></textarea>
         </div>
-    </div>
+    </main>
 
     <script>
         document.getElementById('conferencia-valores-btn').addEventListener('click', function () {
