@@ -46,18 +46,17 @@
         <input type="text" placeholder="Pesquisar..." class="search-bar">
     </header>
 
-    <div class="content">
-        <h3>Definir Garantia de Revenda (3 Meses)</h3>
+    <main class="content"> <h3>Definir Garantia de Revenda (3 Meses)</h3>
         <label for="date-list">Lista de datas (formato DD/MM/AAAA):</label>
-        <textarea id="date-list" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
+        <textarea id="date-list" class="main-input" rows="10" placeholder="Insira as datas, uma por linha"></textarea>
 
-        <button id="check-warranty-btn">Verificar Garantia</button>
+        <button id="check-warranty-btn" class="main-button">Verificar Garantia</button>
 
         <div id="result" class="result-box">
             <p>Resultados (Nova Data de Garantia e Status):</p>
-            <textarea id="warranty-results" rows="10" readonly></textarea>
+            <textarea id="warranty-results" class="main-input" rows="10" readonly></textarea>
         </div>
-    </div>
+    </main>
 
     <script>
         document.getElementById('check-warranty-btn').addEventListener('click', function () {
