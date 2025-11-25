@@ -46,19 +46,18 @@
         <input type="text" placeholder="Pesquisar..." class="search-bar">
     </header>
 
-    <div class="content">
-        <h3>Verificar Notas Fiscais</h3>
+    <main class="content"> <h3>Verificar Notas Fiscais</h3>
         <label for="nota-list">Lista de Notas Fiscais:</label>
-        <textarea id="nota-list" rows="10" placeholder="Insira as notas fiscais, uma por linha"></textarea>
+        <textarea id="nota-list" class="main-input" rows="10" placeholder="Insira as notas fiscais, uma por linha"></textarea>
 
-        <button id="check-notas-btn">Verificar Notas</button>
+        <button id="check-notas-btn" class="main-button">Verificar Notas</button>
 
         <div id="result" class="result-box">
             <p>Resultados:</p>
-            <textarea id="nota-results" rows="10" readonly></textarea>
+            <textarea id="nota-results" class="main-input" rows="10" readonly></textarea>
             <p>Total de notas pesquisadas: <span id="nota-count">0</span></p>
         </div>
-    </div>
+    </main>
 
     <script>
         document.getElementById('check-notas-btn').addEventListener('click', function () {
