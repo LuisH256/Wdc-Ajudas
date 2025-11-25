@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar 'S' aos Itens</title>
     <link rel="stylesheet" href="CSS/styles.css">
-
+    <link rel="stylesheet" href="CSS/comparar.css"> 
     
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
@@ -48,14 +48,16 @@
     
     <main class="content">
         <h3>Adicionar 'S' aos Itens</h3>
-        <label for="item-list">Lista de itens:</label>
-        <textarea id="item-list" rows="10" placeholder="Insira os itens, um por linha"></textarea>
+        
+        <div class="input-group"> <label for="item-list">Lista de itens:</label>
+            <textarea id="item-list" class="main-input" rows="10" placeholder="Insira os itens, um por linha"></textarea>
+        </div>
 
-        <button id="add-s-btn">Adicionar 'S'</button>
+        <button id="add-s-btn" class="main-button">Adicionar 'S'</button>
 
         <div id="result" class="result-box">
             <p>Itens com 'S' adicionados:</p>
-            <textarea id="modified-items" rows="10" readonly></textarea>
+            <textarea id="modified-items" class="main-input" rows="10" readonly></textarea>
         </div>
     </main>
 
