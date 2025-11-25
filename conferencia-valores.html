@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conferência de Valores</title>
     <link rel="stylesheet" href="CSS/styles.css">
-    <link rel="stylesheet" href="CSS/conferencia-valores.css">
+
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
@@ -47,15 +47,18 @@
 
     <main class="content">
         <h3>Conferência de Valores</h3>
-        <label for="valores">Valores:</label>
-        <textarea id="valores" rows="10" placeholder="Insira os valores, um por linha"></textarea>
+        
+        <div class="input-group">
+            <label for="valores">Valores:</label>
+            <textarea id="valores" class="main-input" rows="10" placeholder="Insira os valores, um por linha"></textarea>
+        </div>
 
-        <button id="conferencia-valores-btn">Conferência de valores</button>
-        <button id="conferencia-total-btn">Conferência total</button>
+        <button id="conferencia-valores-btn" class="main-button">Conferência de valores (Únicos)</button>
+        <button id="conferencia-total-btn" class="main-button">Conferência total (Todos)</button>
 
         <div id="result" class="result-box">
             <p>Resultado:</p>
-            <textarea id="resultado" rows="10" readonly></textarea>
+            <textarea id="resultado" class="main-input" rows="10" readonly></textarea>
         </div>
     </main>
 
