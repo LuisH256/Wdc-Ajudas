@@ -48,17 +48,18 @@
     
     <main class="content">
         <h3>Comparar Listas</h3>
+        
         <label for="lista1">Lista 1:</label>
-        <textarea id="lista1" rows="10" placeholder="Insira os itens da lista 1, um por linha"></textarea>
+        <textarea id="lista1" class="main-input" rows="10" placeholder="Insira os itens da lista 1, um por linha"></textarea>
 
         <label for="lista2">Lista 2:</label>
-        <textarea id="lista2" rows="10" placeholder="Insira os itens da lista 2, um por linha"></textarea>
+        <textarea id="lista2" class="main-input" rows="10" placeholder="Insira os itens da lista 2, um por linha"></textarea>
 
-        <button id="comparar-btn">Comparar Listas</button>
+        <button id="comparar-btn" class="main-button">Comparar Listas</button>
 
         <div id="result" class="result-box">
             <p>Itens presentes na Lista 1, mas não na Lista 2:</p>
-            <textarea id="diferenca-itens" rows="10" readonly></textarea>
+            <textarea id="diferenca-itens" class="main-input" rows="10" readonly></textarea>
         </div>
     </main>
 
