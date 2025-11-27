@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar 'S' aos Itens</title>
     <link rel="stylesheet" href="CSS/styles.css">
-    <link rel="stylesheet" href="CSS/comparar.css"> 
-    
     <link rel="icon" href="imgs/wdc.png" type="image/x-icon">
 </head>
 <body>
@@ -49,7 +47,8 @@
     <main class="content">
         <h3>Adicionar 'S' aos Itens</h3>
         
-        <div class="input-group"> <label for="item-list">Lista de itens:</label>
+        <div class="input-group"> 
+            <label for="item-list">Lista de itens:</label>
             <textarea id="item-list" class="main-input" rows="10" placeholder="Insira os itens, um por linha"></textarea>
         </div>
 
@@ -62,17 +61,24 @@
     </main>
 
     <script>
-        document.getElementById('add-s-btn').addEventListener('click', function () {
-            // Obter os valores de entrada
-            const items = document.getElementById('item-list').value.split('\n').map(item => item.trim()).filter(Boolean);
+        // Função para manipular a adição do 'S'
+        function handleAddS() {
+            // Obter os valores de entrada, separando por linha, removendo espaços e eliminando linhas vazias
+            const items = document.getElementById('item-list').value
+                .split('\n')
+                .map(item => item.trim())
+                .filter(Boolean);
 
-            // Adicionar 'S' ao início de cada item
-            const modifiedItems = items.map(item => 'S' + item);
+            // MODIFICAÇÃO: Adicionar 'S ' (com espaço) ao início de cada item
+            const modifiedItems = items.map(item => 'S ' + item);
 
-            // Exibir os resultados
+            // Exibir os resultados na área de texto de saída
             document.getElementById('modified-items').value = modifiedItems.join('\n');
-        });
+        }
+
+        // Adicionar o listener ao botão
+        document.getElementById('add-s-btn').addEventListener('click', handleAddS);
     </script>
-    <script src="JS/scripts.js"></script>
+    <script src="JS/scripts.js"></script> 
 </body>
 </html>
