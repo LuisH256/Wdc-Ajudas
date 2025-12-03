@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
         
         // Links de Pesquisas (Estão em /pesquisas/, use /pesquisas/)
-        { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
+        { title: "Pesquisa Serial", url: "../pesquisas/serial.html" },
         { title: "Pesquisa PA (LVP)", url: "/pesquisas/lvp.html" },
         { title: "Abrir OS", url: "/pesquisas/os.html" },
         { title: "Baixar NF", url: "/pesquisas/nf.html" },
@@ -100,3 +100,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
