@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Mapeamento de todos os links do seu site
     const siteLinks = [
         // Links Principais e de E-mails
-        { title: "Página Principal", url: "/index.html" }, 
-        { title: "Script de E-mails", url: "/emails.html" },
+        { title: "Página Principal", url: "index.html" }, 
+        { title: "Script de E-mails", url: "emails.html" },
         
         // Links de Automação/Atalhos
-        { title: "Atalhos", url: "/atalhos.html" },
-        { title: "Comparar Lista", url: "/comprar-lista.html" },
-        { title: "Adicionar S", url: "/adds.html" },
-        { title: "Definir Garantia", url: "/garantia.html" },
-        { title: "Verificar NF", url: "/verificarnf.html" },
-        { title: "Definir Garantia Revenda", url: "/revendagarantia.html" },
-        { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
+        { title: "Atalhos", url: "atalhos.html" },
+        { title: "Comparar Lista", url: "comprar-lista.html" },
+        { title: "Adicionar S", url: "adds.html" },
+        { title: "Definir Garantia", url: "garantia.html" },
+        { title: "Verificar NF", url: "verificarnf.html" },
+        { title: "Definir Garantia Revenda", url: "revendagarantia.html" },
+        { title: "Conferir Valores Unitário", url: "conferencia-valores.html" },
         
         // Links de Pesquisas (Incluindo os que faltavam)
         { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
@@ -101,3 +101,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
