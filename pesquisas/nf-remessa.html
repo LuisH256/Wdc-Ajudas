@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa Nota Remessa por Baixa (M5)</title>
+    <link rel="stylesheet" href="../CSS/serial.css"> 
+    <link rel="stylesheet" href="../CSS/styles.css">
+    
+    <link rel="icon" href="/imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+   <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/index.html">Página Principal</a></li>
+                
+                <li><a href="/emails.html">Script de E-mails</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="/atalhos.html">Atalhos</a>
+                        <a href="/comprar-lista.html">Comparar Lista</a>
+                        <a href="/adds.html">Adicionar S</a>
+                        <a href="/garantia.html">Definir Garantia</a>
+                        <a href="/verificarnf.html">Verificar NF</a>
+                        <a href="/revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="/conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="/pesquisas/serial.html">Pesquisa Serial</a>
+                        <a href="/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="/pesquisas/os.html">Abrir OS</a>
+                        <a href="/pesquisas/nf.html">Baixar NF</a>
+                        <a href="/pesquisas/visao.html">Romaneio Visão</a>
+                        <a href="/pesquisas/garantiafabricante.html">Pesquisa Fabricante</a>
+                        <a href="/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
+                        <a href="/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
+                        <a href="/pesquisas/serial-kit.html">Pesquisa Serial KIT</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+
+    <main class="content">
+        <section id="pesquisa-nota-remessa">
+            <h1>Pesquisa Nota de Remessa por Nota de Baixa (Módulo 5)</h1>
+            
+            <div class="step">
+                <h2>Acessando Pedidos de Venda</h2>
+                <ul class="nested">
+                    <li>Acesse: <strong>Atualização</strong></li>
+                    <ul>
+                        <li><strong>Pedidos</strong></li>
+                        <ul>
+                            <li><strong>Pedidos de venda</strong></li>
+                        </ul>
+                    </ul>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h2>Criando o Filtro de Contrato</h2>
+                <ul>
+                    <li>Clique em <strong>FILTRAR</strong>.</li>
+                    <li>Em seguida, clique em <strong>CRIAR FILTRO</strong>.</li>
+                    <li>Na caixa de seleção (campo <strong>Expressão</strong>), coloque: <strong>CONTRATO. LOC</strong></li>
+                    <li>No campo de valor, coloque o <strong>NÚMERO DO CONTRATO DE LOCAÇÃO</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h2>Localizando e Comparando as Notas</h2>
+                <ul>
+                    <li>Após aplicar o filtro, procure e abra o pedido relacionado.</li>
+                    <li>Dentro do pedido, localize as informações da Nota Fiscal.</li>
+                    <li>Faça a <strong>COMPARAÇÃO</strong> entre a <strong>Nota de Baixa</strong> e a <strong>Nota de Remessa</strong> relacionadas.</li>
+                    <li>Pegue o número da <strong>NOTA DE REMESSA DESEJADA</strong>.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <script src="/JS/scripts.js"></script>
+</body>
+</html>

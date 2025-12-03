@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Nota Fiscal</title>
+    <link rel="stylesheet" href="../CSS/serial.css">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    
+    <link rel="icon" href="/imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/index.html">Página Principal</a></li>
+                
+                <li><a href="/emails.html">Script de E-mails</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="/atalhos.html">Atalhos</a>
+                        <a href="/comprar-lista.html">Comparar Lista</a>
+                        <a href="/adds.html">Adicionar S</a>
+                        <a href="/garantia.html">Definir Garantia</a>
+                        <a href="/verificarnf.html">Verificar NF</a>
+                        <a href="/revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="/conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="/pesquisas/serial.html">Pesquisa Serial</a>
+                        <a href="/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="/pesquisas/os.html">Abrir OS</a>
+                        <a href="/pesquisas/nf.html">Baixar NF</a>
+                        <a href="/pesquisas/visao.html">Romaneio Visão</a>
+                        <a href="/pesquisas/garantiafabricante.html">Pesquisa Fabricante</a>
+                        <a href="/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
+                        <a href="/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
+                        <a href="/pesquisas/serial-kit.html">Pesquisa Serial KIT</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+
+    <main class="content">
+        <section id="nota-fiscal">
+            <h1>Baixar Nota Fiscal - Passo a Passo</h1>
+
+            <div class="step">
+                <h2>Passos para Baixar a Nota Fiscal (Módulo 05)</h2>
+                <ul>
+                    <li>Acesse: <strong>Atualizações > NF-e e NFS-e > NF-e Sefaz</strong>.</li>
+                    <li>Se aparecer uma janela pedindo para dar <strong>OK</strong> ou <strong>Cancelar</strong>, clique em <strong>OK</strong> (isso ocorrerá duas vezes).</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h2>Configurações de Impressão</h2>
+                <ul>
+                    <li>Clique em <strong>Outras Ações</strong>.</li>
+                    <li>Selecione: <strong>DANFE > Imp. Padrão</strong>.</li>
+                    <li>Verifique as seguintes configurações:
+                        <ul>
+                            <li><strong>Exporta para PDF:</strong> Deve estar ativado.</li>
+                            <li><strong>Orientações do Formato:</strong> Defina como <strong>Retrato</strong>.</li>
+                            <li><strong>Destino:</strong> Escolha <strong>Local</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Role a tela para baixo e clique em <strong>OK</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h2>Preenchimento dos Campos</h2>
+                <ul>
+                    <li>No campo <strong>Da Nota Fiscal?</strong>:
+                        <ul>
+                            <li>Se a nota não tiver zeros à esquerda, adicione-os manualmente.</li>
+                            <li>Exemplo: Nota <strong>25455</strong> deve ser preenchida como <strong>00025455</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>No campo <strong>Até a Nota Fiscal?</strong>, insira novamente o mesmo número com a mesma quantidade de zeros.</li>
+                    <li>Em <strong>Tipo de Operação</strong>, escolha <strong>NF. Saída</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h2>Conclusão</h2>
+                <ul>
+                    <li>Clique em <strong>OK</strong> e aguarde o download da Nota Fiscal.</li>
+                    <li>Caso não ache na filial <strong>01</strong> vá ate a filial <strong>08</strong> e repita o processo.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <script src="/JS/scripts.js"></script>
+</body>
+</html>

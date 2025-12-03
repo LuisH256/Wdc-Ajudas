@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romaneio Visão</title>
+    <link rel="stylesheet" href="../CSS/serial.css">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    
+    <link rel="icon" href="/imgs/wdc.png" type="image/x-icon">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/index.html">Página Principal</a></li>
+                
+                <li><a href="/emails.html">Script de E-mails</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="/atalhos.html">Atalhos</a>
+                        <a href="/comprar-lista.html">Comparar Lista</a>
+                        <a href="/adds.html">Adicionar S</a>
+                        <a href="/garantia.html">Definir Garantia</a>
+                        <a href="/verificarnf.html">Verificar NF</a>
+                        <a href="/revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="/conferencia-valores.html">Conferir Valores Unitário</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="/pesquisas/serial.html">Pesquisa Serial</a>
+                        <a href="/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="/pesquisas/os.html">Abrir OS</a>
+                        <a href="/pesquisas/nf.html">Baixar NF</a>
+                        <a href="/pesquisas/visao.html">Romaneio Visão</a>
+                        <a href="/pesquisas/garantiafabricante.html">Pesquisa Fabricante</a>
+                        <a href="/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
+                        <a href="/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
+                        <a href="/pesquisas/serial-kit.html">Pesquisa Serial KIT</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+
+    <main class="content">
+        <section id="romaneio-visao">
+            <h1>Romaneio Visão - Passo a Passo</h1>
+
+            <div class="step">
+                <h2>Como Puxar Notas no Visão</h2>
+                <ul>
+                    <li>1. Solicite ao Visão enviando uma mensagem com <strong>"Oi"</strong> ou <strong>"Olá"</strong> no chat.</li>
+                    <li>2. Quando o Visão responder com as opções, clique em <strong>"Pesquisar Seriais de NF"</strong>.</li>
+                    <li>3. Escolha a modalidade da nota:
+                        <ul>
+                            <li><strong>Venda:</strong> Notas seguem normalmente.</li>
+                            <li><strong>Ativação:</strong> Essas são notas de baixa.</li>
+                            <li><strong>Locação:</strong>
+                                <ul>
+                                    <li>Informe a nota de locação.</li>
+                                    <li>Colete a nota de baixa que o Visão informar.</li>
+                                    <li>Cole novamente a nota de baixa no chat e selecione o local (<strong>Matriz</strong> ou <strong>Simões Filho</strong>).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>4. Após informar a modalidade, insira o número da nota fiscal.</li>
+                    <li>5. Informe a filial:
+                        <ul>
+                            <li><strong>01:</strong> Matriz</li>
+                            <li><strong>08:</strong> Simões Filho</li>
+                        </ul>
+                    </li>
+                    <li>6. Aguarde o Visão retornar e clique no link fornecido.</li>
+                </ul>
+            </div>
+
+            <div class="carousel-wrapper">
+                <h2>Passo a Passo com Imagens</h2>
+                <div class="carousel">
+                    <button class="carousel-button prev" disabled>❮</button>
+                    <div class="carousel-images">
+                        <img src="imgs/pesquisa.png" alt="Passo 1">
+                        <img src="imgs/modalidade.png" alt="Passo 2">
+                        <img src="imgs/filial.png" alt="Passo 3">
+                    </div>
+                    <button class="carousel-button next">❯</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/JS/scripts.js"></script>
+    <script>
+        // Script para o Carrossel
+        const images = document.querySelectorAll('.carousel-images img');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Atualiza o estado das imagens
+            images.forEach((img, index) => {
+                img.style.display = index === currentIndex ? 'block' : 'none';
+            });
+
+            // Desabilita os botões no início e no fim
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === images.length - 1;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+        // Inicializa o carrossel
+        updateCarousel();
+    </script>
+</body>
+</html>
