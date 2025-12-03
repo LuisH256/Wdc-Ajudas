@@ -1,37 +1,18 @@
-// Selecionando a barra de pesquisa e os links da navegação
-const searchBar = document.querySelector('.search-bar');
-const navLinks = document.querySelectorAll('.nav ul li a');
-
-// Função para filtrar as páginas com base na pesquisa
-function filterPages() {
-    const searchTerm = searchBar.value.toLowerCase(); // Obtém o termo de pesquisa e converte para minúsculas
-
-    navLinks.forEach(link => {
-        const pageTitle = link.textContent.toLowerCase(); // Obtém o título da página e converte para minúsculas
-        if (pageTitle.includes(searchTerm)) {
-            link.parentElement.classList.remove('hidden'); // Mostra o item de navegação
-        } else {
-            link.parentElement.classList.add('hidden'); // Oculta o item de navegação
-        }
-    });
-}
-
-// Adicionando um ouvinte de evento para a pesquisa
-searchBar.addEventListener('input', filterPages);
-
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Seleciona a barra de pesquisa e o cabeçalho principal
     const searchBar = document.querySelector('.search-bar');
     const mainHeader = document.querySelector('.main-header');
     
+    // Aborta se não encontrar os elementos (embora improváveis se o script estiver no HTML)
     if (!searchBar || !mainHeader) return;
 
-    // 1. Mapeamento de todos os links do seu site
+    // 2. Mapeamento de todos os links do seu site (Todos com a barra inicial / para caminho absoluto à raiz)
     const siteLinks = [
-        // Links Principais e de E-mails (Estão na RAIZ, use /)
+        // Links Principais e de E-mails
         { title: "Página Principal", url: "/index.html" }, 
         { title: "Script de E-mails", url: "/emails.html" },
         
-        // Links de Automação/Atalhos (Estão na RAIZ, use /)
+        // Links de Automação/Atalhos
         { title: "Atalhos", url: "/atalhos.html" },
         { title: "Comparar Lista", url: "/comprar-lista.html" },
         { title: "Adicionar S", url: "/adds.html" },
@@ -40,23 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Definir Garantia Revenda", url: "/revendagarantia.html" },
         { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
         
-        // Links de Pesquisas (Estão em /pesquisas/, use /pesquisas/)
-        { title: "Pesquisa Serial", url: "../pesquisas/serial.html" },
+        // Links de Pesquisas (Incluindo os que faltavam)
+        { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
         { title: "Pesquisa PA (LVP)", url: "/pesquisas/lvp.html" },
         { title: "Abrir OS", url: "/pesquisas/os.html" },
         { title: "Baixar NF", url: "/pesquisas/nf.html" },
         { title: "Romaneio Visão", url: "/pesquisas/visao.html" },
         { title: "Pesquisa Fabricante", url: "/pesquisas/garantiafabricante.html" },
-        // Adicionei o link da página atual para pesquisa funcionar
-        { title: "Pesquisa Cliente", url: "/pesquisas/cliente-protheus.html" },
+        { title: "Pesquisa Contato Cliente", url: "/pesquisas/cliente-protheus.html" }, 
+        { title: "Pesquisa NF Remessa", url: "/pesquisas/nf-remessa.html" }, // Adicionado
+        { title: "Pesquisa Serial KIT", url: "/pesquisas/serial-kit.html" }, // Adicionado
     ];
 
-    // 2. Cria o contêiner de resultados
+    // 3. Cria o contêiner de resultados
     const resultsContainer = document.createElement('div');
     resultsContainer.id = 'search-results-container';
+    // Adicionamos o contêiner ao cabeçalho principal (Header)
     mainHeader.appendChild(resultsContainer);
 
-    // 3. Adiciona o listener de input para a barra de pesquisa
+    // 4. Adiciona o listener de input para a barra de pesquisa
     searchBar.addEventListener('input', () => {
         const searchTerm = searchBar.value.toLowerCase().trim();
         resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
@@ -93,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Oculta os resultados ao clicar fora da barra de pesquisa
+    // 5. Oculta os resultados ao clicar fora da barra de pesquisa
     document.addEventListener('click', (event) => {
+        // Verifica se o clique não foi dentro do cabeçalho principal
         if (!mainHeader.contains(event.target)) {
             resultsContainer.style.display = 'none';
         }
     });
 });
-
