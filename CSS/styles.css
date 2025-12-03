@@ -453,3 +453,45 @@ hr {
     background-color: #fff; /* Fundo branco para resultado */
     border: 1px solid #ccc;
 }
+
+
+/* Estilo para o box de cada passo, como visto na "Pesquisa Serial" */
+.step {
+    background-color: #f0f0f0; /* Cinza claro */
+    border: 1px solid #ddd; /* Borda sutil */
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px; /* Espaço entre os passos */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* Garante que os títulos dos passos tenham a cor correta */
+.step h2 {
+    color: #333; /* Cor escura para o título do passo */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 1px solid #ddd; /* Separador sutil */
+    padding-bottom: 10px;
+}
+
+/* Estilo para os links/texto azul dentro dos passos */
+.step a, .step .nested li, .step p, .step ul li {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Estilo para a linha verde abaixo do título principal (como na imagem) */
+#pesquisa-cliente-protheus h1 {
+    border-bottom: 3px solid #1abc9c; /* Verde claro */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 2em;
+}
+
+/* Estilo para o texto azul/verde nos passos */
+.step .nested li, .step a {
+    color: #1abc9c; /* Cor verde/azul para destacar itens de ação/módulos */
+    font-weight: bold;
+}
