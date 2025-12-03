@@ -26,28 +26,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!searchBar || !mainHeader) return;
 
     // 1. Mapeamento de todos os links do seu site
-    // (Usamos os links do cabeçalho como base para a pesquisa)
     const siteLinks = [
-        // Links Principais e de E-mails
-        { title: "Página Principal", url: "index.html" },
-        { title: "Script de E-mails", url: "emails.html" },
+        // Links Principais e de E-mails (Estão na RAIZ, use /)
+        { title: "Página Principal", url: "/index.html" }, 
+        { title: "Script de E-mails", url: "/emails.html" },
         
-        // Links de Automação/Atalhos
-        { title: "Atalhos", url: "atalhos.html" },
-        { title: "Comparar Lista", url: "comprar-lista.html" },
-        { title: "Adicionar S", url: "adds.html" },
-        { title: "Definir Garantia", url: "garantia.html" },
-        { title: "Verificar NF", url: "verificarnf.html" },
-        { title: "Definir Garantia Revenda", url: "revendagarantia.html" },
-        { title: "Conferir Valores Unitário", url: "conferencia-valores.html" },
+        // Links de Automação/Atalhos (Estão na RAIZ, use /)
+        { title: "Atalhos", url: "/atalhos.html" },
+        { title: "Comparar Lista", url: "/comprar-lista.html" },
+        { title: "Adicionar S", url: "/adds.html" },
+        { title: "Definir Garantia", url: "/garantia.html" },
+        { title: "Verificar NF", url: "/verificarnf.html" },
+        { title: "Definir Garantia Revenda", url: "/revendagarantia.html" },
+        { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
         
-        // Links de Pesquisas
-        { title: "Pesquisa Serial", url: "serial.html" },
-        { title: "Pesquisa PA (LVP)", url: "lvp.html" },
-        { title: "Abrir OS", url: "os.html" },
-        { title: "Baixar NF", url: "nf.html" },
-        { title: "Romaneio Visão", url: "visao.html" },
-        { title: "Pesquisa Fabricante", url: "garantiafabricante.html" },
+        // Links de Pesquisas (Estão em /pesquisas/, use /pesquisas/)
+        { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
+        { title: "Pesquisa PA (LVP)", url: "/pesquisas/lvp.html" },
+        { title: "Abrir OS", url: "/pesquisas/os.html" },
+        { title: "Baixar NF", url: "/pesquisas/nf.html" },
+        { title: "Romaneio Visão", url: "/pesquisas/visao.html" },
+        { title: "Pesquisa Fabricante", url: "/pesquisas/garantiafabricante.html" },
+        // Adicionei o link da página atual para pesquisa funcionar
+        { title: "Pesquisa Cliente", url: "/pesquisas/cliente-protheus.html" },
     ];
 
     // 2. Cria o contêiner de resultados
