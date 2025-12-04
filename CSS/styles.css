@@ -282,6 +282,21 @@ body {
     border-left: 5px solid #28a745;
 }
 
+/* --- NOVO ESTILO PARA AVISO IMPORTANTE (EM DESTAQUE) --- */
+.alert-important {
+    background-color: #f8d7da; /* Fundo rosa claro (vermelho de alerta) */
+    color: #721c24; /* Texto vermelho escuro */
+    border-left: 5px solid #dc3545; /* Borda vermelha de destaque */
+    font-weight: bold; /* Deixa todo o texto em negrito */
+    margin-bottom: 25px; /* Adiciona margem abaixo para separá-lo */
+}
+
+.alert-important strong {
+    font-weight: 700;
+}
+/* -------------------------------------------------------- */
+
+
 /* Linha Divisória */
 hr {
     border: 0;
@@ -368,8 +383,6 @@ hr {
 
 /* ========================================================== */
 /* --- NOVOS ESTILOS PARA FORMULÁRIOS (LABEL, INPUT, BUTTON, RESULTADO) --- */
-/* Estes estilos devem ser mantidos, pois não existiam antes e são necessários
-   para estilizar os elementos de formulário em 'adds.html' e 'conferencia-valores.html' */
 
 /* Estilo para Rótulos (Labels) */
 .content label { 
