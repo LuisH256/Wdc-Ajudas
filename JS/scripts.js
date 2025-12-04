@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Mapeamento de todos os links do seu site
     const siteLinks = [
         // Links Principais e de E-mails
-        { title: "Página Principal", url: "index.html" }, 
-        { title: "Script de E-mails", url: "emails.html" },
+        { title: "Página Principal", url: "/index.html" }, 
+        { title: "Script de E-mails", url: "/emails.html" },
         
         // Links de Automação/Atalhos
-        { title: "Atalhos", url: "atalhos.html" },
-        { title: "Comparar Lista", url: "comprar-lista.html" },
-        { title: "Adicionar S", url: "adds.html" },
-        { title: "Definir Garantia", url: "garantia.html" },
-        { title: "Verificar NF", url: "verificarnf.html" },
-        { title: "Definir Garantia Revenda", url: "revendagarantia.html" },
-        { title: "Conferir Valores Unitário", url: "conferencia-valores.html" },
+        { title: "Atalhos", url: "/atalhos.html" },
+        { title: "Comparar Lista", url: "/comprar-lista.html" },
+        { title: "Adicionar S", url: "/adds.html" },
+        { title: "Definir Garantia", url: "/garantia.html" },
+        { title: "Definir Garantia Revenda", url: "/revendagarantia.html" },
+        { title: "Verificar NF", url: "/verificarnf.html" },
+        { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
         
         // Links de Pesquisas (Incluindo os que faltavam)
         { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Romaneio Visão", url: "/pesquisas/visao.html" },
         { title: "Pesquisa Fabricante", url: "/pesquisas/garantiafabricante.html" },
         { title: "Pesquisa Contato Cliente", url: "/pesquisas/cliente-protheus.html" }, 
-        { title: "Pesquisa NF Remessa", url: "/pesquisas/nf-remessa.html" }, // Adicionado
-        { title: "Pesquisa Serial KIT", url: "/pesquisas/serial-kit.html" }, // Adicionado
+        { title: "Pesquisa NF Remessa", url: "/pesquisas/nf-remessa.html" }, 
+        { title: "Pesquisa Serial KIT", url: "/pesquisas/serial-kit.html" }, 
     ];
 
     // 2. Cria o contêiner de resultados
@@ -100,5 +100,31 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsContainer.style.display = 'none';
         }
     });
-});
 
+
+    // =======================================================
+    // NOVO: FUNÇÃO PARA CONTROLAR A VISIBILIDADE DO CARD DE AVISO
+    // =======================================================
+
+    /**
+     * Controla a visibilidade do Card de Aviso Global.
+     * @param {boolean} isVisible - Se true, o card é exibido. Se false, é ocultado.
+     */
+    function toggleGlobalAlert(isVisible) {
+        const alertCard = document.getElementById('global-alert-card');
+        if (alertCard) {
+            if (isVisible === true) {
+                // Exibe o card
+                alertCard.style.display = 'block'; 
+            } else {
+                // Oculta o card
+                alertCard.style.display = 'none';
+            }
+        }
+    }
+
+    // CHAMADA INICIAL: Por padrão, o card de aviso está OCULTO (false) ao carregar a página.
+    // Mude para toggleGlobalAlert(true) se quiser que ele apareça imediatamente.
+    toggleGlobalAlert(true);
+
+});
