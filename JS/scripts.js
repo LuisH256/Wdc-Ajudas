@@ -28,28 +28,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Mapeamento de todos os links do seu site
     const siteLinks = [
         // Links Principais e de E-mails
-        { title: "Página Principal", url: "/index.html" }, 
-        { title: "Script de E-mails", url: "/emails.html" },
+        { title: "Página Principal", url: "/Wdc-Ajudas/index.html" }, 
+        { title: "Script de E-mails", url: "/Wdc-Ajudas/emails.html" },
         
         // Links de Automação/Atalhos
-        { title: "Atalhos", url: "/atalhos.html" },
-        { title: "Comparar Lista", url: "/comprar-lista.html" },
-        { title: "Adicionar S", url: "/adds.html" },
-        { title: "Definir Garantia", url: "/garantia.html" },
-        { title: "Definir Garantia Revenda", url: "/revendagarantia.html" },
-        { title: "Verificar NF", url: "/verificarnf.html" },
-        { title: "Conferir Valores Unitário", url: "/conferencia-valores.html" },
+        { title: "Atalhos", url: "/Wdc-Ajudas/atalhos.html" },
+        { title: "Comparar Lista", url: "/Wdc-Ajudas/comprar-lista.html" },
+        { title: "Adicionar S", url: "/Wdc-Ajudas/adds.html" },
+        { title: "Definir Garantia", url: "/Wdc-Ajudas/garantia.html" },
+        { title: "Definir Garantia Revenda", url: "/Wdc-Ajudas/revendagarantia.html" },
+        { title: "Verificar NF", url: "/Wdc-Ajudas/verificarnf.html" },
+        { title: "Conferir Valores Unitário", url: "/Wdc-Ajudas/conferencia-valores.html" },
         
         // Links de Pesquisas (Incluindo os que faltavam)
-        { title: "Pesquisa Serial", url: "/pesquisas/serial.html" },
-        { title: "Pesquisa PA (LVP)", url: "/pesquisas/lvp.html" },
-        { title: "Abrir OS", url: "/pesquisas/os.html" },
-        { title: "Baixar NF", url: "/pesquisas/nf.html" },
-        { title: "Romaneio Visão", url: "/pesquisas/visao.html" },
-        { title: "Pesquisa Fabricante", url: "/pesquisas/garantiafabricante.html" },
-        { title: "Pesquisa Contato Cliente", url: "/pesquisas/cliente-protheus.html" }, 
-        { title: "Pesquisa NF Remessa", url: "/pesquisas/nf-remessa.html" }, 
-        { title: "Pesquisa Serial KIT", url: "/pesquisas/serial-kit.html" }, 
+        { title: "Pesquisa Serial", url: "/Wdc-Ajudas/pesquisas/serial.html" },
+        { title: "Pesquisa PA (LVP)", url: "/Wdc-Ajudas/pesquisas/lvp.html" },
+        { title: "Abrir OS", url: "/Wdc-Ajudas/pesquisas/os.html" },
+        { title: "Baixar NF", url: "/Wdc-Ajudas/pesquisas/nf.html" },
+        { title: "Romaneio Visão", url: "/Wdc-Ajudas/pesquisas/visao.html" },
+        { title: "Pesquisa Fabricante", url: "/Wdc-Ajudas/pesquisas/garantiafabricante.html" },
+        { title: "Pesquisa Contato Cliente", url: "/Wdc-Ajudas/pesquisas/cliente-protheus.html" }, 
+        { title: "Pesquisa NF Remessa", url: "/Wdc-Ajudas/pesquisas/nf-remessa.html" }, 
+        { title: "Pesquisa Serial KIT", url: "/Wdc-Ajudas/pesquisas/serial-kit.html" }, 
     ];
 
     // 2. Cria o contêiner de resultados
@@ -128,3 +128,4 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleGlobalAlert(true);
 
 });
+
