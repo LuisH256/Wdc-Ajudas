@@ -125,7 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // CHAMADA INICIAL: Por padrão, o card de aviso está OCULTO (false) ao carregar a página.
     // Mude para toggleGlobalAlert(true) se quiser que ele apareça imediatamente.
-    toggleGlobalAlert(true);
+    toggleGlobalAlert(false); // <---- Altere aqui, false para esta invisivel, true para visivel 
 
 });
+
 
