@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'email-template', 'sac-template', 'sac-options', 'apoio-vendas-options',
         'destinatario-container', 'tipo-operacao-container', 'pdaf-options',
         'solar-options', 
-        'ticket-correios-options', // ID para o container principal de tickets (Ticket para advanceds)
+        'ticket-correios-options', // ID para o container principal de tickets
         'email-preview', 'email-content', 'recusa-nf-options',
         'destinatario', 'tipo-operacao', 'tipo-select', 'nfs-input',
         'ean-input', 'swqt-input', 'nf-input', 'valor-unitario-input',
@@ -40,7 +40,7 @@ A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota or
 No campo de “dados adicionais” da NF, mencionar:  
 {{dados_adicionais}}
 
-{{observacao_matriz}}
+{{observacao_agendamento}}
 
 Aguardamos a nota fiscal emitida para prosseguimento.`,
         pdaf: `Favor verificar entrada no {{tipo}} RMA que virou devolução,
@@ -61,7 +61,7 @@ Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedi
 <b>Segue endereço para envio do material:</b><br>
 {{endereco}}
 
-{{observacao_simoes}}
+{{observacao_agendamento}}
 
 <b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
         ticket_para_advanceds: { 
@@ -123,6 +123,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
     };
 
+    // Função centralizada para a observação de agendamento (Simões Filho)
+    const getObservacaoAgendamento = (destinatarioKey) => {
+        if (destinatarioKey === 'simoes') {
+            return `<br><span style="color: red;"><b>Observação Importante:</b></span><br>` +
+                   `Referente a tratativas de devoluções para <b>Simões Filho/BA</b> é necessário agendamento prévio, ` +
+                   `para realizar um agendamento segue os e-mails:<br>` +
+                   `• iemilli@toplogba.com.br<br>` +
+                   `• operacional@toplogba.com.br`;
+        }
+        return "";
+    };
+
     const resetFields = () => {
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
@@ -164,21 +176,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const destinatario = DESTINATARIOS[destinatarioKey] || '';
         const operacaoInfo = OPERACOES[elements.tipo_operacao.value] || {};
 
-        // Lógica para aviso da Matriz
-        let obsMatriz = "";
-        if (destinatarioKey === 'matriz') {
-            obsMatriz = `<br><span style="color: red;"><b>Observação Importante:</b></span><br>` +
-                        `Referente ao processo de devolução para a unidade de <b>Ilhéus/BA (Matriz)</b>, ` +
-                        `informamos que é <b>obrigatório o agendamento prévio</b>.`;
-        }
-
         if (destinatario && operacaoInfo.operacao) {
             const emailText = TEMPLATES.devolucao
                 .replace('{{destinatario}}', destinatario)
                 .replace('{{operacao}}', operacaoInfo.operacao)
                 .replace('{{cfop}}', operacaoInfo.cfop)
                 .replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais)
-                .replace('{{observacao_matriz}}', obsMatriz);
+                .replace('{{observacao_agendamento}}', getObservacaoAgendamento(destinatarioKey));
             
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
@@ -190,20 +194,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateEnvioMaterialEmail = () => {
         const destinatarioKey = elements.destinatario.value;
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
-        
-        let obsSimoes = "";
-        if (destinatarioKey === 'simoes') {
-            obsSimoes = `<br><br><span style="color: red;"><b>Observação Importante:</b></span><br>` +
-                        `Referente a tratativas de devoluções para <b>Simões Filho/BA</b> é necessário agendamento prévio, ` +
-                        `para realizar um agendamento segue os e-mails:<br>` +
-                        `• iemilli@toplogba.com.br<br>` +
-                        `• operacional@toplogba.com.br`;
-        }
 
         if (destinatarioKey) {
             const emailText = TEMPLATES.envio_material_devolucao
                 .replace('{{endereco}}', endereco)
-                .replace('{{observacao_simoes}}', obsSimoes);
+                .replace('{{observacao_agendamento}}', getObservacaoAgendamento(destinatarioKey));
             
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
@@ -237,9 +232,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
                 .replace(/EAN .*\n/g, ''); 
         }
-
-        setVisibility(elements.ean_input, true);
-        setVisibility(elements.swqt_input, true);
 
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
