@@ -196,11 +196,12 @@ Cep: 43721-450 SIMOES FILHO/BA`
         
         let obsSimoes = "";
         if (destinatarioKey === 'simoes') {
-            obsSimoes = `<br><br><span style="color: red;"><b>Observação Importante:</b></span><br>` +
-                        `Referente a tratativas de devoluções para <b>Simões Filho/BA</b> é necessário agendamento prévio, ` +
-                        `para realizar um agendamento segue os e-mails:<br>` +
-                        `• iemilli@toplogba.com.br<br>` +
-                        `• operacional@toplogba.com.br`;
+            // Formatação focada em cores e negrito para destaque visual no e-mail
+            obsSimoes = `<br><br><span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
+                        `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
+                        `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
+                        `<span style="color: #ff0000;"><b>iemilli@toplogba.com.br</b></span><br>` +
+                        `<span style="color: #ff0000;"><b>operacional@toplogba.com.br</b></span>`;
         }
 
         if (destinatarioKey) {
@@ -215,6 +216,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
     };
 
+    
     const updatePdAfEmail = () => {
         const tipo = elements.tipo_select.value || 'PD';
         const ean = elements.ean_input.value || '...';
@@ -455,3 +457,4 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
