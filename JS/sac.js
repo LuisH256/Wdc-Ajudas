@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'data-validade-input-expired', 'postagem-correios-template',
         'primeiro-ticket-options', 'ticket-expirado-options',
         'nf-input-postagem', // NF de retorno para primeiro ticket
+        'btn-copiar' // ID ADICIONADO PARA O BOTÃO DE COPIAR
     ].reduce((acc, id) => {
         acc[id.replace(/-/g, '_')] = document.getElementById(id);
         return acc;
@@ -48,7 +49,6 @@ EAN {{ean}}
 
 {{swqt}}`,
         troca_solar: `{{saudacao}}\n\nSeguem instruções para emissão da nota fiscal de retorno de troca em garantia para seguirmos com o processo de troca do seu produto {{nfText}}.\n\n<b>Natureza da Operação:</b> Entrada para troca em garantia.\n\nCFOP: 6949 (outros estados) / 5949\n\n<b>VALOR UNITÁRIO:</b> R$ {{valorUnitario}}\n\n<b>QUANTIDADE:</b> {{quantidade}}\n\n<b>NCM DO ITEM:</b> {{ncm}}\n\nDESCRIÇÃO ITEM: {{descricao}}\n\n<b>DESTINATÁRIO:</b> LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA\nCNPJ: 05.917.486/0001-40 - I.E: 63250303\nROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8\nIGUAPE – ILHÉUS/BA\n45658-335\n\n<b>OBS:</b> No aguardo da pré nota para validação.`,
-        // 'substituicao_componentes' removido
         envio_material_devolucao: `ENVIO DE MATERIAL - DEVOLUÇÃO
 
 Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
@@ -63,7 +63,6 @@ Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedi
 {{observacao_simoes}}
 
 <b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
-        // Template RENOMEADO
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
 
@@ -87,7 +86,6 @@ Ficamos à disposição para maiores esclarecimentos.`,
 Favor sinalizar caso haja alguma divergência no processo.
 
 Ficamos à disposição para maiores esclarecimentos.`,
-            // 'informativo_fiberhome' removido
         }
     };
 
@@ -118,46 +116,37 @@ Cep: 43721-450 SIMOES FILHO/BA`
     // 2. Funções Auxiliares
     const getSaudacao = () => new Date().getHours() < 12 ? "Bom dia!" : "Boa tarde!";
 
-    /**
-     * Define a visibilidade de um elemento.
-     * @param {HTMLElement} element O elemento a ser manipulado.
-     * @param {boolean} isVisible Se deve ser visível (true) ou escondido (false).
-     */
+    // FUNÇÃO AUXILIAR PARA FORMATAR QUEBRA DE LINHA PARA HTML (ESSENCIAL PARA GMAIL)
+    const formatToEmail = (text) => text.trim().replace(/\n/g, '<br>');
+
     const setVisibility = (element, isVisible) => {
         if (element) {
             element.classList.toggle('hidden', !isVisible);
         }
     };
 
-    /**
-     * Limpa os campos de input e esconde as opções.
-     */
     const resetFields = () => {
-        // Limpa campos de input de texto
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
-        // Oculta todos os contêineres de opções de forma genérica
         const containersToHide = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
             'solar_options', 
-            'ticket_correios_options', // Container de Tickets
+            'ticket_correios_options', 
             'email_preview', 'recusa_nf_options', 'sac_options',
             'apoio_vendas_options', 'primeiro_ticket_options', 'ticket_expirado_options'
         ];
         containersToHide.forEach(id => setVisibility(elements[id], false));
         
-        // Limpa os selects
         if (elements.destinatario) elements.destinatario.value = '';
         if (elements.tipo_operacao) elements.tipo_operacao.value = '';
-        if (elements.tipo_select) elements.tipo_select.value = 'PD'; // Valor padrão
+        if (elements.tipo_select) elements.tipo_select.value = 'PD';
         if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
 
-        // Garante que os campos EAN/SWQT de PD/AF estejam visíveis por padrão
         setVisibility(elements.ean_input, true);
         setVisibility(elements.swqt_input, true);
     };
 
-    // 3. Funções de Atualização de Email (Simplificadas)
+    // 3. Funções de Atualização de Email (Ajustadas para HTML)
 
     const updateRecusaNfEmail = () => {
         const nf = elements.nf_recusa_input.value || '...';
@@ -168,7 +157,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{nf}}', nf)
             .replace('{{descricao}}', descricao);
         
-        elements.email_content.innerHTML = emailText.trim();
+        elements.email_content.innerHTML = formatToEmail(emailText);
         setVisibility(elements.email_preview, true);
     };
 
@@ -183,7 +172,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 .replace('{{cfop}}', operacaoInfo.cfop)
                 .replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
             
-            elements.email_content.innerHTML = emailText.trim();
+            elements.email_content.innerHTML = formatToEmail(emailText);
             setVisibility(elements.email_preview, true);
         } else {
             setVisibility(elements.email_preview, false);
@@ -196,7 +185,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         
         let obsSimoes = "";
         if (destinatarioKey === 'simoes') {
-            // Formatação focada em cores e negrito para destaque visual no e-mail
             obsSimoes = `<br><br><span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
                         `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
                         `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
@@ -209,14 +197,14 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 .replace('{{endereco}}', endereco)
                 .replace('{{observacao_simoes}}', obsSimoes);
             
-            elements.email_content.innerHTML = emailText.trim();
+            // Aqui usamos o replace direto para não quebrar as tags HTML já existentes em obsSimoes
+            elements.email_content.innerHTML = emailText.trim().replace(/\n/g, '<br>');
             setVisibility(elements.email_preview, true);
         } else {
             setVisibility(elements.email_preview, false);
         }
     };
 
-    
     const updatePdAfEmail = () => {
         const tipo = elements.tipo_select.value || 'PD';
         const ean = elements.ean_input.value || '...';
@@ -237,22 +225,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{ean}}', ean)
             .replace('{{swqt}}', swqtMessage);
         
-        // Lógica de visibilidade e ajuste de texto para AF (CORRIGIDA)
-        // EAN e SW/QT são mantidos visíveis para ambos (PD e AF),
-        // mas a mensagem do e-mail é ajustada para AF.
         if (tipo === 'AF') {
             emailText = emailText
-                // Remove a parte "seguir também com notas_servico" para AF
                 .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
-                // Remove a linha do EAN no template para AF
                 .replace(/EAN .*\n/g, ''); 
         }
 
-        // Garante que os campos EAN e SW/QT fiquem visíveis para ambos (PD e AF)
-        setVisibility(elements.ean_input, true);
-        setVisibility(elements.swqt_input, true);
-
-        elements.email_content.innerHTML = emailText.trim();
+        elements.email_content.innerHTML = formatToEmail(emailText);
         setVisibility(elements.email_preview, true);
     };
 
@@ -262,7 +241,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const quantidade = elements.quantidade_input.value || '...';
         const ncm = elements.ncm_input.value || '...';
         const descricao = elements.descricao_input.value || '...';
-
         const nfText = nf.includes(',') ? `das NFs ${nf}` : `da NF ${nf}`;
 
         const emailText = TEMPLATES[templateKey]
@@ -273,11 +251,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{ncm}}', ncm)
             .replace('{{descricao}}', descricao);
 
-        elements.email_content.innerHTML = emailText.trim();
+        elements.email_content.innerHTML = formatToEmail(emailText);
         setVisibility(elements.email_preview, true);
     };
 
-    // Função RENOMEADA
     const updateTicketParaAdvancedsEmail = (templateKey) => {
         const templateData = TEMPLATES.ticket_para_advanceds[templateKey];
         if (!templateData) return;
@@ -301,47 +278,33 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 .replace('{{dataValidade}}', elements.data_validade_input_expired.value || '...');
         }
         
-        elements.email_content.innerHTML = emailText.trim();
+        elements.email_content.innerHTML = formatToEmail(emailText);
         setVisibility(elements.email_preview, true);
     };
     
     // 4. Lógica de Manipulação de Eventos
-
-    /**
-     * Mapeamento da lógica de exibição de opções
-     */
     const templateMap = {
-        // Mapeamento principal (email-template)
         'email-template': {
             sac: () => setVisibility(elements.sac_options, true),
             apoio_vendas: () => setVisibility(elements.apoio_vendas_options, true),
         },
-        // Mapeamento secundário (sac-template)
         'sac-template': {
             devolucao: () => {
                 setVisibility(elements.destinatario_container, true);
                 setVisibility(elements.tipo_operacao_container, true);
             },
-            solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), // RENOMEADO pdaf -> solicitar_entrada_nf
+            solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true),
             troca_solar: () => setVisibility(elements.solar_options, true), 
-            // 'substituicao_componentes' removido
             envio_material_devolucao: () => {
                 setVisibility(elements.destinatario_container, true);
                 updateEnvioMaterialEmail(); 
             },
-            // NOVO/RENOMEADO
             ticket_para_advanceds: () => setVisibility(elements.ticket_correios_options, true),
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
         }
     };
 
-    /**
-     * Função genérica para lidar com a mudança de templates.
-     * @param {string} templateId O ID do select que mudou ('email-template' ou 'sac-template').
-     * @param {string} value O valor selecionado.
-     */
     const handleTemplateChange = (templateId, value) => {
-        // Se for o template principal, reseta tudo
         if (templateId === 'email-template') {
             resetFields(); 
             if (templateMap['email-template'][value]) {
@@ -349,9 +312,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             }
         } 
         
-        // Se for o template SAC, apenas reseta os campos específicos e opções SAC
         if (templateId === 'sac-template') {
-            // Esconde todas as sub-opções antes de mostrar a correta
             const sacSubContainersToHide = [
                 'destinatario_container', 'tipo_operacao_container', 'pdaf_options', 
                 'solar_options', 'recusa_nf_options', 'email_preview', 'ticket_correios_options'
@@ -363,74 +324,46 @@ Cep: 43721-450 SIMOES FILHO/BA`
             }
         }
         
-        // Para Recusa NF, atualiza logo após o reset/mudança para mostrar o template base
-        if (value === 'recusa_nf') {
-            updateRecusaNfEmail();
-        }
-
-        // Para Solicitar Entrada NF, atualiza para mostrar o template base
-        if (value === 'solicitar_entrada_nf') {
-            updatePdAfEmail();
-        }
-
-        // Para Ticket para Advanceds, atualiza logo após o reset/mudança (caso já haja uma opção selecionada)
+        if (value === 'recusa_nf') updateRecusaNfEmail();
+        if (value === 'solicitar_entrada_nf') updatePdAfEmail();
         if (value === 'ticket_para_advanceds' && elements.postagem_correios_template && elements.postagem_correios_template.value) {
              updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
         }
     };
 
     // 5. Associação de Event Listeners
-
-    // Lógica para selects principais (CHANGE)
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
-    
-    // Lógica para SAC template (CHANGE)
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
-    // Lógica para Devoução/Envio Material (CHANGE)
     if (elements.destinatario) elements.destinatario.addEventListener('change', () => {
-        if (elements.sac_template.value === 'envio_material_devolucao') {
-            updateEnvioMaterialEmail();
-        } else if (elements.sac_template.value === 'devolucao') {
-            updateDevolucaoEmail();
-        }
+        if (elements.sac_template.value === 'envio_material_devolucao') updateEnvioMaterialEmail();
+        else if (elements.sac_template.value === 'devolucao') updateDevolucaoEmail();
     });
     if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
-
-    // Lógica para Solicitar Entrada NF (INPUT/CHANGE)
-    // O campo 'tipo_select' (PD/AF) agora aciona a atualização do e-mail E do estado de visibilidade
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
+
     ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail);
     });
 
-    // Lógica para Troca Solar (INPUT)
     ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
             const template = elements.sac_template.value;
-            if (template === 'troca_solar') { // 'substituicao_componentes' removido daqui
-                updateSolarEmail(template);
-            }
+            if (template === 'troca_solar') updateSolarEmail(template);
         });
     });
 
-    // Lógica para Recusa NF (INPUT)
     ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail);
     });
 
-    // Lógica para Ticket para Advanceds (reintroduzida e ajustada)
     if (elements.postagem_correios_template) {
         elements.postagem_correios_template.addEventListener('change', () => {
             const selectedOption = elements.postagem_correios_template.value;
             setVisibility(elements.primeiro_ticket_options, selectedOption === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, selectedOption === 'ticket_expirado');
-            
-            if (selectedOption) {
-                updateTicketParaAdvancedsEmail(selectedOption);
-            } else {
-                setVisibility(elements.email_preview, false);
-            }
+            if (selectedOption) updateTicketParaAdvancedsEmail(selectedOption);
+            else setVisibility(elements.email_preview, false);
         });
     }
 
@@ -441,7 +374,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 
-    // Listeners para Primeiro Ticket
     ['nf_input_postagem', 'ticket_input', 'data_emissao_input', 'data_validade_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
             if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'primeiro_ticket')
@@ -449,12 +381,33 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 
-    // Listeners para Ticket Expirado
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
             if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'ticket_expirado')
                 updateTicketParaAdvancedsEmail('ticket_expirado');
         });
     });
-});
 
+    // --- FUNÇÃO DE CÓPIA PARA MANTER FORMATAÇÃO ---
+    if (elements.btn_copiar) {
+        elements.btn_copiar.addEventListener('click', async () => {
+            const preview = elements.email_content;
+            try {
+                // Criamos um Blob do tipo HTML para que o Gmail entenda as cores/estilos
+                const blobHtml = new Blob([preview.innerHTML], { type: 'text/html' });
+                const blobText = new Blob([preview.innerText], { type: 'text/plain' });
+                const data = [new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })];
+
+                await navigator.clipboard.write(data);
+                
+                // Feedback visual no botão
+                const originalText = elements.btn_copiar.innerText;
+                elements.btn_copiar.innerText = "Copiado!";
+                setTimeout(() => elements.btn_copiar.innerText = originalText, 2000);
+            } catch (err) {
+                console.error("Erro ao copiar: ", err);
+                alert("Não foi possível copiar com formatação automaticamente.");
+            }
+        });
+    }
+});
