@@ -54,7 +54,7 @@ EAN {{ean}}
 
 <br><br>Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
 
-<br><br><b><font color="#FF0000">Lembrete:</font></b> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
+<br><br><span style="color: #FF0000;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
 
 <br><br>- O material deve acompanhar a nota fiscal física de devolução emitida.
 
@@ -198,11 +198,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
         let obsSimoes = "";
         if (destinatarioKey === 'simoes') {
             // Formatação focada em cores e negrito para destaque visual no e-mail
-            obsSimoes = `<br><br><b><font color="#FF0000" size="4">ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</font></b><br>` +
-            `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
-            `<b><font color="#0000FF">Para realizar o agendamento, envie um e-mail para:</font></b><br>` +
-            `<b><font color="#FF0000">iemilli@toplogba.com.br</font></b><br>` +
-            `<b><font color="#FF0000">operacional@toplogba.com.br</font></b>`;
+           obsSimoes = `<br><br><span style="color: #FF0000;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
+            `Referente às tratativas...<br><br>` +
+            `<span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
+            `<span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span>`;
         }
 
         if (destinatarioKey) {
@@ -458,6 +457,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
 
 
