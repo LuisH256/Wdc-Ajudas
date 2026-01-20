@@ -27,26 +27,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Função de copiar com feedback visual
-    copyEmailButton.addEventListener('click', () => {
-        const emailText = emailContent.textContent;
+    // Função de copiar CORRIGIDA para preservar formatação (Rich Text)
+copyEmailButton.addEventListener('click', () => {
+    // Seleciona o elemento de conteúdo
+    const range = document.createRange();
+    range.selectNode(emailContent);
+    
+    // Faz a seleção visual do conteúdo para o navegador capturar o HTML
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+        // O comando 'copy' aqui leva o HTML (cores e negrito) junto
+        const successful = document.execCommand('copy');
         
-        navigator.clipboard.writeText(emailText).then(() => {
+        if (successful) {
             // Feedback visual: Mudar cor e texto do botão
             const originalText = copyEmailButton.textContent;
-            copyEmailButton.textContent = 'Copiado! ✅';
+            copyEmailButton.textContent = 'Copiado com Formatação! ✅';
             copyEmailButton.classList.add('copy-success');
 
             setTimeout(() => {
                 copyEmailButton.textContent = originalText;
                 copyEmailButton.classList.remove('copy-success');
-            }, 1500); // 1.5 segundos de feedback
-            
-        }).catch(err => {
-            console.error('Erro ao copiar o e-mail: ', err);
-            alert('Erro ao copiar o e-mail. Por favor, tente novamente ou copie manualmente.');
-        });
-    });
+            }, 1500);
+        }
+    } catch (err) {
+        console.error('Erro ao copiar: ', err);
+        alert('Erro ao copiar. Tente selecionar e copiar manualmente.');
+    }
+
+    // Limpa a seleção para não ficar azul na tela
+    selection.removeAllRanges();
+});
 
     // A função de resetar deve ser capaz de resetar todos os campos de input/select
     function resetFields() {
@@ -85,3 +99,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
     window.resetFields = resetFields;
 });
+
