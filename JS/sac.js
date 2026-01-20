@@ -49,19 +49,15 @@ EAN {{ean}}
 {{swqt}}`,
         troca_solar: `{{saudacao}}\n\nSeguem instruções para emissão da nota fiscal de retorno de troca em garantia para seguirmos com o processo de troca do seu produto {{nfText}}.\n\n<b>Natureza da Operação:</b> Entrada para troca em garantia.\n\nCFOP: 6949 (outros estados) / 5949\n\n<b>VALOR UNITÁRIO:</b> R$ {{valorUnitario}}\n\n<b>QUANTIDADE:</b> {{quantidade}}\n\n<b>NCM DO ITEM:</b> {{ncm}}\n\nDESCRIÇÃO ITEM: {{descricao}}\n\n<b>DESTINATÁRIO:</b> LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA\nCNPJ: 05.917.486/0001-40 - I.E: 63250303\nROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8\nIGUAPE – ILHÉUS/BA\n45658-335\n\n<b>OBS:</b> No aguardo da pré nota para validação.`,
         // 'substituicao_componentes' removido
-        envio_material_devolucao: `ENVIO DE MATERIAL - DEVOLUÇÃO
-
-Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
-
-<span style="color: red;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
-
-- O material deve acompanhar a nota fiscal física de devolução emitida.
-
-<b>Segue endereço para envio do material:</b>
-{{endereco}}
-{{observacao_simoes}}
-
+        envio_material_devolucao: `ENVIO DE MATERIAL - DEVOLUÇÃO<br><br>
+Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.<br><br>
+<span style="color: red;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física...<br><br>
+- O material deve acompanhar a nota fiscal física de devolução emitida.<br><br>
+<b>Segue endereço para envio do material:</b><br>
+{{endereco}}<br>
+{{observacao_simoes}}<br><br>
 <b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
+};
         // Template RENOMEADO
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
@@ -455,6 +451,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
 
 
