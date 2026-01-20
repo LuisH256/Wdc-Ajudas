@@ -52,18 +52,18 @@ EAN {{ean}}
         // 'substituicao_componentes' removido
         envio_material_devolucao: `<b>ENVIO DE MATERIAL - DEVOLUÇÃO</b>
 
-Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
+<br>Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
 
-<span style="color: red;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
+<span style="color: red;"><br><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
 
-- O material deve acompanhar a nota fiscal física de devolução emitida.
+<br>- O material deve acompanhar a nota fiscal física de devolução emitida.
 
-<b>Segue endereço para envio do material:</b><br>
+<br><br><b>Segue endereço para envio do material:</b><br>
 {{endereco}}
 
 {{observacao_simoes}}
 
-<br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
+<br><br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
         // Template RENOMEADO
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
@@ -458,5 +458,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
 
