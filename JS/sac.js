@@ -191,14 +191,14 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const updateEnvioMaterialEmail = () => {
     const destinatarioKey = elements.destinatario.value;
-    // Aqui pegamos o endereço e removemos possíveis <br> que venham do objeto DESTINATARIOS
+    // Removemos os <br> do endereço para o pre-wrap do CSS agir, mas mantemos as tags de estilo
     const endereco = (DESTINATARIOS[destinatarioKey] || '...').replace(/<br>/g, '\n');
     
     let obsSimoes = "";
     if (destinatarioKey === 'simoes') {
-        // Usamos quebras de linha puras. O pre-wrap fará o resto.
+        // IMPORTANTE: Use \n para pular linha e tags HTML para estilo
         obsSimoes = `\n\n<span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span>\n` +
-                    `Referente às tratativas de devoluções para a unidade de Simões Filho/BA, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.\n\n` +
+                    `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.\n\n` +
                     `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span>\n` +
                     `<span style="color: #ff0000;"><b>iemilli@toplogba.com.br</b></span>\n` +
                     `<span style="color: #ff0000;"><b>operacional@toplogba.com.br</b></span>`;
@@ -206,14 +206,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     if (destinatarioKey) {
         let emailText = TEMPLATES.envio_material_devolucao
+            .replace(/<br>/g, '\n') // Troca qualquer <br> antigo por quebra de linha real
             .replace('{{endereco}}', endereco)
             .replace('{{observacao_simoes}}', obsSimoes);
         
-        // Atribui ao innerHTML. O pre-wrap garantirá que as quebras de linha virem parágrafos.
+        // Atribui como HTML para o navegador ler as tags <b> e <span>
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
-    } else {
-        setVisibility(elements.email_preview, false);
     }
 };
     
@@ -457,5 +456,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
 
