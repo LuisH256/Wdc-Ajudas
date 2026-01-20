@@ -28,54 +28,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Função de copiar ATUALIZADA para preservar cores e formatação (Rich Text)
-copyEmailButton.addEventListener('click', async () => {
-    // 1. Criamos um elemento temporário para processar o estilo exatamente como o Outlook gosta
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    
-    // 2. Injetamos o conteúdo do preview
-    tempDiv.innerHTML = emailContent.innerHTML;
-    document.body.appendChild(tempDiv);
+copyEmailButton.addEventListener('click', () => {
+    // Cria um elemento temporário
+    const container = document.createElement('div');
+    container.innerHTML = emailContent.innerHTML;
 
-    // 3. Forçamos a seleção desse elemento invisível
+    // Estilização forçada para garantir que o fundo não vá junto, apenas o texto colorido
+    container.style.position = 'fixed';
+    container.style.pointerEvents = 'none';
+    container.style.opacity = '0';
+    container.style.color = 'black'; // Cor base preta para o Outlook não bugar
+
+    document.body.appendChild(container);
+
+    // Seleciona o conteúdo
     const range = document.createRange();
-    range.selectNodeContents(tempDiv);
+    range.selectNode(container);
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
 
     try {
-        // 4. Tentativa com a API moderna primeiro (Melhor para Cores)
-        const htmlContent = tempDiv.innerHTML;
-        const textContent = tempDiv.innerText;
+        // O comando execCommand('copy') dentro de uma seleção de Range 
+        // é o que melhor preserva tags <font color> para o Outlook
+        const successful = document.execCommand('copy');
         
-        const blobHTML = new Blob([htmlContent], { type: 'text/html' });
-        const blobText = new Blob([textContent], { type: 'text/plain' });
-        
-        const data = [new ClipboardItem({
-            'text/html': blobHTML,
-            'text/plain': blobText
-        })];
-
-        await navigator.clipboard.write(data);
-        
-        // Feedback de sucesso
-        copyEmailButton.textContent = 'Copiado com Cores! ✅';
+        if (successful) {
+            const originalText = copyEmailButton.textContent;
+            copyEmailButton.textContent = 'Copiado com Cores! ✅';
+            setTimeout(() => {
+                copyEmailButton.textContent = originalText;
+            }, 1500);
+        }
     } catch (err) {
-        // 5. Fallback para o método tradicional caso a API falhe
-        document.execCommand('copy');
-        copyEmailButton.textContent = 'Copiado! ✅';
+        console.error('Erro ao copiar: ', err);
     }
 
     // Limpeza
     selection.removeAllRanges();
-    document.body.removeChild(tempDiv);
-
-    // Reset do botão após 1.5s
-    setTimeout(() => {
-        copyEmailButton.textContent = 'Copiar E-mail';
-    }, 1500);
+    document.body.removeChild(container);
 });
     
 
@@ -116,6 +107,7 @@ copyEmailButton.addEventListener('click', async () => {
     // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
     window.resetFields = resetFields;
 });
+
 
 
 
