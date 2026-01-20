@@ -27,40 +27,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Função de copiar CORRIGIDA para preservar formatação (Rich Text)
-copyEmailButton.addEventListener('click', () => {
-    // Seleciona o elemento de conteúdo
-    const range = document.createRange();
-    range.selectNode(emailContent);
-    
-    // Faz a seleção visual do conteúdo para o navegador capturar o HTML
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
+    // Função de copiar ATUALIZADA para preservar cores e formatação (Rich Text)
+copyEmailButton.addEventListener('click', async () => {
+    // Pegamos o HTML interno do preview (que contém as tags de cor e negrito)
+    const htmlContent = emailContent.innerHTML;
+    // Criamos uma versão em texto simples para compatibilidade
+    const textContent = emailContent.innerText;
 
     try {
-        // O comando 'copy' aqui leva o HTML (cores e negrito) junto
-        const successful = document.execCommand('copy');
+        // Usamos a Clipboard API moderna para injetar o HTML diretamente na área de transferência
+        const blobHTML = new Blob([htmlContent], { type: 'text/html' });
+        const blobText = new Blob([textContent], { type: 'text/plain' });
         
-        if (successful) {
-            // Feedback visual: Mudar cor e texto do botão
-            const originalText = copyEmailButton.textContent;
-            copyEmailButton.textContent = 'Copiado com Formatação! ✅';
-            copyEmailButton.classList.add('copy-success');
+        const data = [new ClipboardItem({
+            'text/html': blobHTML,
+            'text/plain': blobText
+        })];
 
-            setTimeout(() => {
-                copyEmailButton.textContent = originalText;
-                copyEmailButton.classList.remove('copy-success');
-            }, 1500);
-        }
+        await navigator.clipboard.write(data);
+
+        // Feedback visual: Mudar cor e texto do botão
+        const originalText = copyEmailButton.textContent;
+        copyEmailButton.textContent = 'Copiado com Cores! ✅';
+        copyEmailButton.classList.add('copy-success');
+
+        setTimeout(() => {
+            copyEmailButton.textContent = originalText;
+            copyEmailButton.classList.remove('copy-success');
+        }, 1500);
+
     } catch (err) {
-        console.error('Erro ao copiar: ', err);
-        alert('Erro ao copiar. Tente selecionar e copiar manualmente.');
+        console.error('Erro ao copiar com Clipboard API: ', err);
+        
+        // Fallback: Tenta o método antigo se o navegador for muito antigo
+        const range = document.createRange();
+        range.selectNode(emailContent);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        try {
+            document.execCommand('copy');
+            copyEmailButton.textContent = 'Copiado! (Método Alternativo)';
+        } catch (fallbackErr) {
+            alert('Erro ao copiar. Tente selecionar e copiar manualmente.');
+        }
+        selection.removeAllRanges();
     }
-
-    // Limpa a seleção para não ficar azul na tela
-    selection.removeAllRanges();
 });
+    
 
     // A função de resetar deve ser capaz de resetar todos os campos de input/select
     function resetFields() {
@@ -99,4 +114,5 @@ copyEmailButton.addEventListener('click', () => {
     // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
     window.resetFields = resetFields;
 });
+
 
