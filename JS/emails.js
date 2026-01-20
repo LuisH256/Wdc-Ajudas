@@ -29,28 +29,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função de copiar ATUALIZADA para preservar cores e formatação (Rich Text)
 copyEmailButton.addEventListener('click', () => {
-    // Cria um elemento temporário
-    const container = document.createElement('div');
-    container.innerHTML = emailContent.innerHTML;
+    // 1. Pegamos o conteúdo atual do preview
+    const conteudoOriginal = emailContent.innerHTML;
 
-    // Estilização forçada para garantir que o fundo não vá junto, apenas o texto colorido
-    container.style.position = 'fixed';
-    container.style.pointerEvents = 'none';
-    container.style.opacity = '0';
-    container.style.color = 'black'; // Cor base preta para o Outlook não bugar
+    // 2. Criamos a estrutura de tabela que você encontrou, forçando as cores hexadecimais
+    // A largura de 100% garante que ele se ajuste ao Outlook
+    const estruturaHTML = `
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; font-family: Arial, sans-serif;">
+            <tr>
+                <td style="padding: 10px; color: #000000;">
+                    ${conteudoOriginal}
+                </td>
+            </tr>
+        </table>
+    `;
 
-    document.body.appendChild(container);
+    // 3. Criamos um container invisível para o navegador "renderizar" essa tabela
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'fixed';
+    tempDiv.style.left = '-9999px';
+    tempDiv.innerHTML = estruturaHTML;
+    document.body.appendChild(tempDiv);
 
-    // Seleciona o conteúdo
+    // 4. Selecionamos o conteúdo dessa tabela
     const range = document.createRange();
-    range.selectNode(container);
+    range.selectNodeContents(tempDiv);
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
 
     try {
-        // O comando execCommand('copy') dentro de uma seleção de Range 
-        // é o que melhor preserva tags <font color> para o Outlook
+        // 5. Executamos a cópia. Ao estar dentro de uma <table>, 
+        // o Outlook preserva muito melhor o CSS inline (style="color: #...")
         const successful = document.execCommand('copy');
         
         if (successful) {
@@ -62,12 +72,14 @@ copyEmailButton.addEventListener('click', () => {
         }
     } catch (err) {
         console.error('Erro ao copiar: ', err);
+        alert('Erro ao copiar. Tente selecionar manualmente.');
     }
 
-    // Limpeza
+    // 6. Limpeza técnica
     selection.removeAllRanges();
-    document.body.removeChild(container);
+    document.body.removeChild(tempDiv);
 });
+
     
 
     // A função de resetar deve ser capaz de resetar todos os campos de input/select
@@ -107,6 +119,7 @@ copyEmailButton.addEventListener('click', () => {
     // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
     window.resetFields = resetFields;
 });
+
 
 
 
