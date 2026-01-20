@@ -190,16 +190,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
     
     let obsSimoes = "";
     if (destinatarioKey === 'simoes') {
-        // Adicionando margem superior para não colar no endereço
-        obsSimoes = `<br><br><span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
-                    `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
-                    `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
-                    `<span style="color: #ff0000;"><b>iemilli@toplogba.com.br</b></span><br>` +
+        // Usamos \n\n para garantir o espaço duplo antes do aviso importante
+        obsSimoes = `\n\n<span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span>\n` +
+                    `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.\n\n` +
+                    `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span>\n` +
+                    `<span style="color: #ff0000;"><b>iemilli@toplogba.com.br</b></span>\n` +
                     `<span style="color: #ff0000;"><b>operacional@toplogba.com.br</b></span>`;
     }
 
     if (destinatarioKey) {
+        // Remova os <br> manuais do template fixo e use \n para padronizar com o white-space: pre-wrap
         let emailText = TEMPLATES.envio_material_devolucao
+            .replace(/<br>/g, '\n') // Garante que brs antigos virem quebras de linha
             .replace('{{endereco}}', endereco)
             .replace('{{observacao_simoes}}', obsSimoes);
         
@@ -450,3 +452,4 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
