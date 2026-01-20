@@ -63,7 +63,7 @@ Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedi
 
 {{observacao_simoes}}
 
-<b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
+<br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
         // Template RENOMEADO
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
@@ -458,4 +458,5 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
