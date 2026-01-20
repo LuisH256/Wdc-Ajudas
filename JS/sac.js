@@ -49,13 +49,18 @@ EAN {{ean}}
 {{swqt}}`,
         troca_solar: `{{saudacao}}\n\nSeguem instruções para emissão da nota fiscal de retorno de troca em garantia para seguirmos com o processo de troca do seu produto {{nfText}}.\n\n<b>Natureza da Operação:</b> Entrada para troca em garantia.\n\nCFOP: 6949 (outros estados) / 5949\n\n<b>VALOR UNITÁRIO:</b> R$ {{valorUnitario}}\n\n<b>QUANTIDADE:</b> {{quantidade}}\n\n<b>NCM DO ITEM:</b> {{ncm}}\n\nDESCRIÇÃO ITEM: {{descricao}}\n\n<b>DESTINATÁRIO:</b> LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA\nCNPJ: 05.917.486/0001-40 - I.E: 63250303\nROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8\nIGUAPE – ILHÉUS/BA\n45658-335\n\n<b>OBS:</b> No aguardo da pré nota para validação.`,
         // 'substituicao_componentes' removido
-        envio_material_devolucao: `ENVIO DE MATERIAL - DEVOLUÇÃO<br><br>
-Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.<br><br>
-<span style="color: red;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.<br><br>
-- O material deve acompanhar a nota fiscal física de devolução emitida.<br><br>
-<b>Segue endereço para envio do material:</b><br>
-{{endereco}}<br>
-{{observacao_simoes}}<br><br>
+        envio_material_devolucao: `ENVIO DE MATERIAL - DEVOLUÇÃO
+
+Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.
+
+<span style="color: red;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.
+
+- O material deve acompanhar a nota fiscal física de devolução emitida.
+
+<b>Segue endereço para envio do material:</b>
+{{endereco}}
+{{observacao_simoes}}
+
 <b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
         // Template RENOMEADO
         ticket_para_advanceds: { 
@@ -186,25 +191,25 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const updateEnvioMaterialEmail = () => {
     const destinatarioKey = elements.destinatario.value;
-    const endereco = DESTINATARIOS[destinatarioKey] || '...';
+    // Aqui pegamos o endereço e removemos possíveis <br> que venham do objeto DESTINATARIOS
+    const endereco = (DESTINATARIOS[destinatarioKey] || '...').replace(/<br>/g, '\n');
     
     let obsSimoes = "";
     if (destinatarioKey === 'simoes') {
-        // Usamos \n\n para garantir o espaço duplo antes do aviso importante
+        // Usamos quebras de linha puras. O pre-wrap fará o resto.
         obsSimoes = `\n\n<span style="color: #ff0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span>\n` +
-                    `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.\n\n` +
+                    `Referente às tratativas de devoluções para a unidade de Simões Filho/BA, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.\n\n` +
                     `<span style="color: #0000ff;"><b>Para realizar o agendamento, envie um e-mail para:</b></span>\n` +
                     `<span style="color: #ff0000;"><b>iemilli@toplogba.com.br</b></span>\n` +
                     `<span style="color: #ff0000;"><b>operacional@toplogba.com.br</b></span>`;
     }
 
     if (destinatarioKey) {
-        // Remova os <br> manuais do template fixo e use \n para padronizar com o white-space: pre-wrap
         let emailText = TEMPLATES.envio_material_devolucao
-            .replace(/<br>/g, '\n') // Garante que brs antigos virem quebras de linha
             .replace('{{endereco}}', endereco)
             .replace('{{observacao_simoes}}', obsSimoes);
         
+        // Atribui ao innerHTML. O pre-wrap garantirá que as quebras de linha virem parágrafos.
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     } else {
@@ -452,4 +457,5 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
+
 
