@@ -29,13 +29,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função de copiar ATUALIZADA para preservar cores e formatação (Rich Text)
 copyEmailButton.addEventListener('click', async () => {
-    // Pegamos o HTML interno do preview (que contém as tags de cor e negrito)
-    const htmlContent = emailContent.innerHTML;
-    // Criamos uma versão em texto simples para compatibilidade
-    const textContent = emailContent.innerText;
+    // 1. Criamos um elemento temporário para processar o estilo exatamente como o Outlook gosta
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    
+    // 2. Injetamos o conteúdo do preview
+    tempDiv.innerHTML = emailContent.innerHTML;
+    document.body.appendChild(tempDiv);
+
+    // 3. Forçamos a seleção desse elemento invisível
+    const range = document.createRange();
+    range.selectNodeContents(tempDiv);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
 
     try {
-        // Usamos a Clipboard API moderna para injetar o HTML diretamente na área de transferência
+        // 4. Tentativa com a API moderna primeiro (Melhor para Cores)
+        const htmlContent = tempDiv.innerHTML;
+        const textContent = tempDiv.innerText;
+        
         const blobHTML = new Blob([htmlContent], { type: 'text/html' });
         const blobText = new Blob([textContent], { type: 'text/plain' });
         
@@ -45,35 +59,23 @@ copyEmailButton.addEventListener('click', async () => {
         })];
 
         await navigator.clipboard.write(data);
-
-        // Feedback visual: Mudar cor e texto do botão
-        const originalText = copyEmailButton.textContent;
+        
+        // Feedback de sucesso
         copyEmailButton.textContent = 'Copiado com Cores! ✅';
-        copyEmailButton.classList.add('copy-success');
-
-        setTimeout(() => {
-            copyEmailButton.textContent = originalText;
-            copyEmailButton.classList.remove('copy-success');
-        }, 1500);
-
     } catch (err) {
-        console.error('Erro ao copiar com Clipboard API: ', err);
-        
-        // Fallback: Tenta o método antigo se o navegador for muito antigo
-        const range = document.createRange();
-        range.selectNode(emailContent);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-        
-        try {
-            document.execCommand('copy');
-            copyEmailButton.textContent = 'Copiado! (Método Alternativo)';
-        } catch (fallbackErr) {
-            alert('Erro ao copiar. Tente selecionar e copiar manualmente.');
-        }
-        selection.removeAllRanges();
+        // 5. Fallback para o método tradicional caso a API falhe
+        document.execCommand('copy');
+        copyEmailButton.textContent = 'Copiado! ✅';
     }
+
+    // Limpeza
+    selection.removeAllRanges();
+    document.body.removeChild(tempDiv);
+
+    // Reset do botão após 1.5s
+    setTimeout(() => {
+        copyEmailButton.textContent = 'Copiar E-mail';
+    }, 1500);
 });
     
 
@@ -114,5 +116,6 @@ copyEmailButton.addEventListener('click', async () => {
     // Adiciona a função resetFields ao escopo global para ser usada, se necessário.
     window.resetFields = resetFields;
 });
+
 
 
