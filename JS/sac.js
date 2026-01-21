@@ -198,7 +198,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         let obsSimoes = "";
 if (destinatarioKey === 'simoes') {
     obsSimoes = `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
-                `Referente às tratativas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
+                `Referente às entregas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
                 `<span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
                 `<span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span><br>` +
                 `<span style="color: #FF0000;"><b>operacional@toplogba.com.br</b></span>`;
@@ -457,6 +457,7 @@ if (destinatarioKey === 'simoes') {
         });
     });
 });
+
 
 
 
