@@ -36,7 +36,7 @@ O envio do anexo da NF em resposta a este e-mail é obrigatório para validaçã
 <b>CFOP:</b> {{cfop}}<br>
 <b>Destinatário:</b><br>{{destinatario}}<br><br>
 
-A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota original. Não é necessário devolver a NF inteira, considerando que se trata de devolução parcial.
+A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota original. Não é necessário devolver a NF inteira, caso se trate de devolução parcial.
 
 No campo de “dados adicionais” da NF, mencionar:  
 {{dados_adicionais}}
@@ -457,6 +457,7 @@ if (destinatarioKey === 'simoes') {
         });
     });
 });
+
 
 
 
