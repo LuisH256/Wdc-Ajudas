@@ -335,13 +335,14 @@ Cep: 43721-450 SIMOES FILHO/BA`
             ticket_para_advanceds: () => setVisibility(elements.ticket_correios_options, true),
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             
+            // MAPA ATUALIZADO PARA EXIBIR CAMPOS DE PRODUTO E DATA
             advanced_emissao_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(elements.primeiro_ticket_options, true); // Exibe os inputs de produto/data
             },
             advanced_apenas_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(elements.primeiro_ticket_options, true); // Exibe os inputs de produto/data
             }
         }
     };
