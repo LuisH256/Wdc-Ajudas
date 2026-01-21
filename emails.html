@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
-        /* Garantia visual para elementos ocultos */
         .hidden { display: none !important; }
         .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
         .date-group div { flex: 1; min-width: 150px; }
@@ -102,21 +101,22 @@
                 <label for="produto-desc-input">Descrição do Produto:</label>
                 <input type="text" id="produto-desc-input" placeholder="Ex: Antena Ubiquiti">
                 
-                <label for="nf-input-postagem">NF de Compra / Retorno:</label> 
-                <input type="text" id="nf-input-postagem">
-                
-                <label for="ticket-input">Número do e-ticket (se houver):</label>
-                <input type="text" id="ticket-input">
-                
                 <div class="date-group">
                     <div>
-                        <label for="data-emissao-input">Data de Emissão / Recebimento:</label>
+                        <label for="data-emissao-input">Data de Recebimento:</label>
                         <input type="tel" id="data-emissao-input" maxlength="10" placeholder="DD/MM/AAAA"> 
                     </div>
-                    <div>
-                        <label for="data-validade-input">Data de Validade:</label>
-                        <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
-                    </div>
+                </div>
+
+                <div id="campos-exclusivos-correios">
+                    <label for="nf-input-postagem">NF de Compra / Retorno:</label> 
+                    <input type="text" id="nf-input-postagem">
+                    
+                    <label for="ticket-input">Número do e-ticket:</label>
+                    <input type="text" id="ticket-input">
+
+                    <label for="data-validade-input">Data de Validade:</label>
+                    <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
                 </div>
             </div>
 
