@@ -64,10 +64,10 @@ EAN {{ean}}
 
 <br><br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
 
-        // NOVOS TEMPLATES SOLICITADOS (ADVANCED)
-        advanced_emissao_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em {{data_recebimento}}.\n\nPara finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.\n\nSegue em anexo a nota de compra para embasamento.\n\nFavor seguir com a instrução abaixo:\n\n• Enviar nota fiscal de natureza da operação REMESSA DE TROCA EM GARANTIA (em resposta a este email para validação)\n\n<b>Destinatário:</b><br>{{destinatario}}<br>\n\n• Usar na nota fiscal o Código Fiscal de Operação 5.949 ou 6.949, dependendo se for fora ou dentro do estado.\n\n• Destacar impostos com a mesma alíquota da NF de compra.\n\n• Utilizar o valor de venda de cada produto destacado na nota original de venda;\n\n• No campo informações complementares, inserir:\n· Número da(s) nota(s) de Venda de cada produto descrito.\n· Número da nota de Retorno de conserto (que segue anexa neste email)\n\n• Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;\n\n· Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.\n\nAguardamos o mais breve retorno e ficamos à disposição.`,
+        // NOVOS TEMPLATES SOLICITADOS (ADVANCED) ATUALIZADOS COM NEGRITO E FORMATAÇÃO
+        advanced_emissao_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.\n\nPara finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.\n\nSegue em anexo a nota de compra para embasamento.\n\n<b>Favor seguir com a instrução abaixo:</b>\n\n- Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)\n\n<b>Destinatário:</b><br>{{destinatario}}<br>\n\n- Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.\n\n- Destacar impostos com a mesma alíquota da NF de compra\n\n- <b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b>\n\n- <b>No campo informações complementares, inserir:</b>\n\n- Número da(s) nota (s) de Venda de cada produto descrito.\n\n- Número da nota de Retorno de conserto (que segue anexa neste email)\n\n- Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;\n\n- <b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b>\n\nAguardamos o mais breve retorno e ficamos à disposição.`,
 
-        advanced_apenas_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em {{data_recebimento}}.\n\nFavor seguir com o envio do material:\n\n- O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:\n\n<b>Endereço para envio:</b><br>{{destinatario}}<br>\n\n{{observacao_simoes}}\n\nFavor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!`,
+        advanced_apenas_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.\n\n<b>Favor seguir com o envio do material:</b>\n\n- O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:\n\n<b>Destinatário:</b><br>{{destinatario}}<br>\n\n{{observacao_simoes}}\n\n<b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
 
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
@@ -97,9 +97,8 @@ Ficamos à disposição para maiores esclarecimentos.`,
 
     const DESTINATARIOS = {
         matriz: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>
-ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8<br>
-IGUAPE – ILHÉUS/BA  CEP: 45658-335<br>
-CNPJ: 05.917.486/0001-40 - I.E: 63250303`,
+ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8 IGUAPE – ILHÉUS/BA<br>
+CEP: 45658-335  CNPJ: 05.917.486/0001-40 - I.E: 63250303`,
         simoes: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO S.A<br>
 CNPJ: 05.917.486/0008-17  I.E: 153759695<br>
 V URBANA, 4466 Complemento: TERREO CIA SUL<br>
@@ -207,7 +206,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
     };
 
-    // NOVA FUNÇÃO PARA OS TEMPLATES ADVANCED SOLICITADOS
     const updateAdvancedNovosTemplates = () => {
         const templateKey = elements.sac_template.value;
         const destinatarioKey = elements.destinatario.value;
@@ -217,8 +215,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         let obsSimoes = "";
         if (destinatarioKey === 'simoes') {
-            obsSimoes = `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
-                        `Referente ao envio para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio via e-mail: operacional@toplogba.com.br`;
+            obsSimoes = `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio para Simões Filho via iemilli@toplogba.com.br / operacional@toplogba.com.br</span>`;
         }
 
         if (destinatarioKey) {
@@ -338,14 +335,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
             ticket_para_advanceds: () => setVisibility(elements.ticket_correios_options, true),
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             
-            // NOVOS MAPAS
             advanced_emissao_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true); // Mostra Produto e Data
+                setVisibility(elements.primeiro_ticket_options, true);
             },
             advanced_apenas_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true); // Mostra Produto e Data
+                setVisibility(elements.primeiro_ticket_options, true);
             }
         }
     };
@@ -412,7 +408,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail);
     });
 
-    // Listener para campos de Produto e Data (usado por Advanced e Tickets)
+    // Listener para campos de Produto e Data
     ['produto_desc_input', 'data_emissao_input'].forEach(id => {
         if (elements[id]) {
             elements[id].addEventListener('input', () => {
