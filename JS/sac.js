@@ -132,9 +132,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const resetFields = () => {
-        // Limpa apenas os campos de entrada, não os selects de template
+        // Limpa inputs
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
+        // Esconde containers específicos de dados, mas NÃO os menus de opções principais
         const containersToHide = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
             'solar_options', 'ticket_correios_options', 'email_preview', 
@@ -149,7 +150,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         setVisibility(elements.ean_input, true);
         setVisibility(elements.swqt_input, true);
-        if(camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, true);
+        if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, true);
     };
 
     // 3. Funções de Atualização de Email
@@ -239,39 +240,67 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
     
     // 4. Lógica de Manipulação de Eventos
+
+    const templateMap = {
+        'email-template': {
+            sac: () => setVisibility(elements.sac_options, true),
+            apoio_vendas: () => setVisibility(elements.apoio_vendas_options, true),
+        },
+        'sac-template': {
+            devolucao: () => {
+                setVisibility(elements.destinatario_container, true);
+                setVisibility(elements.tipo_operacao_container, true);
+            },
+            solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
+            troca_solar: () => setVisibility(elements.solar_options, true), 
+            envio_material_devolucao: () => {
+                setVisibility(elements.destinatario_container, true);
+            },
+            ticket_para_advanceds: () => {
+                setVisibility(elements.ticket_correios_options, true);
+                setVisibility(camposExclusivosCorreios, true);
+            },
+            recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
+            advanced_emissao_envio: () => {
+                setVisibility(elements.destinatario_container, true);
+                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(camposExclusivosCorreios, false);
+            },
+            advanced_apenas_envio: () => {
+                setVisibility(elements.destinatario_container, true);
+                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(camposExclusivosCorreios, false);
+            }
+        }
+    };
+
     const handleTemplateChange = (templateId, value) => {
         if (templateId === 'email-template') {
-            resetFields();
-            setVisibility(elements.sac_options, value === 'sac');
-            setVisibility(elements.apoio_vendas_options, value === 'apoio_vendas');
+            resetFields(); 
+            // Esconde ambos antes de mostrar o selecionado
+            setVisibility(elements.sac_options, false);
+            setVisibility(elements.apoio_vendas_options, false);
+            if (templateMap['email-template'][value]) {
+                templateMap['email-template'][value]();
+            }
         } 
         
         if (templateId === 'sac-template') {
-            resetFields(); // Limpa campos ao trocar de sub-tipo de SAC
+            // O segredo está aqui: resetFields limpa os dados, mas handleTemplateChange deve reconstruir a visão
+            resetFields();
             
-            const actionMap = {
-                devolucao: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
-                solicitar_entrada_nf: () => { setVisibility(elements.pdaf_options, true); updatePdAfEmail(); },
-                troca_solar: () => setVisibility(elements.solar_options, true),
-                envio_material_devolucao: () => setVisibility(elements.destinatario_container, true),
-                ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); setVisibility(camposExclusivosCorreios, true); },
-                recusa_nf: () => { setVisibility(elements.recusa_nf_options, true); updateRecusaNfEmail(); },
-                advanced_emissao_envio: () => { 
-                    setVisibility(elements.destinatario_container, true); 
-                    setVisibility(elements.primeiro_ticket_options, true); 
-                    setVisibility(camposExclusivosCorreios, false); 
-                },
-                advanced_apenas_envio: () => { 
-                    setVisibility(elements.destinatario_container, true); 
-                    setVisibility(elements.primeiro_ticket_options, true); 
-                    setVisibility(camposExclusivosCorreios, false); 
-                }
-            };
-            if (actionMap[value]) actionMap[value]();
+            if (templateMap['sac-template'][value]) {
+                templateMap['sac-template'][value]();
+            }
+
+            // Gatilhos específicos para prévia imediata
+            if (value === 'recusa_nf') updateRecusaNfEmail();
+            if (value === 'solicitar_entrada_nf') updatePdAfEmail();
         }
     };
 
     // 5. Associação de Event Listeners
+
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
@@ -284,28 +313,56 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
-    ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => elements[id]?.addEventListener('input', updatePdAfEmail));
-    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => elements[id]?.addEventListener('input', () => elements.sac_template.value === 'troca_solar' && updateSolarEmail('troca_solar')));
-    ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => elements[id]?.addEventListener('input', updateRecusaNfEmail));
+
+    ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => {
+        if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail);
+    });
+
+    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => {
+        if (elements[id]) elements[id].addEventListener('input', () => {
+            const template = elements.sac_template.value;
+            if (template === 'troca_solar') updateSolarEmail(template);
+        });
+    });
+
+    ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => {
+        if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail);
+    });
 
     ['produto_desc_input', 'data_emissao_input'].forEach(id => {
-        elements[id]?.addEventListener('input', () => {
-            const sacVal = elements.sac_template.value;
-            if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
-            else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
-        });
+        if (elements[id]) {
+            elements[id].addEventListener('input', () => {
+                const sacVal = elements.sac_template.value;
+                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
+                    updateAdvancedNovosTemplates();
+                } else if (elements.postagem_correios_template && elements.postagem_correios_template.value) {
+                    updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
+                }
+            });
+        }
     });
 
     if (elements.postagem_correios_template) {
         elements.postagem_correios_template.addEventListener('change', () => {
-            const val = elements.postagem_correios_template.value;
-            setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
-            setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
-            if (val) updateTicketParaAdvancedsEmail(val);
+            const selectedOption = elements.postagem_correios_template.value;
+            setVisibility(elements.primeiro_ticket_options, selectedOption === 'primeiro_ticket');
+            setVisibility(elements.ticket_expirado_options, selectedOption === 'ticket_expirado');
+            if (selectedOption) updateTicketParaAdvancedsEmail(selectedOption);
             else setVisibility(elements.email_preview, false);
         });
     }
 
-    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => elements[id]?.addEventListener('input', () => elements.postagem_correios_template?.value === 'primeiro_ticket' && updateTicketParaAdvancedsEmail('primeiro_ticket')));
-    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => elements[id]?.addEventListener('input', () => elements.postagem_correios_template?.value === 'ticket_expirado' && updateTicketParaAdvancedsEmail('ticket_expirado')));
+    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => {
+        if (elements[id]) elements[id].addEventListener('input', () => {
+            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'primeiro_ticket')
+                updateTicketParaAdvancedsEmail('primeiro_ticket');
+        });
+    });
+
+    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => {
+        if (elements[id]) elements[id].addEventListener('input', () => {
+            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'ticket_expirado')
+                updateTicketParaAdvancedsEmail('ticket_expirado');
+        });
+    });
 });
