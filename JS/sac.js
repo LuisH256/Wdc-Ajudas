@@ -17,11 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
         'primeiro-ticket-options', 'ticket-expirado-options',
         'nf-input-postagem', // NF de retorno para primeiro ticket
     ].reduce((acc, id) => {
-        acc[id.replace(/-/g, '_')] = document.getElementById(id);
+        const el = document.getElementById(id);
+        if (el) {
+            acc[id.replace(/-/g, '_')] = el;
+        }
         return acc;
     }, {});
 
-    // Elemento extra criado no seu novo HTML para agrupar os campos que somem no Advanced
     const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios');
 
     // Mantenha os templates e dados estáticos fora da função principal
@@ -130,6 +132,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const resetFields = () => {
+        // Limpa todos os inputs de texto e tel
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
         const containersToHide = [
@@ -337,26 +340,28 @@ Cep: 43721-450 SIMOES FILHO/BA`
             },
             ticket_para_advanceds: () => {
                 setVisibility(elements.ticket_correios_options, true);
-                setVisibility(camposExclusivosCorreios, true); // Garante que os campos apareçam para correios
+                setVisibility(camposExclusivosCorreios, true); 
             },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             
             advanced_emissao_envio: () => {
                 setVisibility(elements.destinatario_container, true);
                 setVisibility(elements.primeiro_ticket_options, true);
-                setVisibility(camposExclusivosCorreios, false); // OCULTA CAMPOS EXTRAS PARA ADVANCED
+                setVisibility(camposExclusivosCorreios, false); 
             },
             advanced_apenas_envio: () => {
                 setVisibility(elements.destinatario_container, true);
                 setVisibility(elements.primeiro_ticket_options, true);
-                setVisibility(camposExclusivosCorreios, false); // OCULTA CAMPOS EXTRAS PARA ADVANCED
+                setVisibility(camposExclusivosCorreios, false); 
             }
         }
     };
 
     const handleTemplateChange = (templateId, value) => {
+        // SEMPRE que mudar qualquer template principal ou sub-template, limpamos os campos
+        resetFields();
+
         if (templateId === 'email-template') {
-            resetFields(); 
             if (templateMap['email-template'][value]) {
                 templateMap['email-template'][value]();
             }
@@ -375,11 +380,9 @@ Cep: 43721-450 SIMOES FILHO/BA`
             }
         }
         
+        // Atualizações automáticas de preview se necessário após o reset
         if (value === 'recusa_nf') updateRecusaNfEmail();
         if (value === 'solicitar_entrada_nf') updatePdAfEmail();
-        if (value === 'ticket_para_advanceds' && elements.postagem_correios_template && elements.postagem_correios_template.value) {
-             updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
-        }
     };
 
     // 5. Associação de Event Listeners
@@ -454,4 +457,3 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     });
 });
-
