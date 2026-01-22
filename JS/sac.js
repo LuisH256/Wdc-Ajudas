@@ -132,15 +132,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const resetFields = () => {
-        // Limpa todos os inputs de texto e tel
+        // Limpa apenas os campos de entrada, não os selects de template
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
         const containersToHide = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
-            'solar_options', 
-            'ticket_correios_options', 
-            'email_preview', 'recusa_nf_options', 'sac_options',
-            'apoio_vendas_options', 'primeiro_ticket_options', 'ticket_expirado_options'
+            'solar_options', 'ticket_correios_options', 'email_preview', 
+            'recusa_nf_options', 'primeiro_ticket_options', 'ticket_expirado_options'
         ];
         containersToHide.forEach(id => setVisibility(elements[id], false));
         
@@ -151,20 +149,14 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         setVisibility(elements.ean_input, true);
         setVisibility(elements.swqt_input, true);
-        setVisibility(camposExclusivosCorreios, true); // Resetar visibilidade dos campos extras
+        if(camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, true);
     };
 
     // 3. Funções de Atualização de Email
-
     const updateRecusaNfEmail = () => {
         const nf = elements.nf_recusa_input.value || '...';
         const descricao = elements.descricao_recusa_input.value || '...';
-        
-        const emailText = TEMPLATES.recusa_nf
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{nf}}', nf)
-            .replace('{{descricao}}', descricao);
-        
+        const emailText = TEMPLATES.recusa_nf.replace('{{saudacao}}', getSaudacao()).replace('{{nf}}', nf).replace('{{descricao}}', descricao);
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -172,14 +164,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateDevolucaoEmail = () => {
         const destinatario = DESTINATARIOS[elements.destinatario.value] || '';
         const operacaoInfo = OPERACOES[elements.tipo_operacao.value] || {};
-
         if (destinatario && operacaoInfo.operacao) {
-            const emailText = TEMPLATES.devolucao
-                .replace('{{destinatario}}', destinatario)
-                .replace('{{operacao}}', operacaoInfo.operacao)
-                .replace('{{cfop}}', operacaoInfo.cfop)
-                .replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
-            
+            const emailText = TEMPLATES.devolucao.replace('{{destinatario}}', destinatario).replace('{{operacao}}', operacaoInfo.operacao).replace('{{cfop}}', operacaoInfo.cfop).replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
         } else {
@@ -190,21 +176,9 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateEnvioMaterialEmail = () => {
         const destinatarioKey = elements.destinatario.value;
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
-        
-        let obsSimoes = "";
-        if (destinatarioKey === 'simoes') {
-            obsSimoes = `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>` +
-                        `Referente às entregas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br>` +
-                        `<span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br>` +
-                        `<span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span><br>` +
-                        `<span style="color: #FF0000;"><b>operacional@toplogba.com.br</b></span>`;
-        }
-
+        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>Referente às entregas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br><span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br><span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span><br><span style="color: #FF0000;"><b>operacional@toplogba.com.br</b></span>` : "";
         if (destinatarioKey) {
-            const emailText = TEMPLATES.envio_material_devolucao
-                .replace('{{endereco}}', endereco)
-                .replace('{{observacao_simoes}}', obsSimoes);
-            
+            const emailText = TEMPLATES.envio_material_devolucao.replace('{{endereco}}', endereco).replace('{{observacao_simoes}}', obsSimoes);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
         } else {
@@ -218,20 +192,9 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
         const produto = elements.produto_desc_input.value || '...';
         const dataRecebimento = elements.data_emissao_input.value || '__/__/____';
-
-        let obsSimoes = "";
-        if (destinatarioKey === 'simoes') {
-            obsSimoes = `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio para Simões Filho via iemilli@toplogba.com.br / operacional@toplogba.com.br</span>`;
-        }
-
+        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio para Simões Filho via iemilli@toplogba.com.br / operacional@toplogba.com.br</span>` : "";
         if (destinatarioKey) {
-            const emailText = TEMPLATES[templateKey]
-                .replace('{{saudacao}}', getSaudacao())
-                .replace('{{produto}}', produto)
-                .replace('{{data_recebimento}}', dataRecebimento)
-                .replace('{{destinatario}}', endereco)
-                .replace('{{observacao_simoes}}', obsSimoes);
-            
+            const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{produto}}', produto).replace('{{data_recebimento}}', dataRecebimento).replace('{{destinatario}}', endereco).replace('{{observacao_simoes}}', obsSimoes);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
         } else {
@@ -244,51 +207,20 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const ean = elements.ean_input.value || '...';
         const nfs = elements.nfs_input.value || '...';
         const swqt = elements.swqt_input.value || '';
-
         const nfsArray = nfs.split(',').map(item => item.trim());
         const nfsMessage = nfsArray.length === 1 && nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : `as notas fiscais ${nfsArray.filter(n => n).join(', ')}`;
-        
         const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
         const notasServicoMessage = swqtArray.length <= 1 ? 'a nota de serviço' : 'as notas de serviço';
-        const swqtMessage = swqtArray.join('\n');
-
-        let emailText = TEMPLATES.pdaf
-            .replace('{{tipo}}', tipo)
-            .replace('{{notas_servico}}', notasServicoMessage)
-            .replace('{{nfs}}', nfsMessage)
-            .replace('{{ean}}', ean)
-            .replace('{{swqt}}', swqtMessage);
-        
-        if (tipo === 'AF') {
-            emailText = emailText
-                .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
-                .replace(/EAN .*\n/g, ''); 
-        }
-
-        setVisibility(elements.ean_input, true);
-        setVisibility(elements.swqt_input, true);
-
+        let emailText = TEMPLATES.pdaf.replace('{{tipo}}', tipo).replace('{{notas_servico}}', notasServicoMessage).replace('{{nfs}}', nfsMessage).replace('{{ean}}', ean).replace('{{swqt}}', swqtArray.join('\n'));
+        if (tipo === 'AF') emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
 
     const updateSolarEmail = (templateKey) => {
         const nf = elements.nf_input.value || '...';
-        const valorUnitario = elements.valor_unitario_input.value || '...';
-        const quantidade = elements.quantidade_input.value || '...';
-        const ncm = elements.ncm_input.value || '...';
-        const descricao = elements.descricao_input.value || '...';
-
         const nfText = nf.includes(',') ? `das NFs ${nf}` : `da NF ${nf}`;
-
-        const emailText = TEMPLATES[templateKey]
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{nfText}}', nfText)
-            .replace('{{valorUnitario}}', valorUnitario)
-            .replace('{{quantidade}}', quantidade)
-            .replace('{{ncm}}', ncm)
-            .replace('{{descricao}}', descricao);
-
+        const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{nfText}}', nfText).replace('{{valorUnitario}}', elements.valor_unitario_input.value || '...').replace('{{quantidade}}', elements.quantidade_input.value || '...').replace('{{ncm}}', elements.ncm_input.value || '...').replace('{{descricao}}', elements.descricao_input.value || '...');
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -296,164 +228,84 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateTicketParaAdvancedsEmail = (templateKey) => {
         const templateData = TEMPLATES.ticket_para_advanceds[templateKey];
         if (!templateData) return;
-
         let emailText = templateData;
-        const nf = elements.nf_input_postagem ? elements.nf_input_postagem.value : '...';
-        const produtoDesc = elements.produto_desc_input ? elements.produto_desc_input.value : '...';
-
         if (templateKey === 'primeiro_ticket') {
-            emailText = emailText
-                .replace('{{produtoDesc}}', produtoDesc)
-                .replace('{{nf}}', nf)
-                .replace('{{ticket}}', elements.ticket_input.value || '...')
-                .replace('{{dataEmissao}}', elements.data_emissao_input.value || '...')
-                .replace('{{dataValidade}}', elements.data_validade_input.value || '...');
+            emailText = emailText.replace('{{produtoDesc}}', elements.produto_desc_input.value || '...').replace('{{nf}}', elements.nf_input_postagem.value || '...').replace('{{ticket}}', elements.ticket_input.value || '...').replace('{{dataEmissao}}', elements.data_emissao_input.value || '...').replace('{{dataValidade}}', elements.data_validade_input.value || '...');
         } else if (templateKey === 'ticket_expirado') {
-            emailText = emailText
-                .replace('{{ticketExpirado}}', elements.ticket_expirado_input.value || '...')
-                .replace('{{ticket}}', elements.ticket_input_expired.value || '...')
-                .replace('{{dataEmissao}}', elements.data_emissao_input_expired.value || '...')
-                .replace('{{dataValidade}}', elements.data_validade_input_expired.value || '...');
+            emailText = emailText.replace('{{ticketExpirado}}', elements.ticket_expirado_input.value || '...').replace('{{ticket}}', elements.ticket_input_expired.value || '...').replace('{{dataEmissao}}', elements.data_emissao_input_expired.value || '...').replace('{{dataValidade}}', elements.data_validade_input_expired.value || '...');
         }
-        
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
     
     // 4. Lógica de Manipulação de Eventos
-
-    const templateMap = {
-        'email-template': {
-            sac: () => setVisibility(elements.sac_options, true),
-            apoio_vendas: () => setVisibility(elements.apoio_vendas_options, true),
-        },
-        'sac-template': {
-            devolucao: () => {
-                setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.tipo_operacao_container, true);
-            },
-            solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
-            troca_solar: () => setVisibility(elements.solar_options, true), 
-            envio_material_devolucao: () => {
-                setVisibility(elements.destinatario_container, true);
-                updateEnvioMaterialEmail(); 
-            },
-            ticket_para_advanceds: () => {
-                setVisibility(elements.ticket_correios_options, true);
-                setVisibility(camposExclusivosCorreios, true); 
-            },
-            recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
-            
-            advanced_emissao_envio: () => {
-                setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true);
-                setVisibility(camposExclusivosCorreios, false); 
-            },
-            advanced_apenas_envio: () => {
-                setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true);
-                setVisibility(camposExclusivosCorreios, false); 
-            }
-        }
-    };
-
     const handleTemplateChange = (templateId, value) => {
-        // SEMPRE que mudar qualquer template principal ou sub-template, limpamos os campos
-        resetFields();
-
         if (templateId === 'email-template') {
-            if (templateMap['email-template'][value]) {
-                templateMap['email-template'][value]();
-            }
+            resetFields();
+            setVisibility(elements.sac_options, value === 'sac');
+            setVisibility(elements.apoio_vendas_options, value === 'apoio_vendas');
         } 
         
         if (templateId === 'sac-template') {
-            const sacSubContainersToHide = [
-                'destinatario_container', 'tipo_operacao_container', 'pdaf_options', 
-                'solar_options', 'recusa_nf_options', 'email_preview', 'ticket_correios_options',
-                'primeiro_ticket_options'
-            ];
-            sacSubContainersToHide.forEach(id => setVisibility(elements[id], false));
+            resetFields(); // Limpa campos ao trocar de sub-tipo de SAC
             
-            if (templateMap['sac-template'][value]) {
-                templateMap['sac-template'][value]();
-            }
+            const actionMap = {
+                devolucao: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
+                solicitar_entrada_nf: () => { setVisibility(elements.pdaf_options, true); updatePdAfEmail(); },
+                troca_solar: () => setVisibility(elements.solar_options, true),
+                envio_material_devolucao: () => setVisibility(elements.destinatario_container, true),
+                ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); setVisibility(camposExclusivosCorreios, true); },
+                recusa_nf: () => { setVisibility(elements.recusa_nf_options, true); updateRecusaNfEmail(); },
+                advanced_emissao_envio: () => { 
+                    setVisibility(elements.destinatario_container, true); 
+                    setVisibility(elements.primeiro_ticket_options, true); 
+                    setVisibility(camposExclusivosCorreios, false); 
+                },
+                advanced_apenas_envio: () => { 
+                    setVisibility(elements.destinatario_container, true); 
+                    setVisibility(elements.primeiro_ticket_options, true); 
+                    setVisibility(camposExclusivosCorreios, false); 
+                }
+            };
+            if (actionMap[value]) actionMap[value]();
         }
-        
-        // Atualizações automáticas de preview se necessário após o reset
-        if (value === 'recusa_nf') updateRecusaNfEmail();
-        if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
 
     // 5. Associação de Event Listeners
-
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
     if (elements.destinatario) elements.destinatario.addEventListener('change', () => {
         const sacVal = elements.sac_template.value;
-        if (sacVal === 'envio_material_devolucao') {
-            updateEnvioMaterialEmail();
-        } else if (sacVal === 'devolucao') {
-            updateDevolucaoEmail();
-        } else if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
-            updateAdvancedNovosTemplates();
-        }
+        if (sacVal === 'envio_material_devolucao') updateEnvioMaterialEmail();
+        else if (sacVal === 'devolucao') updateDevolucaoEmail();
+        else if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
     });
 
     if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
-
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
-    ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => {
-        if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail);
-    });
+    ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => elements[id]?.addEventListener('input', updatePdAfEmail));
+    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => elements[id]?.addEventListener('input', () => elements.sac_template.value === 'troca_solar' && updateSolarEmail('troca_solar')));
+    ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => elements[id]?.addEventListener('input', updateRecusaNfEmail));
 
-    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => {
-        if (elements[id]) elements[id].addEventListener('input', () => {
-            const template = elements.sac_template.value;
-            if (template === 'troca_solar') updateSolarEmail(template);
-        });
-    });
-
-    ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => {
-        if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail);
-    });
-
-    // Listener para campos de Produto e Data
     ['produto_desc_input', 'data_emissao_input'].forEach(id => {
-        if (elements[id]) {
-            elements[id].addEventListener('input', () => {
-                const sacVal = elements.sac_template.value;
-                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
-                    updateAdvancedNovosTemplates();
-                } else if (elements.postagem_correios_template && elements.postagem_correios_template.value) {
-                    updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
-                }
-            });
-        }
+        elements[id]?.addEventListener('input', () => {
+            const sacVal = elements.sac_template.value;
+            if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
+            else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
+        });
     });
 
     if (elements.postagem_correios_template) {
         elements.postagem_correios_template.addEventListener('change', () => {
-            const selectedOption = elements.postagem_correios_template.value;
-            setVisibility(elements.primeiro_ticket_options, selectedOption === 'primeiro_ticket');
-            setVisibility(elements.ticket_expirado_options, selectedOption === 'ticket_expirado');
-            if (selectedOption) updateTicketParaAdvancedsEmail(selectedOption);
+            const val = elements.postagem_correios_template.value;
+            setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
+            setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
+            if (val) updateTicketParaAdvancedsEmail(val);
             else setVisibility(elements.email_preview, false);
         });
     }
 
-    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => {
-        if (elements[id]) elements[id].addEventListener('input', () => {
-            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'primeiro_ticket')
-                updateTicketParaAdvancedsEmail('primeiro_ticket');
-        });
-    });
-
-    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => {
-        if (elements[id]) elements[id].addEventListener('input', () => {
-            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'ticket_expirado')
-                updateTicketParaAdvancedsEmail('ticket_expirado');
-        });
-    });
+    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => elements[id]?.addEventListener('input', () => elements.postagem_correios_template?.value === 'primeiro_ticket' && updateTicketParaAdvancedsEmail('primeiro_ticket')));
+    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => elements[id]?.addEventListener('input', () => elements.postagem_correios_template?.value === 'ticket_expirado' && updateTicketParaAdvancedsEmail('ticket_expirado')));
 });
