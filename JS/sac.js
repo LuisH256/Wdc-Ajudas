@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return acc;
     }, {});
 
+    // Elemento extra criado no seu novo HTML para agrupar os campos que somem no Advanced
+    const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios');
+
     // Mantenha os templates e dados estáticos fora da função principal
     const TEMPLATES = {
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
@@ -64,7 +67,6 @@ EAN {{ean}}
 
 <br><br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
 
-        // NOVOS TEMPLATES SOLICITADOS (ADVANCED) ATUALIZADOS COM NEGRITO E FORMATAÇÃO
         advanced_emissao_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.\n\nPara finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.\n\nSegue em anexo a nota de compra para embasamento.\n\n<b>Favor seguir com a instrução abaixo:</b>\n\n- Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)\n\n<b>Destinatário:</b><br>{{destinatario}}<br>\n\n- Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.\n\n- Destacar impostos com a mesma alíquota da NF de compra\n\n- <b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b>\n\n- <b>No campo informações complementares, inserir:</b>\n\n- Número da(s) nota (s) de Venda de cada produto descrito.\n\n- Número da nota de Retorno de conserto (que segue anexa neste email)\n\n- Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;\n\n- <b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b>\n\nAguardamos o mais breve retorno e ficamos à disposição.`,
 
         advanced_apenas_envio: `{{saudacao}}\n\nReferente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.\n\n<b>Favor seguir com o envio do material:</b>\n\n- O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:\n\n<b>Destinatário:</b><br>{{destinatario}}<br>\n\n{{observacao_simoes}}\n\n<b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
@@ -146,6 +148,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         setVisibility(elements.ean_input, true);
         setVisibility(elements.swqt_input, true);
+        setVisibility(camposExclusivosCorreios, true); // Resetar visibilidade dos campos extras
     };
 
     // 3. Funções de Atualização de Email
@@ -332,17 +335,21 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.destinatario_container, true);
                 updateEnvioMaterialEmail(); 
             },
-            ticket_para_advanceds: () => setVisibility(elements.ticket_correios_options, true),
+            ticket_para_advanceds: () => {
+                setVisibility(elements.ticket_correios_options, true);
+                setVisibility(camposExclusivosCorreios, true); // Garante que os campos apareçam para correios
+            },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             
-            // MAPA ATUALIZADO PARA EXIBIR CAMPOS DE PRODUTO E DATA
             advanced_emissao_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true); // Exibe os inputs de produto/data
+                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(camposExclusivosCorreios, false); // OCULTA CAMPOS EXTRAS PARA ADVANCED
             },
             advanced_apenas_envio: () => {
                 setVisibility(elements.destinatario_container, true);
-                setVisibility(elements.primeiro_ticket_options, true); // Exibe os inputs de produto/data
+                setVisibility(elements.primeiro_ticket_options, true);
+                setVisibility(camposExclusivosCorreios, false); // OCULTA CAMPOS EXTRAS PARA ADVANCED
             }
         }
     };
