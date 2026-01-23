@@ -9,8 +9,6 @@
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
         .hidden { display: none !important; }
-        .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        .date-group div { flex: 1; min-width: 150px; }
         #email-content { 
             white-space: pre-wrap; 
             word-wrap: break-word; 
@@ -85,18 +83,6 @@
                 </select>
             </div>
 
-            <div id="apoio-vendas-options" class="hidden">
-                <label for="apoio-vendas-template">Escolha o tipo de Apoio a Vendas:</label>
-                <select id="apoio-vendas-template">
-                    <option value="">Selecione</option>
-                    <option value="relatorio_geral">Relatório Geral (Posicionamento de notas)</option>
-                    <option value="pendencias">Transportadoras - Pendências (Singular/Plural)</option>
-                    <option value="pendencias_lista">Transportadoras - Pendências com lista</option>
-                    <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
-                    <option value="ticket_correios">Ticket Correios - Geral</option>
-                </select>
-            </div>
-
             <div id="destinatario-container" class="hidden">
                 <label for="destinatario">Destinatário:</label>
                 <select id="destinatario">
@@ -118,8 +104,12 @@
             <div id="rma-fields" class="hidden">
                 <label for="crg-input">N° do CRG:</label>
                 <input type="text" id="crg-input">
-                <label for="anexo-info-input">Informação do Anexo:</label>
+                <label for="anexo-info-input">Informações:</label>
                 <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de Crédito">
+                <label for="quantidade-input-rma">Quantidade (QTD):</label>
+                <input type="text" id="quantidade-input-rma">
+                <label for="descricao-input-rma">Produto (Produtos):</label>
+                <input type="text" id="descricao-input-rma">
             </div>
 
             <div id="solar-options" class="hidden">
@@ -137,13 +127,24 @@
 
             <div id="pdaf-options" class="hidden">
                 <label for="tipo-select">Tipo:</label>
-                <select id="tipo-select"><option value="PD">PD</option><option value="AF">AF</option></select>
+                <select id="tipo-select">
+                    <option value="">Selecione uma opção</option>
+                    <option value="PD">PD</option>
+                    <option value="AF">AF</option>
+                </select>
                 <label for="nfs-input">NFs:</label>
                 <input type="text" id="nfs-input">
                 <label for="ean-input">EAN:</label>
                 <input type="text" id="ean-input">
                 <label for="swqt-input">SW/QT:</label>
                 <input type="text" id="swqt-input">
+            </div>
+
+            <div id="advanced-fields" class="hidden">
+                <label for="produto-desc-input">Descrição do Produto:</label>
+                <input type="text" id="produto-desc-input">
+                <label for="data-recebimento-input">Data de Recebimento:</label>
+                <input type="tel" id="data-recebimento-input" placeholder="DD/MM/AAAA">
             </div>
 
             <div id="recusa-nf-options" class="hidden">
@@ -163,14 +164,12 @@
             </div>
 
             <div id="primeiro-ticket-options" class="hidden">
-                <label for="produto-desc-input">Descrição do Produto:</label>
-                <input type="text" id="produto-desc-input">
-                <label for="nf-input-postagem">NF de Compra / Retorno:</label>
+                <label for="nf-input-postagem">NF de Compra:</label>
                 <input type="text" id="nf-input-postagem">
                 <div id="campos-exclusivos-correios">
                     <label for="ticket-input">Número do e-ticket:</label>
                     <input type="text" id="ticket-input">
-                    <label for="data-emissao-input">Data de Recebimento:</label>
+                    <label for="data-emissao-input">Data de Emissão:</label>
                     <input type="tel" id="data-emissao-input" placeholder="DD/MM/AAAA">
                     <label for="data-validade-input">Data de Validade:</label>
                     <input type="tel" id="data-validade-input" placeholder="DD/MM/AAAA">
