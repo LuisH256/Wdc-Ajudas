@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'ticket-input-expired', 'data-emissao-input-expired',
         'data-validade-input-expired', 'postagem-correios-template',
         'primeiro-ticket-options', 'ticket-expirado-options',
-        'nf-input-postagem', 'crg-input', 'anexo-info-input'
+        'nf-input-postagem', 'crg-input', 'anexo-info-input',
+        'pendencias-options', 'edi-select', 'nf-select' // Adicionados para garantir o reset
     ].reduce((acc, id) => {
         const el = document.getElementById(id);
         if (el) {
@@ -158,7 +159,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const containersToHide = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
             'solar_options', 'rma_fields', 'ticket_correios_options', 'email_preview', 
-            'recusa_nf_options', 'primeiro_ticket_options', 'ticket_expirado_options'
+            'recusa_nf_options', 'primeiro_ticket_options', 'ticket_expirado_options',
+            'pendencias_options' // Adicionado para ocultar opções de Apoio ao mudar para SAC
         ];
 
         containersToHide.forEach(id => {
