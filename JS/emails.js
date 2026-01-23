@@ -1,4 +1,4 @@
-// emails.js (CÓDIGO COMPLETO E CORRIGIDO)
+// emails.js
 
 document.addEventListener('DOMContentLoaded', () => {
     const emailTemplate = document.getElementById('email-template');
@@ -8,17 +8,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailContent = document.getElementById('email-content');
     const copyEmailButton = document.getElementById('copy-email');
 
+    // Função para esconder TODOS os contêineres de opções de uma vez
+    function hideAllContainers() {
+        const containers = [
+            'sac-options', 'apoio-vendas-options', 'pendencias-options',
+            'destinatario-container', 'tipo-operacao-container', 'rma-fields',
+            'solar-options', 'pdaf-options', 'recusa-nf-options', 
+            'ticket-correios-options', 'primeiro-ticket-options', 'ticket-expirado-options'
+        ];
+        containers.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+        });
+    }
+
     // Evento para o primeiro Select (SAC ou Apoio)
     emailTemplate.addEventListener('change', () => {
         const selectedTemplate = emailTemplate.value;
+        
+        // 1. Limpa valores
         resetFields();
         
-        document.getElementById('sac-options').classList.add('hidden');
-        document.getElementById('apoio-vendas-options').classList.add('hidden');
+        // 2. Esconde TUDO
+        hideAllContainers();
         emailPreview.classList.add('hidden');
         copyEmailButton.classList.add('hidden'); 
         emailContent.innerHTML = '';
 
+        // 3. Mostra apenas o menu do grupo selecionado
         if (selectedTemplate === 'sac') {
             document.getElementById('sac-options').classList.remove('hidden');
         } else if (selectedTemplate === 'apoio_vendas') {
@@ -28,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mostrar botão de copiar quando um template específico for selecionado
     const showCopyButton = () => {
-        if (sacTemplate.value !== '' || apoioVendasTemplate.value !== '') {
+        if (sacTemplate.value !== '' || (apoioVendasTemplate && apoioVendasTemplate.value !== '')) {
             copyEmailButton.classList.remove('hidden');
         } else {
             copyEmailButton.classList.add('hidden');
@@ -36,74 +53,62 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     sacTemplate.addEventListener('change', showCopyButton);
-    apoioVendasTemplate.addEventListener('change', showCopyButton);
+    if(apoioVendasTemplate) apoioVendasTemplate.addEventListener('change', showCopyButton);
 
-    // Função de copiar preservando Rich Text
+    // Função de copiar preservando Rich Text (Outlook)
     copyEmailButton.addEventListener('click', () => {
-    // Pegamos o conteúdo do preview
-    const conteudoOriginal = emailContent.innerHTML;
+        const conteudoOriginal = emailContent.innerHTML;
+        const estruturaHTML = `
+            <div id="copy-helper" style="font-family: Arial, sans-serif; color: #000;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 0; margin: 0;">
+                            ${conteudoOriginal}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        `;
 
-    // Criamos a tabela para o Outlook (Rich Text)
-    const estruturaHTML = `
-        <div id="copy-helper" style="font-family: Arial, sans-serif; color: #000;">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
-                <tr>
-                    <td style="padding: 0; margin: 0;">
-                        ${conteudoOriginal}
-                    </td>
-                </tr>
-            </table>
-        </div>
-    `;
+        const tempDiv = document.createElement('div');
+        tempDiv.style.position = 'fixed';
+        tempDiv.style.left = '-9999px';
+        tempDiv.innerHTML = estruturaHTML;
+        document.body.appendChild(tempDiv);
 
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'fixed';
-    tempDiv.style.left = '-9999px';
-    tempDiv.innerHTML = estruturaHTML;
-    document.body.appendChild(tempDiv);
+        const range = document.createRange();
+        range.selectNodeContents(tempDiv);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
 
-    // Seleção para cópia
-    const range = document.createRange();
-    range.selectNodeContents(tempDiv);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
+        try {
+            document.execCommand('copy');
+            const originalText = copyEmailButton.textContent;
+            copyEmailButton.textContent = 'Copiado para Outlook! ✅';
+            setTimeout(() => { copyEmailButton.textContent = originalText; }, 1500);
+        } catch (err) {
+            console.error('Erro ao copiar:', err);
+        }
 
-    try {
-        // Executa a cópia formatada
-        document.execCommand('copy');
-        
-        const originalText = copyEmailButton.textContent;
-        copyEmailButton.textContent = 'Copiado para Outlook! ✅';
-        setTimeout(() => { copyEmailButton.textContent = originalText; }, 1500);
-    } catch (err) {
-        console.error('Erro ao copiar:', err);
-    }
-
-    selection.removeAllRanges();
-    document.body.removeChild(tempDiv);
-});
+        selection.removeAllRanges();
+        document.body.removeChild(tempDiv);
+    });
 
     function resetFields() {
+        // Reseta os selects de segundo nível
         document.getElementById('sac-template').value = '';
-        document.getElementById('apoio-vendas-template').value = '';
+        if(document.getElementById('apoio-vendas-template')) document.getElementById('apoio-vendas-template').value = '';
 
-        const optionContainers = [
-            'destinatario-container', 'tipo-operacao-container', 'pdaf-options', 'solar-options',
-            'ticket-correios-options', 'recusa-nf-options', 'primeiro-ticket-options', 'ticket-expirado-options'
-        ];
-        
-        optionContainers.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.add('hidden');
-        });
-
+        // Lista de todos os inputs para limpar
         const inputsToReset = [
-            'destinatario', 'tipo-operacao', 'tipo-select', 'nfs-input', 'ean-input', 'swqt-input', 
-            'nf-input', 'valor-unitario-input', 'quantidade-input', 'ncm-input', 'descricao-input',
-            'postagem-correios-template', 'produto-desc-input', 'nf-input-postagem', 'ticket-input',
-            'data-emissao-input', 'data-validade-input', 'ticket-expirado-input', 'ticket-input-expired',
-            'data-emissao-input-expired', 'data-validade-input-expired', 'nf-recusa-input', 'descricao-recusa-input'
+            'edi-select', 'nf-select', 'destinatario', 'tipo-operacao', 'crg-input', 
+            'anexo-info-input', 'nf-input', 'valor-unitario-input', 'quantidade-input', 
+            'ncm-input', 'descricao-input', 'tipo-select', 'nfs-input', 'ean-input', 
+            'swqt-input', 'nf-recusa-input', 'descricao-recusa-input', 'postagem-correios-template',
+            'produto-desc-input', 'data-emissao-input', 'nf-input-postagem', 'ticket-input',
+            'data-validade-input', 'ticket-expirado-input', 'ticket-input-expired',
+            'data-emissao-input-expired', 'data-validade-input-expired'
         ];
 
         inputsToReset.forEach(id => {
@@ -114,4 +119,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.resetFields = resetFields;
 });
-
