@@ -40,47 +40,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função de copiar preservando Rich Text
     copyEmailButton.addEventListener('click', () => {
-        const conteudoOriginal = emailContent.innerHTML;
+    // Pegamos o conteúdo do preview
+    const conteudoOriginal = emailContent.innerHTML;
 
-        const estruturaHTML = `
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; font-family: Arial, sans-serif;">
+    // Criamos a tabela para o Outlook (Rich Text)
+    const estruturaHTML = `
+        <div id="copy-helper" style="font-family: Arial, sans-serif; color: #000;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
                 <tr>
-                    <td style="padding: 10px; color: #000000;">
+                    <td style="padding: 0; margin: 0;">
                         ${conteudoOriginal}
                     </td>
                 </tr>
             </table>
-        `;
+        </div>
+    `;
 
-        const tempDiv = document.createElement('div');
-        tempDiv.style.position = 'fixed';
-        tempDiv.style.left = '-9999px';
-        tempDiv.innerHTML = estruturaHTML;
-        document.body.appendChild(tempDiv);
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'fixed';
+    tempDiv.style.left = '-9999px';
+    tempDiv.innerHTML = estruturaHTML;
+    document.body.appendChild(tempDiv);
 
-        const range = document.createRange();
-        range.selectNodeContents(tempDiv);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
+    // Seleção para cópia
+    const range = document.createRange();
+    range.selectNodeContents(tempDiv);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
 
-        try {
-            const successful = document.execCommand('copy');
-            if (successful) {
-                const originalText = copyEmailButton.textContent;
-                copyEmailButton.textContent = 'Copiado com Cores! ✅';
-                setTimeout(() => {
-                    copyEmailButton.textContent = originalText;
-                }, 1500);
-            }
-        } catch (err) {
-            console.error('Erro ao copiar: ', err);
-            alert('Erro ao copiar.');
-        }
+    try {
+        // Executa a cópia formatada
+        document.execCommand('copy');
+        
+        const originalText = copyEmailButton.textContent;
+        copyEmailButton.textContent = 'Copiado para Outlook! ✅';
+        setTimeout(() => { copyEmailButton.textContent = originalText; }, 1500);
+    } catch (err) {
+        console.error('Erro ao copiar:', err);
+    }
 
-        selection.removeAllRanges();
-        document.body.removeChild(tempDiv);
-    });
+    selection.removeAllRanges();
+    document.body.removeChild(tempDiv);
+});
 
     function resetFields() {
         document.getElementById('sac-template').value = '';
@@ -112,3 +114,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.resetFields = resetFields;
 });
+
