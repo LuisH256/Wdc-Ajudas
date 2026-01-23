@@ -19,6 +19,7 @@
             padding: 15px; 
             border: 1px solid #ddd;
             min-height: 100px;
+            color: #333;
         }
         #copy-email {
             margin-top: 15px;
@@ -29,6 +30,10 @@
             border: none;
             border-radius: 4px;
         }
+        #copy-email:hover { background-color: #0056b3; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="tel"], select { width: 100%; padding: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -72,26 +77,31 @@
     <main class="content">
         <h3>Gerador de E-mails Automáticos</h3>
         <div class="email-configuration">
-            <label for="email-template">Escolha o template de e-mail:</label>
-            <select id="email-template">
-                <option value="">Selecione</option>
-                <option value="sac">SAC</option>
-                <option value="apoio_vendas">Apoio a Vendas</option>
-            </select>
+            <div class="input-group">
+                <label for="email-template">Escolha o template de e-mail:</label>
+                <select id="email-template">
+                    <option value="">Selecione</option>
+                    <option value="sac">SAC</option>
+                    <option value="apoio_vendas">Apoio a Vendas</option>
+                </select>
+            </div>
 
             <div id="sac-options" class="hidden">
-                <label for="sac-template">Escolha o tipo de SAC:</label>
-                <select id="sac-template">
-                    <option value="">Selecione</option>
-                    <option value="devolucao">Devolução</option>
-                    <option value="solicitar_entrada_nf">Solicitar entrada NF</option>
-                    <option value="troca_solar">Troca em garantia - Solar</option>
-                    <option value="envio_material_devolucao">Envio de Material - Devolução</option>
-                    <option value="ticket_para_advanceds">Ticket para advanceds</option>
-                    <option value="recusa_nf">Recusa NF</option>
-                    <option value="advanced_emissao_envio">Advanced - Emissão de NF + Envio</option>
-                    <option value="advanced_apenas_envio">Advanced - Apenas Envio do Material</option>
-                </select>
+                <div class="input-group">
+                    <label for="sac-template">Escolha o tipo de SAC:</label>
+                    <select id="sac-template">
+                        <option value="">Selecione</option>
+                        <option value="devolucao">Devolução</option>
+                        <option value="devolucao_rma">Devolução-RMA (Crédito)</option>
+                        <option value="solicitar_entrada_nf">Solicitar entrada NF</option>
+                        <option value="troca_solar">Troca em garantia - Solar</option>
+                        <option value="envio_material_devolucao">Envio de Material - Devolução</option>
+                        <option value="ticket_para_advanceds">Ticket para advanceds</option>
+                        <option value="recusa_nf">Recusa NF</option>
+                        <option value="advanced_emissao_envio">Advanced - Emissão de NF + Envio</option>
+                        <option value="advanced_apenas_envio">Advanced - Apenas Envio do Material</option>
+                    </select>
+                </div>
             </div>
 
             <div id="apoio-vendas-options" class="hidden">
@@ -117,7 +127,7 @@
 
             <div id="primeiro-ticket-options" class="hidden">
                 <label for="produto-desc-input">Descrição do Produto:</label>
-                <input type="text" id="produto-desc-input" placeholder="Descrição do produto">
+                <input type="text" id="produto-desc-input" placeholder="Ex: ONU Huawei, Inversor Solar...">
                 
                 <div class="date-group">
                     <div>
@@ -136,6 +146,14 @@
                     <label for="data-validade-input">Data de Validade:</label>
                     <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
                 </div>
+            </div>
+
+            <div id="rma-fields" class="hidden">
+                <label for="crg-input">N° do CRG:</label>
+                <input type="text" id="crg-input" placeholder="Digite o número do CRG">
+                
+                <label for="anexo-info-input">Informação do Anexo:</label>
+                <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de crédito, Nota de crédito">
             </div>
 
             <div id="ticket-expirado-options" class="hidden">
@@ -172,8 +190,8 @@
                 <label for="tipo-operacao">Tipo de Operação:</label>
                 <select id="tipo-operacao">
                     <option value="">Selecione</option>
-                    <option value="locacao">Locação</option>
-                    <option value="devolucao">Devolução</option>
+                    <option value="locacao">Retorno de Locação</option>
+                    <option value="devolucao">Devolução de Compra</option>
                 </select>
             </div>
 
@@ -200,20 +218,18 @@
                 <input type="text" id="quantidade-input">
                 <label for="ncm-input">NCM:</label>
                 <input type="text" id="ncm-input">
-                <label for="descricao-input">Descrição:</label>
+                <label for="descricao-input">Descrição do Produto:</label>
                 <input type="text" id="descricao-input">
             </div>
 
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
-                <div id="email-content"></div> </div>
-            
-            <button id="copy-email" class="hidden">Copiar E-mail</button>
+                <div id="email-content"></div> 
+                <button id="copy-email">Copiar E-mail</button>
+            </div>
         </div>
     </main>
     
-    <script src="/Wdc-Ajudas/JS/sac.js"></script>
-    <script src="/Wdc-Ajudas/JS/apoio_vendas.js"></script>
     <script src="/Wdc-Ajudas/JS/emails.js"></script>
     <script src="/Wdc-Ajudas/JS/scripts.js"></script>
 </body>
