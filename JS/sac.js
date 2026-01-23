@@ -141,19 +141,23 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const setVisibility = (element, isVisible) => {
         if (element) {
-            element.classList.toggle('hidden', !isVisible);
+            if (isVisible) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
         }
     };
 
     const resetFields = (mode = 'total') => {
         if (mode === 'total') {
-            document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
+            document.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"]').forEach(input => input.value = '');
             const mainOptions = ['sac_options', 'apoio_vendas_options'];
             mainOptions.forEach(id => setVisibility(elements[id], false));
         }
         
         if (mode === 'sac_change') {
-            document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
+            document.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"]').forEach(input => input.value = '');
         }
 
         const containersToHide = [
@@ -166,6 +170,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
         containersToHide.forEach(id => {
             if (elements[id]) setVisibility(elements[id], false);
         });
+
+        if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
         
         if (mode !== 'dest_only') {
             if (elements.destinatario) elements.destinatario.value = '';
@@ -173,8 +179,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             if (elements.tipo_select) elements.tipo_select.value = 'PD'; 
             if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
         }
-
-        if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
     };
 
     // 3. Funções de Atualização de Email
@@ -349,7 +353,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); updateEnvioMaterialEmail(); },
             ticket_para_advanceds: () => { 
                 setVisibility(elements.ticket_correios_options, true); 
-                setVisibility(camposExclusivosCorreios, false); // CORREÇÃO: Fica oculto aqui, aparece via sub-opção se necessário
             },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             advanced_emissao_envio: () => { 
@@ -399,7 +402,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
     });
     ['crg_input', 'anexo_info_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateDevolucaoRmaEmail); });
     ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail); });
-    ['produto_desc_input', 'data_emissao_input'].forEach(id => { if (elements[id]) { elements[id].addEventListener('input', () => { const sacVal = elements.sac_template.value; if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates(); else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value); }); } });
+    ['produto_desc_input', 'data_emissao_input'].forEach(id => { 
+        if (elements[id]) { 
+            elements[id].addEventListener('input', () => { 
+                const sacVal = elements.sac_template.value; 
+                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
+                    updateAdvancedNovosTemplates(); 
+                } else if (elements.postagem_correios_template?.value) {
+                    updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
+                }
+            }); 
+        } 
+    });
 
     if (elements.postagem_correios_template) {
         elements.postagem_correios_template.addEventListener('change', () => {
@@ -407,7 +421,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
             
-            // Reativa campos de produto/data apenas se for "primeiro_ticket" dentro de Advanceds
             if (val === 'primeiro_ticket') setVisibility(camposExclusivosCorreios, true);
             else setVisibility(camposExclusivosCorreios, false);
 
@@ -418,7 +431,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 
-    // Botão de Copiar
     const copyBtn = document.getElementById('copy-email');
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
