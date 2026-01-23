@@ -13,7 +13,6 @@
         #email-content { white-space: pre-wrap; font-family: Arial, sans-serif; line-height: 1.5; color: #000; }
         label { display: block; margin-top: 10px; font-weight: bold; }
         input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-        .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
     </style>
 </head>
 <body>
@@ -103,7 +102,7 @@
             <div id="rma-fields" class="hidden">
                 <label for="crg-input">N° do CRG:</label>
                 <input type="text" id="crg-input">
-                <label for="anexo-info-input">Informação do Anexo:</label>
+                <label for="anexo-info-input">Informação do Anexo (Ex: Carta de Correção):</label>
                 <input type="text" id="anexo-info-input">
             </div>
 
@@ -122,7 +121,10 @@
 
             <div id="pdaf-options" class="hidden"> 
                 <label for="tipo-select">Tipo:</label>
-                <select id="tipo-select"><option value="PD">PD</option><option value="AF">AF</option></select>
+                <select id="tipo-select">
+                    <option value="PD">PD</option>
+                    <option value="AF">AF</option>
+                </select>
                 <label for="nfs-input">NFs:</label>
                 <input type="text" id="nfs-input">
                 <label for="ean-input">EAN:</label>
@@ -145,39 +147,39 @@
                     <option value="primeiro_ticket">Primeira emissão</option>
                     <option value="ticket_expirado">Ticket Expirado</option>
                 </select>
-                
-                <div id="campos-exclusivos-correios">
-                    <label for="produto-desc-input">Descrição do Produto:</label>
-                    <input type="text" id="produto-desc-input">
-                    <label for="data-emissao-input">Data de Emissão / Recebimento:</label>
-                    <input type="tel" id="data-emissao-input" maxlength="10">
-                </div>
+            </div>
 
-                <div id="primeiro-ticket-options" class="hidden">
-                    <label for="nf-input-postagem">NF de Compra / Retorno:</label>
-                    <input type="text" id="nf-input-postagem">
-                    <label for="ticket-input">Ticket:</label>
-                    <input type="text" id="ticket-input">
-                    <label for="data-validade-input">Data de Validade:</label>
-                    <input type="tel" id="data-validade-input" maxlength="10">
-                </div>
+            <div id="campos-exclusivos-correios" class="hidden">
+                <label for="produto-desc-input">Descrição do Produto:</label>
+                <input type="text" id="produto-desc-input">
+                <label for="data-emissao-input">Data de Emissão / Recebimento:</label>
+                <input type="tel" id="data-emissao-input" placeholder="dd/mm/aaaa" maxlength="10">
+            </div>
 
-                <div id="ticket-expirado-options" class="hidden">
-                    <label for="ticket-expirado-input">Ticket Expirado Anterior:</label>
-                    <input type="text" id="ticket-expirado-input">
-                    <label for="ticket-input-expired">Novo Ticket:</label>
-                    <input type="text" id="ticket-input-expired">
-                    <label for="data-emissao-input-expired">Nova Data Emissão:</label>
-                    <input type="tel" id="data-emissao-input-expired">
-                    <label for="data-validade-input-expired">Nova Data Validade:</label>
-                    <input type="tel" id="data-validade-input-expired">
-                </div>
+            <div id="primeiro-ticket-options" class="hidden">
+                <label for="nf-input-postagem">NF de Compra / Retorno:</label>
+                <input type="text" id="nf-input-postagem">
+                <label for="ticket-input">Ticket:</label>
+                <input type="text" id="ticket-input">
+                <label for="data-validade-input">Data de Validade:</label>
+                <input type="tel" id="data-validade-input" placeholder="dd/mm/aaaa" maxlength="10">
+            </div>
+
+            <div id="ticket-expirado-options" class="hidden">
+                <label for="ticket-expirado-input">Ticket Expirado Anterior:</label>
+                <input type="text" id="ticket-expirado-input">
+                <label for="ticket-input-expired">Novo Ticket:</label>
+                <input type="text" id="ticket-input-expired">
+                <label for="data-emissao-input-expired">Nova Data Emissão:</label>
+                <input type="tel" id="data-emissao-input-expired" placeholder="dd/mm/aaaa">
+                <label for="data-validade-input-expired">Nova Data Validade:</label>
+                <input type="tel" id="data-validade-input-expired" placeholder="dd/mm/aaaa">
             </div>
 
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
                 <div id="email-content"></div>
-                <button id="copy-email" class="hidden" style="margin-top: 20px;">Copiar E-mail</button>
+                <button id="copy-email" style="margin-top: 20px;">Copiar E-mail</button>
             </div>
         </div>
     </main>
