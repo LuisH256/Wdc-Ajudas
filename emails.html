@@ -11,6 +11,24 @@
         .hidden { display: none !important; }
         .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
         .date-group div { flex: 1; min-width: 150px; }
+        /* Garantir que o preview mantenha quebras de linha mas aceite HTML */
+        #email-content { 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            background: #fff; 
+            padding: 15px; 
+            border: 1px solid #ddd;
+            min-height: 100px;
+        }
+        #copy-email {
+            margin-top: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -188,8 +206,7 @@
 
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
-                <pre id="email-content"></pre>
-            </div>
+                <div id="email-content"></div> </div>
             
             <button id="copy-email" class="hidden">Copiar E-mail</button>
         </div>
@@ -201,4 +218,3 @@
     <script src="/Wdc-Ajudas/JS/scripts.js"></script>
 </body>
 </html>
-
