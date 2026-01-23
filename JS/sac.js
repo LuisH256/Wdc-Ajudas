@@ -342,21 +342,23 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.tipo_operacao_container, true); 
                 setVisibility(elements.rma_fields, true);
                 setVisibility(elements.solar_options, true);
-                // OCULTA campos desnecessários de RMA que vinham do Advanced
                 setVisibility(camposExclusivosCorreios, false);
             },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => setVisibility(elements.solar_options, true), 
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); updateEnvioMaterialEmail(); },
-            ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); setVisibility(camposExclusivosCorreios, true); },
+            ticket_para_advanceds: () => { 
+                setVisibility(elements.ticket_correios_options, true); 
+                setVisibility(camposExclusivosCorreios, false); // CORREÇÃO: Fica oculto aqui, aparece via sub-opção se necessário
+            },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
             advanced_emissao_envio: () => { 
                 setVisibility(elements.destinatario_container, true); 
-                setVisibility(camposExclusivosCorreios, true); // Exibe Descrição e Data de Recebimento
+                setVisibility(camposExclusivosCorreios, true); 
             },
             advanced_apenas_envio: () => { 
                 setVisibility(elements.destinatario_container, true); 
-                setVisibility(camposExclusivosCorreios, true); // Exibe Descrição e Data de Recebimento
+                setVisibility(camposExclusivosCorreios, true); 
             }
         }
     };
@@ -404,6 +406,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
             const val = elements.postagem_correios_template.value;
             setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
+            
+            // Reativa campos de produto/data apenas se for "primeiro_ticket" dentro de Advanceds
+            if (val === 'primeiro_ticket') setVisibility(camposExclusivosCorreios, true);
+            else setVisibility(camposExclusivosCorreios, false);
+
             if (val) updateTicketParaAdvancedsEmail(val); else setVisibility(elements.email_preview, false);
         });
     }
