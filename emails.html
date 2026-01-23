@@ -19,7 +19,6 @@
             padding: 15px; 
             border: 1px solid #ddd;
             min-height: 100px;
-            color: #333;
         }
         #copy-email {
             margin-top: 15px;
@@ -30,10 +29,6 @@
             border: none;
             border-radius: 4px;
         }
-        #copy-email:hover { background-color: #0056b3; }
-        .input-group { margin-bottom: 10px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="tel"], select { width: 100%; padding: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -77,31 +72,26 @@
     <main class="content">
         <h3>Gerador de E-mails Automáticos</h3>
         <div class="email-configuration">
-            <div class="input-group">
-                <label for="email-template">Escolha o template de e-mail:</label>
-                <select id="email-template">
-                    <option value="">Selecione</option>
-                    <option value="sac">SAC</option>
-                    <option value="apoio_vendas">Apoio a Vendas</option>
-                </select>
-            </div>
+            <label for="email-template">Escolha o template de e-mail:</label>
+            <select id="email-template">
+                <option value="">Selecione</option>
+                <option value="sac">SAC</option>
+                <option value="apoio_vendas">Apoio a Vendas</option>
+            </select>
 
             <div id="sac-options" class="hidden">
-                <div class="input-group">
-                    <label for="sac-template">Escolha o tipo de SAC:</label>
-                    <select id="sac-template">
-                        <option value="">Selecione</option>
-                        <option value="devolucao">Devolução</option>
-                        <option value="devolucao_rma">Devolução-RMA (Crédito)</option>
-                        <option value="solicitar_entrada_nf">Solicitar entrada NF</option>
-                        <option value="troca_solar">Troca em garantia - Solar</option>
-                        <option value="envio_material_devolucao">Envio de Material - Devolução</option>
-                        <option value="ticket_para_advanceds">Ticket para advanceds</option>
-                        <option value="recusa_nf">Recusa NF</option>
-                        <option value="advanced_emissao_envio">Advanced - Emissão de NF + Envio</option>
-                        <option value="advanced_apenas_envio">Advanced - Apenas Envio do Material</option>
-                    </select>
-                </div>
+                <label for="sac-template">Escolha o tipo de SAC:</label>
+                <select id="sac-template">
+                    <option value="">Selecione</option>
+                    <option value="devolucao">Devolução</option>
+                    <option value="devolucao_rma">Devolução-RMA</option> <option value="solicitar_entrada_nf">Solicitar entrada NF</option>
+                    <option value="troca_solar">Troca em garantia - Solar</option>
+                    <option value="envio_material_devolucao">Envio de Material - Devolução</option>
+                    <option value="ticket_para_advanceds">Ticket para advanceds</option>
+                    <option value="recusa_nf">Recusa NF</option>
+                    <option value="advanced_emissao_envio">Advanced - Emissão de NF + Envio</option>
+                    <option value="advanced_apenas_envio">Advanced - Apenas Envio do Material</option>
+                </select>
             </div>
 
             <div id="apoio-vendas-options" class="hidden">
@@ -127,7 +117,7 @@
 
             <div id="primeiro-ticket-options" class="hidden">
                 <label for="produto-desc-input">Descrição do Produto:</label>
-                <input type="text" id="produto-desc-input" placeholder="Ex: ONU Huawei, Inversor Solar...">
+                <input type="text" id="produto-desc-input" placeholder="Descrição do produto">
                 
                 <div class="date-group">
                     <div>
@@ -146,14 +136,6 @@
                     <label for="data-validade-input">Data de Validade:</label>
                     <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
                 </div>
-            </div>
-
-            <div id="rma-fields" class="hidden">
-                <label for="crg-input">N° do CRG:</label>
-                <input type="text" id="crg-input" placeholder="Digite o número do CRG">
-                
-                <label for="anexo-info-input">Informação do Anexo:</label>
-                <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de crédito, Nota de crédito">
             </div>
 
             <div id="ticket-expirado-options" class="hidden">
@@ -175,6 +157,13 @@
                 <input type="text" id="nf-recusa-input">
                 <label for="descricao-recusa-input">Descreva a situação:</label>
                 <input type="text" id="descricao-recusa-input">
+            </div>
+
+            <div id="rma-fields" class="hidden">
+                <label for="crg-input">N° do CRG:</label>
+                <input type="text" id="crg-input" placeholder="Ex: 12345">
+                <label for="anexo-info-input">Informação do Anexo:</label>
+                <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de Crédito">
             </div>
 
             <div id="destinatario-container" class="hidden">
@@ -218,18 +207,125 @@
                 <input type="text" id="quantidade-input">
                 <label for="ncm-input">NCM:</label>
                 <input type="text" id="ncm-input">
-                <label for="descricao-input">Descrição do Produto:</label>
+                <label for="descricao-input">Descrição:</label>
                 <input type="text" id="descricao-input">
             </div>
 
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
                 <div id="email-content"></div> 
-                <button id="copy-email">Copiar E-mail</button>
             </div>
+            
+            <button id="copy-email" class="hidden">Copiar E-mail</button>
         </div>
     </main>
     
+    <script>
+    // Script centralizado para garantir funcionamento total
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = {
+            emailTemplate: document.getElementById('email-template'),
+            sacTemplate: document.getElementById('sac-template'),
+            sacOptions: document.getElementById('sac-options'),
+            destinatarioContainer: document.getElementById('destinatario-container'),
+            tipoOperacaoContainer: document.getElementById('tipo-operacao-container'),
+            rmaFields: document.getElementById('rma-fields'),
+            emailPreview: document.getElementById('email-preview'),
+            emailContent: document.getElementById('email-content'),
+            destinatario: document.getElementById('destinatario'),
+            tipoOperacao: document.getElementById('tipo-operacao'),
+            crgInput: document.getElementById('crg-input'),
+            anexoInput: document.getElementById('anexo-info-input'),
+            qtdInput: document.getElementById('quantidade-input'),
+            descInput: document.getElementById('descricao-input'),
+            solarOptions: document.getElementById('solar-options')
+        };
+
+        const TEMPLATES = {
+            devolucao_rma: `{{saudacao}}<br><br>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a <b>{{anexo}}</b> e notas fiscais de compras, Favor seguir com a instrução abaixo para realizarmos o processo de devolução.<br><br><b>Emitir Nota Fiscal de {{titulo}} (enviar anexa em resposta a este email):</b><br><br>>QTD {{qtd}} : {{label_produto}} <b>{{descricao}}</b>.<br><br>• Natureza de Operação: {{natureza}}<br>• CFOP: {{cfop}}<br>• Destinatário: <br>{{dest_txt}}<br><br>{{instrucao_valores}}<br><br>No campo de “dados adicionais” da NF, favor mencionar:<br>· Devolução recebida por meio da NF nº......., emitida em ....../....../........`
+        };
+
+        const DADOS_DEST = {
+            matriz: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8<br>IGUAPE – ILHÉUS/BA CEP: 45658-335<br>CNPJ: 05.917.486/0001-40 - I.E: 63250303`,
+            simoes: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO S.A<br>CNPJ: 05.917.486/0008-17 I.E: 153759695<br>V URBANA, 4466 Complemento: TERREO CIA SUL<br>Cep: 43721-450 SIMOES FILHO/BA`
+        };
+
+        function getSaudacao() {
+            const hora = new Date().getHours();
+            return hora < 12 ? "Bom Dia!" : "Boa Tarde!";
+        }
+
+        function updateRMA() {
+            const crg = elements.crgInput.value || "_______";
+            const anexo = elements.anexoInput.value || "_______";
+            const qtd = elements.qtdInput.value || "___";
+            const desc = elements.descInput.value || "_______";
+            const tipo = elements.tipoOperacao.value;
+            const dest = elements.destinatario.value;
+
+            if (!tipo || !dest) return;
+
+            const isLocacao = tipo === 'locacao';
+            const labelProd = parseInt(qtd) > 1 ? "produtos" : "produto";
+            
+            let html = TEMPLATES.devolucao_rma
+                .replace('{{saudacao}}', getSaudacao())
+                .replace('{{crg}}', crg)
+                .replace('{{anexo}}', anexo)
+                .replace('{{qtd}}', qtd)
+                .replace('{{label_produto}}', labelProd)
+                .replace('{{descricao}}', desc)
+                .replace('{{dest_txt}}', DADOS_DEST[dest])
+                .replace('{{titulo}}', isLocacao ? "Retorno de Locação" : "Devolução de Compra")
+                .replace('{{natureza}}', isLocacao ? "Retorno de Locação" : "Devolução de Compra para Comercialização")
+                .replace('{{cfop}}', isLocacao ? "5909 ou 6909 (Conforme dentro ou fora do estado)" : "6202 (Para fora da UF) E 5202 (Para a própria UF)")
+                .replace('{{instrucao_valores}}', isLocacao ? 
+                    "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)." : 
+                    "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários, valor total, IPI, ICMS e alíquota.");
+
+            elements.emailContent.innerHTML = html;
+            elements.emailPreview.classList.remove('hidden');
+        }
+
+        // Listener Principal de Templates
+        elements.sacTemplate.addEventListener('change', (e) => {
+            const val = e.target.value;
+            // Reset
+            elements.rmaFields.classList.add('hidden');
+            elements.destinatarioContainer.classList.add('hidden');
+            elements.tipoOperacaoContainer.classList.add('hidden');
+            elements.solarOptions.classList.add('hidden');
+
+            if (val === 'devolucao_rma') {
+                elements.rmaFields.classList.remove('hidden');
+                elements.destinatarioContainer.classList.remove('hidden');
+                elements.tipoOperacaoContainer.classList.remove('hidden');
+                elements.solarOptions.classList.remove('hidden'); // Reutiliza campos de qtd e desc
+                updateRMA();
+            } else if (val === 'devolucao') {
+                elements.destinatarioContainer.classList.remove('hidden');
+                elements.tipoOperacaoContainer.classList.remove('hidden');
+            }
+            // Outras lógicas originais permanecem via scripts externos
+        });
+
+        // Listeners de Input para o RMA
+        [elements.crgInput, elements.anexoInput, elements.qtdInput, elements.descInput, elements.destinatario, elements.tipoOperacao].forEach(el => {
+            el.addEventListener('input', () => {
+                if (elements.sacTemplate.value === 'devolucao_rma') updateRMA();
+            });
+        });
+
+        // Toggle SAC/Apoio
+        elements.emailTemplate.addEventListener('change', (e) => {
+            elements.sacOptions.classList.toggle('hidden', e.target.value !== 'sac');
+            document.getElementById('apoio-vendas-options').classList.toggle('hidden', e.target.value !== 'apoio_vendas');
+        });
+    });
+    </script>
+
+    <script src="/Wdc-Ajudas/JS/sac.js"></script>
+    <script src="/Wdc-Ajudas/JS/apoio_vendas.js"></script>
     <script src="/Wdc-Ajudas/JS/emails.js"></script>
     <script src="/Wdc-Ajudas/JS/scripts.js"></script>
 </body>
