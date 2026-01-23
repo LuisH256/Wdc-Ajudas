@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'data-validade-input-expired', 'postagem-correios-template',
         'primeiro-ticket-options', 'ticket-expirado-options',
         'nf-input-postagem',
+        // Novos ID para Devolução RMA
+        'crg-input', 'anexo-info-input'
     ].reduce((acc, id) => {
         const el = document.getElementById(id);
         if (el) {
@@ -69,9 +71,20 @@ EAN {{ean}}
 
 <br><br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
 
-        advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div> - Número da(s) nota (s) de Venda de cada produto descrito.</div><div> - Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b> - Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
+        advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div>Número da(s) nota (s) de Venda de cada produto descrito.</div><div>Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
 
-        advanced_apenas_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div><b>Favor seguir com o envio do material:</b></div><br><div> - O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
+        advanced_apenas_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div><b>Favor seguir com o envio do material:</b></div><br><div>O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
+
+        devolucao_rma: `<div>{{saudacao}}</div><br>
+        <div>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a {{anexo}} e notas fiscais de compras, favor seguir com a instrução abaixo para realizarmos o processo de devolução.</div><br>
+        <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
+        <div>QTD {{quantidade}}: {{produtoLabel}} <b>{{descricao}}</b></div><br>
+        <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
+        <div>• <b>CFOP:</b> {{cfop}}</div>
+        <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
+        <div>{{instrucaoValores}}</div><br>
+        <div>No campo de “dados adicionais” da NF, favor mencionar:</div>
+        <div>· Devolução recebida por meio da NF nº.......</div>`,
 
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
@@ -111,14 +124,16 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const OPERACOES = {
         locacao: {
-            operacao: "Retorno de Locação",
+            titulo: "Retorno de Locação",
+            natureza: "Retorno de Locação",
             cfop: "5909 ou 6909 (Conforme dentro ou fora do estado)",
-            dados_adicionais: `Retorno de locação, referente à NF nº ......., emitida em ....../....../........`
+            instrucao: "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)."
         },
         devolucao: {
-            operacao: "Devolução de Compra para Comercialização",
-            cfop: "6202 (Para fora da UF) e 5202 (Para a própria UF)",
-            dados_adicionais: `Devolução recebida por meio da NF nº ......., emitida em ....../....../........`
+            titulo: "Devolução de Compra",
+            natureza: "Devolução de Compra para Comercialização",
+            cfop: "6202 (Para fora da UF) E 5202 (Para a própria UF)",
+            instrucao: "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários, valor total, IPI, ICMS e alíquota."
         }
     };
 
@@ -138,7 +153,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             mainOptions.forEach(id => setVisibility(elements[id], false));
         }
         
-        // CORREÇÃO: Limpa todos os campos, inclusive descrição e data ao trocar de template de SAC
         if (mode === 'sac_change') {
             document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         }
@@ -167,6 +181,37 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     // 3. Funções de Atualização de Email
 
+    const updateDevolucaoRmaEmail = () => {
+        const opKey = elements.tipo_operacao.value;
+        const destKey = elements.destinatario.value;
+        if (!opKey || !destKey) return;
+
+        const opData = OPERACOES[opKey];
+        const destData = DESTINATARIOS[destKey];
+        const crg = elements.crg_input.value || '...';
+        const anexo = elements.anexo_info_input.value || '...';
+        const qtd = parseInt(elements.quantidade_input.value) || 0;
+        const descricao = elements.descricao_input.value || '...';
+        
+        const produtoLabel = qtd > 1 ? "produtos" : "produto";
+
+        const emailText = TEMPLATES.devolucao_rma
+            .replace('{{saudacao}}', getSaudacao())
+            .replace('{{crg}}', crg)
+            .replace('{{anexo}}', anexo)
+            .replace('{{tituloOperacao}}', opData.titulo)
+            .replace('{{quantidade}}', qtd || '___')
+            .replace('{{produtoLabel}}', produtoLabel)
+            .replace('{{descricao}}', descricao)
+            .replace('{{natureza}}', opData.natureza)
+            .replace('{{cfop}}', opData.cfop)
+            .replace('{{destinatario}}', destData)
+            .replace('{{instrucaoValores}}', opData.instrucao);
+
+        elements.email_content.innerHTML = emailText.trim();
+        setVisibility(elements.email_preview, true);
+    };
+
     const updateRecusaNfEmail = () => {
         const nf = elements.nf_recusa_input.value || '...';
         const descricao = elements.descricao_recusa_input.value || '...';
@@ -176,8 +221,28 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const updateDevolucaoEmail = () => {
+        const sacVal = elements.sac_template.value;
+        if (sacVal === 'devolucao_rma') {
+            updateDevolucaoRmaEmail();
+            return;
+        }
+
         const destinatario = DESTINATARIOS[elements.destinatario.value] || '';
-        const operacaoInfo = OPERACOES[elements.tipo_operacao.value] || {};
+        // Mapeamento simples para o template de devolução padrão
+        const opMap = {
+            locacao: {
+                operacao: "Retorno de Locação",
+                cfop: "5909 ou 6909 (Conforme dentro ou fora do estado)",
+                dados_adicionais: "Retorno de locação, referente à NF nº ......., emitida em ....../....../........"
+            },
+            devolucao: {
+                operacao: "Devolução de Compra para Comercialização",
+                cfop: "6202 (Para fora da UF) e 5202 (Para a própria UF)",
+                dados_adicionais: "Devolução recebida por meio da NF nº ......., emitida em ....../....../........"
+            }
+        };
+
+        const operacaoInfo = opMap[elements.tipo_operacao.value] || {};
         if (destinatario && operacaoInfo.operacao) {
             const emailText = TEMPLATES.devolucao.replace('{{destinatario}}', destinatario).replace('{{operacao}}', operacaoInfo.operacao).replace('{{cfop}}', operacaoInfo.cfop).replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
             elements.email_content.innerHTML = emailText.trim();
@@ -278,6 +343,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         },
         'sac-template': {
             devolucao: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
+            devolucao_rma: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => setVisibility(elements.solar_options, true), 
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); updateEnvioMaterialEmail(); },
@@ -308,14 +374,21 @@ Cep: 43721-450 SIMOES FILHO/BA`
     if (elements.destinatario) elements.destinatario.addEventListener('change', () => {
         const sacVal = elements.sac_template.value;
         if (sacVal === 'envio_material_devolucao') updateEnvioMaterialEmail();
-        else if (sacVal === 'devolucao') updateDevolucaoEmail();
+        else if (sacVal === 'devolucao' || sacVal === 'devolucao_rma') updateDevolucaoEmail();
         else if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
     });
 
     if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
     ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail); });
-    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.sac_template.value === 'troca_solar') updateSolarEmail('troca_solar'); }); });
+    ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => { 
+        if (elements[id]) elements[id].addEventListener('input', () => { 
+            const sacVal = elements.sac_template.value;
+            if (sacVal === 'troca_solar') updateSolarEmail('troca_solar'); 
+            else if (sacVal === 'devolucao_rma') updateDevolucaoRmaEmail();
+        }); 
+    });
+    ['crg_input', 'anexo_info_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateDevolucaoRmaEmail); });
     ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail); });
     ['produto_desc_input', 'data_emissao_input'].forEach(id => { if (elements[id]) { elements[id].addEventListener('input', () => { const sacVal = elements.sac_template.value; if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates(); else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value); }); } });
 
@@ -331,4 +404,3 @@ Cep: 43721-450 SIMOES FILHO/BA`
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 });
-
