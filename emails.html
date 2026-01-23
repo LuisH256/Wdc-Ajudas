@@ -10,9 +10,10 @@
     <style>
         .hidden { display: none !important; }
         .email-box { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; }
-        #email-content { white-space: pre-wrap; font-family: Arial, sans-serif; line-height: 1.5; }
+        #email-content { white-space: pre-wrap; font-family: Arial, sans-serif; line-height: 1.5; color: #000; }
         label { display: block; margin-top: 10px; font-weight: bold; }
         input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
     </style>
 </head>
 <body>
@@ -81,13 +82,6 @@
                 <input type="text" id="nf-select">
             </div>
 
-            <div id="recusa-nf-options" class="hidden">
-                <label for="nf-recusa-input">NF:</label>
-                <input type="text" id="nf-recusa-input">
-                <label for="descricao-recusa-input">Situação/Descrição:</label>
-                <input type="text" id="descricao-recusa-input">
-            </div>
-
             <div id="destinatario-container" class="hidden">
                 <label for="destinatario">Destinatário:</label>
                 <select id="destinatario">
@@ -137,6 +131,13 @@
                 <input type="text" id="swqt-input">
             </div>
 
+            <div id="recusa-nf-options" class="hidden">
+                <label for="nf-recusa-input">NF:</label>
+                <input type="text" id="nf-recusa-input">
+                <label for="descricao-recusa-input">Situação/Descrição:</label>
+                <input type="text" id="descricao-recusa-input">
+            </div>
+
             <div id="ticket-correios-options" class="hidden">
                 <label for="postagem-correios-template">Selecione o tipo de ticket:</label>
                 <select id="postagem-correios-template">
@@ -176,7 +177,7 @@
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
                 <div id="email-content"></div>
-                <button id="copy-email">Copiar E-mail</button>
+                <button id="copy-email" class="hidden" style="margin-top: 20px;">Copiar E-mail</button>
             </div>
         </div>
     </main>
