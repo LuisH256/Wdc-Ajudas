@@ -141,11 +141,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const setVisibility = (element, isVisible) => {
         if (element) {
-            if (isVisible) {
-                element.classList.remove('hidden');
-            } else {
-                element.classList.add('hidden');
-            }
+            if (isVisible) element.classList.remove('hidden');
+            else element.classList.add('hidden');
         }
     };
 
@@ -171,6 +168,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             if (elements[id]) setVisibility(elements[id], false);
         });
 
+        // Correção principal: Sempre esconde os campos de correio ao trocar de SAC
         if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
         
         if (mode !== 'dest_only') {
@@ -182,34 +180,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     // 3. Funções de Atualização de Email
-
     const updateDevolucaoRmaEmail = () => {
         const opKey = elements.tipo_operacao.value;
         const destKey = elements.destinatario.value;
         if (!opKey || !destKey) return;
-
         const opData = OPERACOES[opKey];
         const destData = DESTINATARIOS[destKey];
         const crg = elements.crg_input.value || '...';
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         const descricao = elements.descricao_input.value || '...';
-        
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
-
-        const emailText = TEMPLATES.devolucao_rma
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{crg}}', crg)
-            .replace('{{anexo}}', anexo)
-            .replace('{{tituloOperacao}}', opData.titulo)
-            .replace('{{quantidade}}', qtd || '___')
-            .replace('{{produtoLabel}}', produtoLabel)
-            .replace('{{descricao}}', descricao)
-            .replace('{{natureza}}', opData.natureza)
-            .replace('{{cfop}}', opData.cfop)
-            .replace('{{destinatario}}', destData)
-            .replace('{{instrucaoValores}}', opData.instrucao);
-
+        const emailText = TEMPLATES.devolucao_rma.replace('{{saudacao}}', getSaudacao()).replace('{{crg}}', crg).replace('{{anexo}}', anexo).replace('{{tituloOperacao}}', opData.titulo).replace('{{quantidade}}', qtd || '___').replace('{{produtoLabel}}', produtoLabel).replace('{{descricao}}', descricao).replace('{{natureza}}', opData.natureza).replace('{{cfop}}', opData.cfop).replace('{{destinatario}}', destData).replace('{{instrucaoValores}}', opData.instrucao);
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -224,33 +206,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const updateDevolucaoEmail = () => {
         const sacVal = elements.sac_template.value;
-        if (sacVal === 'devolucao_rma') {
-            updateDevolucaoRmaEmail();
-            return;
-        }
-
+        if (sacVal === 'devolucao_rma') { updateDevolucaoRmaEmail(); return; }
         const destinatario = DESTINATARIOS[elements.destinatario.value] || '';
         const opMap = {
-            locacao: {
-                operacao: "Retorno de Locação",
-                cfop: "5909 ou 6909 (Conforme dentro ou fora do estado)",
-                dados_adicionais: "Retorno de locação, referente à NF nº ......., emitida em ....../....../........"
-            },
-            devolucao: {
-                operacao: "Devolução de Compra para Comercialização",
-                cfop: "6202 (Para fora da UF) e 5202 (Para a própria UF)",
-                dados_adicionais: "Devolução recebida por meio da NF nº ......., emitida em ....../....../........"
-            }
+            locacao: { operacao: "Retorno de Locação", cfop: "5909 ou 6909 (Conforme dentro ou fora do estado)", dados_adicionais: "Retorno de locação, referente à NF nº ......., emitida em ....../....../........" },
+            devolucao: { operacao: "Devolução de Compra para Comercialização", cfop: "6202 (Para fora da UF) e 5202 (Para a própria UF)", dados_adicionais: "Devolução recebida por meio da NF nº ......., emitida em ....../....../........" }
         };
-
         const operacaoInfo = opMap[elements.tipo_operacao.value] || {};
         if (destinatario && operacaoInfo.operacao) {
             const emailText = TEMPLATES.devolucao.replace('{{destinatario}}', destinatario).replace('{{operacao}}', operacaoInfo.operacao).replace('{{cfop}}', operacaoInfo.cfop).replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
-        } else {
-            setVisibility(elements.email_preview, false);
-        }
+        } else { setVisibility(elements.email_preview, false); }
     };
 
     const updateEnvioMaterialEmail = () => {
@@ -273,19 +240,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
         const produto = elements.produto_desc_input.value || '...';
         const dataRecebimento = elements.data_emissao_input.value || '__/__/____';
-
         if (destinatarioKey) {
-            const emailText = TEMPLATES[templateKey]
-                .replace('{{saudacao}}', getSaudacao())
-                .replace('{{produto}}', produto)
-                .replace('{{data_recebimento}}', dataRecebimento)
-                .replace('{{destinatario}}', endereco);
-            
+            const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{produto}}', produto).replace('{{data_recebimento}}', dataRecebimento).replace('{{destinatario}}', endereco);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
-        } else {
-            setVisibility(elements.email_preview, false);
-        }
+        } else { setVisibility(elements.email_preview, false); }
     };
 
     const updatePdAfEmail = () => {
@@ -337,44 +296,21 @@ Cep: 43721-450 SIMOES FILHO/BA`
             apoio_vendas: () => setVisibility(elements.apoio_vendas_options, true),
         },
         'sac-template': {
-            devolucao: () => { 
-                setVisibility(elements.destinatario_container, true); 
-                setVisibility(elements.tipo_operacao_container, true); 
-            },
-            devolucao_rma: () => { 
-                setVisibility(elements.destinatario_container, true); 
-                setVisibility(elements.tipo_operacao_container, true); 
-                setVisibility(elements.rma_fields, true);
-                setVisibility(elements.solar_options, true);
-                setVisibility(camposExclusivosCorreios, false);
-            },
+            devolucao: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
+            devolucao_rma: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); setVisibility(elements.rma_fields, true); setVisibility(elements.solar_options, true); },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => setVisibility(elements.solar_options, true), 
-            envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); updateEnvioMaterialEmail(); },
-            ticket_para_advanceds: () => { 
-                setVisibility(elements.ticket_correios_options, true); 
-            },
+            envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); },
+            ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
-            advanced_emissao_envio: () => { 
-                setVisibility(elements.destinatario_container, true); 
-                setVisibility(camposExclusivosCorreios, true); 
-            },
-            advanced_apenas_envio: () => { 
-                setVisibility(elements.destinatario_container, true); 
-                setVisibility(camposExclusivosCorreios, true); 
-            }
+            advanced_emissao_envio: () => { setVisibility(elements.destinatario_container, true); setVisibility(camposExclusivosCorreios, true); },
+            advanced_apenas_envio: () => { setVisibility(elements.destinatario_container, true); setVisibility(camposExclusivosCorreios, true); }
         }
     };
 
     const handleTemplateChange = (templateId, value) => {
-        if (templateId === 'email-template') {
-            resetFields('total');
-            if (templateMap['email-template'][value]) templateMap['email-template'][value]();
-        } 
-        if (templateId === 'sac-template') {
-            resetFields('sac_change');
-            if (templateMap['sac-template'][value]) templateMap['sac-template'][value]();
-        }
+        if (templateId === 'email-template') { resetFields('total'); if (templateMap['email-template'][value]) templateMap['email-template'][value](); } 
+        if (templateId === 'sac-template') { resetFields('sac_change'); if (templateMap['sac-template'][value]) templateMap['sac-template'][value](); }
         if (value === 'recusa_nf') updateRecusaNfEmail();
         if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
@@ -402,15 +338,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
     });
     ['crg_input', 'anexo_info_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateDevolucaoRmaEmail); });
     ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail); });
+    
     ['produto_desc_input', 'data_emissao_input'].forEach(id => { 
         if (elements[id]) { 
             elements[id].addEventListener('input', () => { 
                 const sacVal = elements.sac_template.value; 
-                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
-                    updateAdvancedNovosTemplates(); 
-                } else if (elements.postagem_correios_template?.value) {
-                    updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
-                }
+                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates(); 
+                else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
             }); 
         } 
     });
@@ -421,6 +355,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
             
+            // Correção para Ticket Advanceds: Descrição e Data só aparecem na "Primeira emissão"
             if (val === 'primeiro_ticket') setVisibility(camposExclusivosCorreios, true);
             else setVisibility(camposExclusivosCorreios, false);
 
