@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Mapeamento de Elementos (Redução de Repetição)
+    // 1. Mapeamento de Elementos
     const elements = [
         'email-template', 'sac-template', 'sac-options', 'apoio-vendas-options',
         'destinatario-container', 'tipo-operacao-container', 'pdaf-options',
         'solar-options', 
-        'ticket-correios-options', // ID para o container principal de tickets
+        'ticket-correios-options', 
         'email-preview', 'email-content', 'recusa-nf-options',
         'destinatario', 'tipo-operacao', 'tipo-select', 'nfs-input',
         'ean-input', 'swqt-input', 'nf-input', 'valor-unitario-input',
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'ticket-input-expired', 'data-emissao-input-expired',
         'data-validade-input-expired', 'postagem-correios-template',
         'primeiro-ticket-options', 'ticket-expirado-options',
-        'nf-input-postagem', // NF de retorno para primeiro ticket
+        'nf-input-postagem',
     ].reduce((acc, id) => {
         const el = document.getElementById(id);
         if (el) {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios');
 
-    // Mantenha os templates e dados estáticos fora da função principal
+    // Mantenha os templates e dados estáticos
     const TEMPLATES = {
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
         primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
@@ -100,8 +100,13 @@ Ficamos à disposição para maiores esclarecimentos.`,
     };
 
     const DESTINATARIOS = {
-        matriz: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8 IGUAPE – ILHÉUS/BA<br>CEP: 45658-335  CNPJ: 05.917.486/0001-40 - I.E: 63250303`,
-        simoes: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO S.A<br>CNPJ: 05.917.486/0008-17  I.E: 153759695<br>V URBANA, 4466 Complemento: TERREO CIA SUL<br>Cep: 43721-450 SIMOES FILHO/BA`
+        matriz: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>
+ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8 IGUAPE – ILHÉUS/BA<br>
+CEP: 45658-335  CNPJ: 05.917.486/0001-40 - I.E: 63250303`,
+        simoes: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO S.A<br>
+CNPJ: 05.917.486/0008-17  I.E: 153759695<br>
+V URBANA, 4466 Complemento: TERREO CIA SUL<br>
+Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const OPERACOES = {
@@ -126,27 +131,34 @@ Ficamos à disposição para maiores esclarecimentos.`,
         }
     };
 
-    const resetFields = (excludeMainOptions = false) => {
-        document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
+    const resetFields = (mode = 'total') => {
+        if (mode === 'total') {
+            document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
+            const mainOptions = ['sac_options', 'apoio_vendas_options'];
+            mainOptions.forEach(id => setVisibility(elements[id], false));
+        }
         
+        // Se for 'partial', não limpamos produto_desc_input nem data_emissao_input
+        if (mode === 'sac_change') {
+            document.querySelectorAll('input[type="text"]:not(#produto-desc-input):not(#data-emissao-input), input[type="tel"]').forEach(input => input.value = '');
+        }
+
         const containersToHide = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
             'solar_options', 'ticket_correios_options', 'email_preview', 
             'recusa_nf_options', 'primeiro_ticket_options', 'ticket_expirado_options'
         ];
 
-        if (!excludeMainOptions) {
-            containersToHide.push('sac_options', 'apoio_vendas_options');
-        }
-
         containersToHide.forEach(id => {
             if (elements[id]) setVisibility(elements[id], false);
         });
         
-        if (elements.destinatario) elements.destinatario.value = '';
-        if (elements.tipo_operacao) elements.tipo_operacao.value = '';
-        if (elements.tipo_select) elements.tipo_select.value = 'PD'; 
-        if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
+        if (mode !== 'dest_only') {
+            if (elements.destinatario) elements.destinatario.value = '';
+            if (elements.tipo_operacao) elements.tipo_operacao.value = '';
+            if (elements.tipo_select) elements.tipo_select.value = 'PD'; 
+            if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
+        }
 
         setVisibility(elements.ean_input, true);
         setVisibility(elements.swqt_input, true);
@@ -158,10 +170,7 @@ Ficamos à disposição para maiores esclarecimentos.`,
     const updateRecusaNfEmail = () => {
         const nf = elements.nf_recusa_input.value || '...';
         const descricao = elements.descricao_recusa_input.value || '...';
-        const emailText = TEMPLATES.recusa_nf
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{nf}}', nf)
-            .replace('{{descricao}}', descricao);
+        const emailText = TEMPLATES.recusa_nf.replace('{{saudacao}}', getSaudacao()).replace('{{nf}}', nf).replace('{{descricao}}', descricao);
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -170,11 +179,7 @@ Ficamos à disposição para maiores esclarecimentos.`,
         const destinatario = DESTINATARIOS[elements.destinatario.value] || '';
         const operacaoInfo = OPERACOES[elements.tipo_operacao.value] || {};
         if (destinatario && operacaoInfo.operacao) {
-            const emailText = TEMPLATES.devolucao
-                .replace('{{destinatario}}', destinatario)
-                .replace('{{operacao}}', operacaoInfo.operacao)
-                .replace('{{cfop}}', operacaoInfo.cfop)
-                .replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
+            const emailText = TEMPLATES.devolucao.replace('{{destinatario}}', destinatario).replace('{{operacao}}', operacaoInfo.operacao).replace('{{cfop}}', operacaoInfo.cfop).replace('{{dados_adicionais}}', operacaoInfo.dados_adicionais);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
         } else {
@@ -190,13 +195,9 @@ Ficamos à disposição para maiores esclarecimentos.`,
             obsSimoes = `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>Referente às entregas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br><span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br><span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span><br><span style="color: #FF0000;"><b>operacional@toplogba.com.br</b></span>`;
         }
         if (destinatarioKey) {
-            const emailText = TEMPLATES.envio_material_devolucao
-                .replace('{{endereco}}', endereco)
-                .replace('{{observacao_simoes}}', obsSimoes);
+            const emailText = TEMPLATES.envio_material_devolucao.replace('{{endereco}}', endereco).replace('{{observacao_simoes}}', obsSimoes);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
-        } else {
-            setVisibility(elements.email_preview, false);
         }
     };
 
@@ -219,6 +220,7 @@ Ficamos à disposição para maiores esclarecimentos.`,
                 .replace('{{data_recebimento}}', dataRecebimento)
                 .replace('{{destinatario}}', endereco)
                 .replace('{{observacao_simoes}}', obsSimoes);
+            
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
         } else {
@@ -235,18 +237,8 @@ Ficamos à disposição para maiores esclarecimentos.`,
         const nfsMessage = nfsArray.length === 1 && nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : `as notas fiscais ${nfsArray.filter(n => n).join(', ')}`;
         const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
         const notasServicoMessage = swqtArray.length <= 1 ? 'a nota de serviço' : 'as notas de serviço';
-        const swqtMessage = swqtArray.join('\n');
-        let emailText = TEMPLATES.pdaf
-            .replace('{{tipo}}', tipo)
-            .replace('{{notas_servico}}', notasServicoMessage)
-            .replace('{{nfs}}', nfsMessage)
-            .replace('{{ean}}', ean)
-            .replace('{{swqt}}', swqtMessage);
-        if (tipo === 'AF') {
-            emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
-        }
-        setVisibility(elements.ean_input, true);
-        setVisibility(elements.swqt_input, true);
+        let emailText = TEMPLATES.pdaf.replace('{{tipo}}', tipo).replace('{{notas_servico}}', notasServicoMessage).replace('{{nfs}}', nfsMessage).replace('{{ean}}', ean).replace('{{swqt}}', swqtArray.join('\n'));
+        if (tipo === 'AF') emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -258,13 +250,7 @@ Ficamos à disposição para maiores esclarecimentos.`,
         const ncm = elements.ncm_input.value || '...';
         const descricao = elements.descricao_input.value || '...';
         const nfText = nf.includes(',') ? `das NFs ${nf}` : `da NF ${nf}`;
-        const emailText = TEMPLATES[templateKey]
-            .replace('{{saudacao}}', getSaudacao())
-            .replace('{{nfText}}', nfText)
-            .replace('{{valorUnitario}}', valorUnitario)
-            .replace('{{quantidade}}', quantidade)
-            .replace('{{ncm}}', ncm)
-            .replace('{{descricao}}', descricao);
+        const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{nfText}}', nfText).replace('{{valorUnitario}}', valorUnitario).replace('{{quantidade}}', quantidade).replace('{{ncm}}', ncm).replace('{{descricao}}', descricao);
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -284,7 +270,7 @@ Ficamos à disposição para maiores esclarecimentos.`,
         setVisibility(elements.email_preview, true);
     };
     
-    // 4. Lógica de Manipulação de Eventos
+    // 4. Lógica de Eventos
     const templateMap = {
         'email-template': {
             sac: () => setVisibility(elements.sac_options, true),
@@ -297,27 +283,25 @@ Ficamos à disposição para maiores esclarecimentos.`,
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); updateEnvioMaterialEmail(); },
             ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); setVisibility(camposExclusivosCorreios, true); },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
-            advanced_emissao_envio: () => { setVisibility(elements.destinatario_container, true); },
-            advanced_apenas_envio: () => { setVisibility(elements.destinatario_container, true); }
+            advanced_emissao_envio: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.primeiro_ticket_options, true); setVisibility(camposExclusivosCorreios, false); },
+            advanced_apenas_envio: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.primeiro_ticket_options, true); setVisibility(camposExclusivosCorreios, false); }
         }
     };
 
     const handleTemplateChange = (templateId, value) => {
         if (templateId === 'email-template') {
-            resetFields(false);
+            resetFields('total');
             if (templateMap['email-template'][value]) templateMap['email-template'][value]();
         } 
         if (templateId === 'sac-template') {
-            resetFields(true);
-            const sacSubContainersToHide = ['destinatario_container', 'tipo_operacao_container', 'pdaf_options', 'solar_options', 'recusa_nf_options', 'email_preview', 'ticket_correios_options', 'primeiro_ticket_options'];
-            sacSubContainersToHide.forEach(id => { if(elements[id]) setVisibility(elements[id], false); });
+            resetFields('sac_change');
             if (templateMap['sac-template'][value]) templateMap['sac-template'][value]();
         }
         if (value === 'recusa_nf') updateRecusaNfEmail();
         if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
 
-    // 5. Associação de Event Listeners
+    // 5. Listeners
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
@@ -333,18 +317,17 @@ Ficamos à disposição para maiores esclarecimentos.`,
     ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail); });
     ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.sac_template.value === 'troca_solar') updateSolarEmail('troca_solar'); }); });
     ['nf_recusa_input', 'descricao_recusa_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updateRecusaNfEmail); });
-    ['produto_desc_input', 'data_emissao_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { const sacVal = elements.sac_template.value; if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates(); else if (elements.postagem_correios_template && elements.postagem_correios_template.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value); }); });
+    ['produto_desc_input', 'data_emissao_input'].forEach(id => { if (elements[id]) { elements[id].addEventListener('input', () => { const sacVal = elements.sac_template.value; if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates(); else if (elements.postagem_correios_template?.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value); }); } });
 
     if (elements.postagem_correios_template) {
         elements.postagem_correios_template.addEventListener('change', () => {
-            const selectedOption = elements.postagem_correios_template.value;
-            setVisibility(elements.primeiro_ticket_options, selectedOption === 'primeiro_ticket');
-            setVisibility(elements.ticket_expirado_options, selectedOption === 'ticket_expirado');
-            if (selectedOption) updateTicketParaAdvancedsEmail(selectedOption);
-            else setVisibility(elements.email_preview, false);
+            const val = elements.postagem_correios_template.value;
+            setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
+            setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
+            if (val) updateTicketParaAdvancedsEmail(val); else setVisibility(elements.email_preview, false);
         });
     }
 
-    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
-    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
+    ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
+    ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 });
