@@ -9,15 +9,10 @@
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
         .hidden { display: none !important; }
-        .email-box {
-            background: #f4f4f4;
-            padding: 15px;
-            border: 1px solid #ccc;
-            margin-top: 20px;
-            white-space: pre-wrap;
-        }
-        .date-group { display: flex; gap: 10px; }
-        .date-group div { flex: 1; }
+        .email-box { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; }
+        #email-content { white-space: pre-wrap; font-family: Arial, sans-serif; line-height: 1.5; }
+        .date-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .date-group div { flex: 1; min-width: 150px; }
     </style>
 </head>
 <body>
@@ -32,11 +27,6 @@
                     <div class="dropdown-content">
                         <a href="/Wdc-Ajudas/atalhos.html">Atalhos</a>
                         <a href="/Wdc-Ajudas/comprar-lista.html">Comparar Lista</a>
-                        <a href="/Wdc-Ajudas/adds.html">Adicionar S</a>
-                        <a href="/Wdc-Ajudas/garantia.html">Definir Garantia</a>
-                        <a href="/Wdc-Ajudas/verificarnf.html">Verificar NF</a>
-                        <a href="/Wdc-Ajudas/revendagarantia.html">Definir Garantia Revenda</a>
-                        <a href="/Wdc-Ajudas/conferencia-valores.html">Conferir Valores Unitário</a>
                         <hr>
                         <a href="/Wdc-Ajudas/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
                         <a href="/Wdc-Ajudas/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
@@ -51,6 +41,7 @@
     <main class="content">
         <h3>Gerador de E-mails Automáticos</h3>
         <div class="email-configuration">
+            
             <label for="email-template">Escolha o template de e-mail:</label>
             <select id="email-template">
                 <option value="">Selecione</option>
@@ -75,46 +66,12 @@
             </div>
 
             <div id="apoio-vendas-options" class="hidden">
-                <label for="apoio-vendas-template">Escolha o tipo de Apoio a Vendas:</label>
+                <label for="apoio-vendas-template">Tipo de Apoio a Vendas:</label>
                 <select id="apoio-vendas-template">
                     <option value="">Selecione</option>
-                    <option value="relatorio_geral">Relatório Geral (Posicionamento de notas)</option>
-                    <option value="pendencias">Transportadoras - Pendências (Singular/Plural)</option>
-                    <option value="pendencias_lista">Transportadoras - Pendências com lista</option>
-                    <option value="nfs_retidas">NFs retidas - Notificação ao cliente</option>
-                    <option value="ticket_correios">Ticket Correios - Geral</option>
+                    <option value="relatorio_geral">Relatório Geral</option>
+                    <option value="pendencias">Transportadoras - Pendências</option>
                 </select>
-            </div>
-
-            <div id="rma-fields" class="hidden">
-                <label for="crg-input">N° do CRG:</label>
-                <input type="text" id="crg-input">
-                <label for="anexo-info-input">Informação do Anexo:</label>
-                <input type="text" id="anexo-info-input">
-                <label for="quantidade-input-rma">Quantidade:</label>
-                <input type="text" id="quantidade-input-rma">
-                <label for="produto-input-rma">Produto(s):</label>
-                <input type="text" id="produto-input-rma">
-            </div>
-
-            <div id="advanced-fields" class="hidden">
-                <label for="nf-compra-advanced">NF de Compra / Retorno:</label>
-                <input type="text" id="nf-compra-advanced">
-                <label for="data-recebimento-advanced">Data de Recebimento:</label>
-                <input type="tel" id="data-recebimento-advanced" placeholder="DD/MM/AAAA">
-                <label for="produto-advanced">Descrição do Produto:</label>
-                <input type="text" id="produto-advanced">
-            </div>
-
-            <div id="pdaf-options" class="hidden"> 
-                <label for="tipo-select">Tipo (Pd ou AF):</label>
-                <select id="tipo-select">
-                    <option value="">Selecione uma opção</option>
-                    <option value="PD">PD</option>
-                    <option value="AF">AF</option>
-                </select>
-                <label for="nfs-input">NFs:</label>
-                <input type="text" id="nfs-input">
             </div>
 
             <div id="destinatario-container" class="hidden">
@@ -135,6 +92,13 @@
                 </select>
             </div>
 
+            <div id="rma-fields" class="hidden">
+                <label for="crg-input">N° do CRG:</label>
+                <input type="text" id="crg-input">
+                <label for="anexo-info-input">Informação do Anexo (Ex: Planilha de Crédito):</label>
+                <input type="text" id="anexo-info-input">
+            </div>
+
             <div id="solar-options" class="hidden">
                 <label for="nf-input">NF:</label>
                 <input type="text" id="nf-input">
@@ -142,23 +106,79 @@
                 <input type="text" id="valor-unitario-input">
                 <label for="quantidade-input">Quantidade:</label>
                 <input type="text" id="quantidade-input">
+                <label for="ncm-input">NCM:</label>
+                <input type="text" id="ncm-input">
+                <label for="descricao-input">Descrição do Item:</label>
+                <input type="text" id="descricao-input">
+            </div>
+
+            <div id="pdaf-options" class="hidden">
+                <label for="tipo-select">Tipo:</label>
+                <select id="tipo-select">
+                    <option value="PD">PD</option>
+                    <option value="AF">AF</option>
+                </select>
+                <label for="nfs-input">NFs:</label>
+                <input type="text" id="nfs-input">
+                <label for="ean-input">EAN:</label>
+                <input type="text" id="ean-input">
+                <label for="swqt-input">SW/QT:</label>
+                <input type="text" id="swqt-input">
+            </div>
+
+            <div id="ticket-correios-options" class="hidden">
+                <label for="postagem-correios-template">Selecione o tipo de ticket:</label>
+                <select id="postagem-correios-template">
+                    <option value="">Selecione</option>
+                    <option value="primeiro_ticket">Primeira emissão</option>
+                    <option value="ticket_expirado">Ticket Expirado</option>
+                </select>
+
+                <div id="campos-exclusivos-correios">
+                    <label for="produto-desc-input">Descrição do Produto:</label>
+                    <input type="text" id="produto-desc-input">
+                    <label for="data-emissao-input">Data de Recebimento / Emissão:</label>
+                    <input type="tel" id="data-emissao-input" placeholder="DD/MM/AAAA">
+                </div>
+
+                <div id="primeiro-ticket-options" class="hidden">
+                    <label for="nf-input-postagem">NF de Compra / Retorno:</label>
+                    <input type="text" id="nf-input-postagem">
+                    <label for="ticket-input">Número do Ticket:</label>
+                    <input type="text" id="ticket-input">
+                    <label for="data-validade-input">Data de Validade:</label>
+                    <input type="tel" id="data-validade-input" placeholder="DD/MM/AAAA">
+                </div>
+
+                <div id="ticket-expirado-options" class="hidden">
+                    <label for="ticket-expirado-input">Ticket Anterior (Expirado):</label>
+                    <input type="text" id="ticket-expirado-input">
+                    <label for="ticket-input-expired">Novo Ticket:</label>
+                    <input type="text" id="ticket-input-expired">
+                    <label for="data-emissao-input-expired">Nova Data Emissão:</label>
+                    <input type="tel" id="data-emissao-input-expired">
+                    <label for="data-validade-input-expired">Nova Data Validade:</label>
+                    <input type="tel" id="data-validade-input-expired">
+                </div>
             </div>
 
             <div id="recusa-nf-options" class="hidden">
                 <label for="nf-recusa-input">NF:</label>
                 <input type="text" id="nf-recusa-input">
-                <label for="descricao-recusa-input">Descreva a situação:</label>
+                <label for="descricao-recusa-input">Situação da Recusa:</label>
                 <input type="text" id="descricao-recusa-input">
             </div>
 
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
-                <pre id="email-content"></pre>
-                <button id="copy-email">Copiar E-mail</button>
+                <div id="email-content"></div>
+                <button id="copy-email" style="margin-top:15px; padding:10px; cursor:pointer;">Copiar E-mail</button>
             </div>
+
         </div>
     </main>
-    
+
+    <script src="/Wdc-Ajudas/JS/sac.js"></script>
     <script src="/Wdc-Ajudas/JS/emails.js"></script>
 </body>
 </html>
