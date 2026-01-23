@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'sac-options', 'apoio-vendas-options', 'pendencias-options',
             'destinatario-container', 'tipo-operacao-container', 'rma-fields',
             'solar-options', 'pdaf-options', 'recusa-nf-options', 
-            'ticket-correios-options', 'primeiro-ticket-options', 'ticket-expirado-options'
+            'ticket-correios-options', 'primeiro-ticket-options', 'ticket-expirado-options',
+            'campos-exclusivos-correios' // Adicionado para garantir que limpe no reset
         ];
         containers.forEach(id => {
             const el = document.getElementById(id);
@@ -118,4 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.resetFields = resetFields;
+    window.hideAllContainers = hideAllContainers; // Torna global para uso no sac.js
 });
