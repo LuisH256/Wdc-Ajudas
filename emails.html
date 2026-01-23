@@ -105,53 +105,10 @@
                     <option value="ticket_correios">Ticket Correios - Geral</option>
                 </select>
             </div>
-            
-            <div id="ticket-correios-options" class="hidden">
-                <label>Selecione o tipo de ticket:</label>
-                <select id="postagem-correios-template">
-                    <option value="">Selecione</option>
-                    <option value="primeiro_ticket">Primeira emissão</option>
-                    <option value="ticket_expirado">Ticket Expirado</option>
-                </select>
-            </div> 
-
-            <div id="primeiro-ticket-options" class="hidden">
-                <label for="produto-desc-input">Descrição do Produto:</label>
-                <input type="text" id="produto-desc-input" placeholder="Descrição do produto">
-                
-                <div class="date-group">
-                    <div>
-                        <label for="data-emissao-input">Data de Recebimento:</label>
-                        <input type="tel" id="data-emissao-input" maxlength="10" placeholder="DD/MM/AAAA"> 
-                    </div>
-                </div>
-
-                <div id="campos-exclusivos-correios">
-                    <label for="nf-input-postagem">NF de Compra / Retorno:</label> 
-                    <input type="text" id="nf-input-postagem">
-                    <label for="ticket-input">Número do e-ticket:</label>
-                    <input type="text" id="ticket-input">
-                    <label for="data-validade-input">Data de Validade:</label>
-                    <input type="tel" id="data-validade-input" maxlength="10" placeholder="DD/MM/AAAA">
-                </div>
-            </div>
-
-            <div id="ticket-expirado-options" class="hidden">
-                <label for="ticket-expirado-input">Ticket Expirado Anterior:</label>
-                <input type="text" id="ticket-expirado-input">
-                <label for="ticket-input-expired">Novo Ticket:</label>
-                <input type="text" id="ticket-input-expired">
-                <div class="date-group">
-                    <label for="data-emissao-input-expired">Nova Data de Emissão:</label>
-                    <input type="tel" id="data-emissao-input-expired" maxlength="10" placeholder="DD/MM/AAAA">
-                    <label for="data-validade-input-expired">Nova Data de Validade:</label>
-                    <input type="tel" id="data-validade-input-expired" maxlength="10" placeholder="DD/MM/AAAA">
-                </div>
-            </div>
 
             <div id="rma-fields" class="hidden">
                 <label for="crg-input">N° do CRG:</label>
-                <input type="text" id="crg-input" placeholder="Campo para inserir o n° do CRG">
+                <input type="text" id="crg-input" placeholder="Ex: 12345">
                 
                 <label for="anexo-info-input">Informação do Anexo:</label>
                 <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de Crédito">
@@ -181,33 +138,6 @@
                 </select>
             </div>
 
-            <div id="pdaf-options" class="hidden"> 
-                <label for="tipo-select">Tipo:</label>
-                <select id="tipo-select">
-                    <option value="PD">PD</option>
-                    <option value="AF">AF</option>
-                </select>
-                <label for="nfs-input">NFs:</label>
-                <input type="text" id="nfs-input">
-                <label for="ean-input">EAN:</label>
-                <input type="text" id="ean-input">
-                <label for="swqt-input">SW/QT:</label>
-                <input type="text" id="swqt-input">
-            </div>
-
-            <div id="solar-options" class="hidden">
-                <label for="nf-input">NF:</label>
-                <input type="text" id="nf-input">
-                <label for="valor-unitario-input">Valor Unitário:</label>
-                <input type="text" id="valor-unitario-input">
-                <label for="quantidade-input">Quantidade:</label>
-                <input type="text" id="quantidade-input">
-                <label for="ncm-input">NCM:</label>
-                <input type="text" id="ncm-input">
-                <label for="descricao-input">Descrição:</label>
-                <input type="text" id="descricao-input">
-            </div>
-
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
                 <div id="email-content"></div> 
@@ -228,6 +158,7 @@
             tipoOperacaoContainer: document.getElementById('tipo-operacao-container'),
             emailPreview: document.getElementById('email-preview'),
             emailContent: document.getElementById('email-content'),
+            copyBtn: document.getElementById('copy-email'),
             
             // Inputs RMA
             crg: document.getElementById('crg-input'),
@@ -243,41 +174,33 @@
             simoes: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO S.A<br>CNPJ: 05.917.486/0008-17 I.E: 153759695<br>V URBANA, 4466 Complemento: TERREO CIA SUL<br>Cep: 43721-450 SIMOES FILHO/BA`
         };
 
-        function updateDevolucaoRMA() {
-            if (elements.sacTemplate.value !== 'devolucao_rma') return;
+        function updatePreview() {
+            const template = elements.sacTemplate.value;
+            if (template === 'devolucao_rma') {
+                const saudacao = new Date().getHours() < 12 ? "Bom Dia!" : "Boa Tarde!";
+                const isLocacao = elements.tipo.value === 'locacao';
+                const qtdVal = elements.qtd.value || "___";
+                const prodVal = elements.prod.value || "...";
+                const labelProduto = parseInt(qtdVal) > 1 ? "produtos" : "produto";
+                const destinoTxt = DADOS_DEST[elements.dest.value] || "(Selecione o Destinatário)";
 
-            const saudacao = new Date().getHours() < 12 ? "Bom Dia!" : "Boa Tarde!";
-            const isLocacao = elements.tipo.value === 'locacao';
-            const labelProduto = parseInt(elements.qtd.value) > 1 ? "Produtos" : "Produto";
-            const destino = DADOS_DEST[elements.dest.value] || "(Selecione o Destinatário)";
+                let opTxt = isLocacao ? "Retorno de Locação" : "Devolução de Compra";
+                let natTxt = isLocacao ? "Retorno de Locação" : "Devolução de Compra para Comercialização";
+                let cfopTxt = isLocacao ? "5909 ou 6909 (Conforme dentro ou fora do estado)" : "6202 (Para fora da UF) E 5202 (Para a própria UF)";
+                let insTxt = isLocacao ? 
+                    "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)." : 
+                    "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários, valor total, IPI, ICMS e alíquota.";
 
-            let txtOperacao = isLocacao ? "Retorno de Locação" : "Devolução de Compra";
-            let txtNatureza = isLocacao ? "Retorno de Locação" : "Devolução de Compra para Comercialização";
-            let txtCfop = isLocacao ? "5909 ou 6909 (Conforme dentro ou fora do estado)" : "6202 (Para fora da UF) E 5202 (Para a própria UF)";
-            let txtInstrucao = isLocacao ? 
-                "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)." : 
-                "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários, valor total, IPI, ICMS e alíquota.";
-
-            let template = `
-${saudacao}<br><br>
-Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>${elements.crg.value || '___'}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a <b>${elements.anexo.value || '___'}</b> e notas fiscais de compras, Favor seguir com a instrução abaixo para realizarmos o processo de devolução.<br><br>
-<b>Emitir Nota Fiscal de ${txtOperacao} (enviar anexa em resposta a este email):</b><br><br>
->QTD ${elements.qtd.value || '___'} : ${labelProduto} <b>${elements.prod.value || '___'}</b>.<br><br>
-• Natureza de Operação: ${txtNatureza}<br>
-• CFOP: ${txtCfop}<br>
-• Destinatário: <br>${destino}<br><br>
-${txtInstrucao}<br><br>
-No campo de “dados adicionais” da NF, favor mencionar:<br>
-· Devolução recebida por meio da NF nº......., emitida em ....../....../........
-            `;
-
-            elements.emailContent.innerHTML = template;
-            elements.emailPreview.classList.remove('hidden');
+                elements.emailContent.innerHTML = `${saudacao}<br><br>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>${elements.crg.value || '___'}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a <b>${elements.anexo.value || '___'}</b> e notas fiscais de compras, Favor seguir com a instrução abaixo para realizarmos o processo de devolução.<br><br><b>Emitir Nota Fiscal de ${opTxt} (enviar anexa em resposta a este email):</b><br><br>QTD ${qtdVal} : ${labelProduto} ${prodVal}<br><br>• Natureza de Operação: ${natTxt}<br>• CFOP: ${cfopTxt}<br>• Destinatário: <br>${destinoTxt}<br><br>${insTxt}<br><br>No campo de “dados adicionais” da NF, favor mencionar:<br>· Devolução recebida por meio da NF nº......., emitida em ....../....../........`;
+                
+                elements.emailPreview.classList.remove('hidden');
+                elements.copyBtn.classList.remove('hidden');
+            }
         }
 
         elements.emailTemplate.addEventListener('change', (e) => {
             elements.sacOptions.classList.toggle('hidden', e.target.value !== 'sac');
-            document.getElementById('apoio-vendas-options').classList.add('hidden');
+            elements.emailPreview.classList.add('hidden');
         });
 
         elements.sacTemplate.addEventListener('change', (e) => {
@@ -285,12 +208,12 @@ No campo de “dados adicionais” da NF, favor mencionar:<br>
             elements.rmaFields.classList.toggle('hidden', !isRMA);
             elements.destinatarioContainer.classList.toggle('hidden', !isRMA && e.target.value !== 'devolucao');
             elements.tipoOperacaoContainer.classList.toggle('hidden', !isRMA && e.target.value !== 'devolucao');
-            
-            if (isRMA) updateDevolucaoRMA();
+            updatePreview();
         });
 
-        [elements.crg, elements.anexo, elements.qtd, elements.prod, elements.dest, elements.tipo].forEach(el => {
-            el.addEventListener('input', updateDevolucaoRMA);
+        // Adiciona evento de digitação em todos os campos do RMA
+        [elements.crg, elements.anexo, elements.qtd, elements.prod, elements.dest, elements.tipo].forEach(input => {
+            input.addEventListener('input', updatePreview);
         });
     });
     </script>
