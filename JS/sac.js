@@ -135,13 +135,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
         // Limpa inputs
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
-        // Esconde containers específicos de dados, mas NÃO os menus de opções principais
-        const containersToHide = [
+        // Esconde containers internos (SUB-opções), mas NÃO os menus principais (sac_options/apoio_vendas_options)
+        const subContainers = [
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
-            'solar_options', 'ticket_correios_options', 'email_preview', 
-            'recusa_nf_options', 'primeiro_ticket_options', 'ticket_expirado_options'
+            'solar_options', 'ticket_correios_options', 'email_preview', 'recusa_nf_options',
+            'primeiro_ticket_options', 'ticket_expirado_options'
         ];
-        containersToHide.forEach(id => setVisibility(elements[id], false));
+        subContainers.forEach(id => setVisibility(elements[id], false));
         
         if (elements.destinatario) elements.destinatario.value = '';
         if (elements.tipo_operacao) elements.tipo_operacao.value = '';
@@ -177,13 +177,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateEnvioMaterialEmail = () => {
         const destinatarioKey = elements.destinatario.value;
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
-        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000; font-size: 16px;"><b>ATENÇÃO: OBSERVAÇÃO IMPORTANTE (SIMÕES FILHO/BA)</b></span><br>Referente às entregas de devoluções para a unidade de <b>Simões Filho/BA</b>, informamos que é <b>OBRIGATÓRIO</b> o agendamento prévio.<br><br><span style="color: #0000FF;"><b>Para realizar o agendamento, envie um e-mail para:</b></span><br><span style="color: #FF0000;"><b>iemilli@toplogba.com.br</b></span><br><span style="color: #FF0000;"><b>operacional@toplogba.com.br</b></span>` : "";
+        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio via iemilli@toplogba.com.br / operacional@toplogba.com.br</span>` : "";
         if (destinatarioKey) {
             const emailText = TEMPLATES.envio_material_devolucao.replace('{{endereco}}', endereco).replace('{{observacao_simoes}}', obsSimoes);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
-        } else {
-            setVisibility(elements.email_preview, false);
         }
     };
 
@@ -193,27 +191,19 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const endereco = DESTINATARIOS[destinatarioKey] || '...';
         const produto = elements.produto_desc_input.value || '...';
         const dataRecebimento = elements.data_emissao_input.value || '__/__/____';
-        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio para Simões Filho via iemilli@toplogba.com.br / operacional@toplogba.com.br</span>` : "";
+        let obsSimoes = destinatarioKey === 'simoes' ? `<br><br><span style="color: #FF0000;"><b>ATENÇÃO:</b> Obrigatório agendamento prévio.</span>` : "";
         if (destinatarioKey) {
             const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{produto}}', produto).replace('{{data_recebimento}}', dataRecebimento).replace('{{destinatario}}', endereco).replace('{{observacao_simoes}}', obsSimoes);
             elements.email_content.innerHTML = emailText.trim();
             setVisibility(elements.email_preview, true);
-        } else {
-            setVisibility(elements.email_preview, false);
         }
     };
 
     const updatePdAfEmail = () => {
         const tipo = elements.tipo_select.value || 'PD';
-        const ean = elements.ean_input.value || '...';
         const nfs = elements.nfs_input.value || '...';
-        const swqt = elements.swqt_input.value || '';
-        const nfsArray = nfs.split(',').map(item => item.trim());
-        const nfsMessage = nfsArray.length === 1 && nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : `as notas fiscais ${nfsArray.filter(n => n).join(', ')}`;
-        const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
-        const notasServicoMessage = swqtArray.length <= 1 ? 'a nota de serviço' : 'as notas de serviço';
-        let emailText = TEMPLATES.pdaf.replace('{{tipo}}', tipo).replace('{{notas_servico}}', notasServicoMessage).replace('{{nfs}}', nfsMessage).replace('{{ean}}', ean).replace('{{swqt}}', swqtArray.join('\n'));
-        if (tipo === 'AF') emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
+        const nfsMessage = nfs.includes(',') ? `as notas fiscais ${nfs}` : `a nota fiscal ${nfs}`;
+        let emailText = TEMPLATES.pdaf.replace('{{tipo}}', tipo).replace('{{nfs}}', nfsMessage).replace('{{ean}}', elements.ean_input.value || '...').replace('{{swqt}}', elements.swqt_input.value || '').replace('{{notas_servico}}', 'as notas de serviço');
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -238,9 +228,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
-    
-    // 4. Lógica de Manipulação de Eventos
 
+    // 4. Lógica de Manipulação de Eventos
     const templateMap = {
         'email-template': {
             sac: () => setVisibility(elements.sac_options, true),
@@ -255,6 +244,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             troca_solar: () => setVisibility(elements.solar_options, true), 
             envio_material_devolucao: () => {
                 setVisibility(elements.destinatario_container, true);
+                updateEnvioMaterialEmail(); 
             },
             ticket_para_advanceds: () => {
                 setVisibility(elements.ticket_correios_options, true);
@@ -276,31 +266,28 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     const handleTemplateChange = (templateId, value) => {
         if (templateId === 'email-template') {
-            resetFields(); 
-            // Esconde ambos antes de mostrar o selecionado
+            // Esconde menus principais e limpa tudo
             setVisibility(elements.sac_options, false);
             setVisibility(elements.apoio_vendas_options, false);
+            resetFields(); 
             if (templateMap['email-template'][value]) {
                 templateMap['email-template'][value]();
             }
         } 
         
         if (templateId === 'sac-template') {
-            // O segredo está aqui: resetFields limpa os dados, mas handleTemplateChange deve reconstruir a visão
+            // Limpa apenas os sub-campos, mantendo o sac_options visível
             resetFields();
-            
             if (templateMap['sac-template'][value]) {
                 templateMap['sac-template'][value]();
             }
-
-            // Gatilhos específicos para prévia imediata
-            if (value === 'recusa_nf') updateRecusaNfEmail();
-            if (value === 'solicitar_entrada_nf') updatePdAfEmail();
         }
+        
+        if (value === 'recusa_nf') updateRecusaNfEmail();
+        if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
 
     // 5. Associação de Event Listeners
-
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
@@ -313,15 +300,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
     if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
-
     ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail);
     });
 
     ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
-            const template = elements.sac_template.value;
-            if (template === 'troca_solar') updateSolarEmail(template);
+            if (elements.sac_template.value === 'troca_solar') updateSolarEmail('troca_solar');
         });
     });
 
@@ -333,11 +318,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
         if (elements[id]) {
             elements[id].addEventListener('input', () => {
                 const sacVal = elements.sac_template.value;
-                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') {
-                    updateAdvancedNovosTemplates();
-                } else if (elements.postagem_correios_template && elements.postagem_correios_template.value) {
-                    updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
-                }
+                if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
+                else if (elements.postagem_correios_template && elements.postagem_correios_template.value) updateTicketParaAdvancedsEmail(elements.postagem_correios_template.value);
             });
         }
     });
@@ -348,21 +330,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
             setVisibility(elements.primeiro_ticket_options, selectedOption === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, selectedOption === 'ticket_expirado');
             if (selectedOption) updateTicketParaAdvancedsEmail(selectedOption);
-            else setVisibility(elements.email_preview, false);
         });
     }
 
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
-            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'primeiro_ticket')
-                updateTicketParaAdvancedsEmail('primeiro_ticket');
+            if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket');
         });
     });
 
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => {
         if (elements[id]) elements[id].addEventListener('input', () => {
-            if (elements.postagem_correios_template && elements.postagem_correios_template.value === 'ticket_expirado')
-                updateTicketParaAdvancedsEmail('ticket_expirado');
+            if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado');
         });
     });
 });
