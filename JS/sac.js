@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mantenha os templates e dados estáticos fora da função principal
     const TEMPLATES = {
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
-        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto  substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
+        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue.  Informamos que enviamos um  email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
         devolucao: `Informamos que a sua solicitação de devolução da NF foi aprovada.
         
 Importante: Os produtos remetidos para retorno devem ser embalados de forma que garantam sua integridade física, permitindo a conferência do Número de Série e/ou MAC Address. Os produtos serão vistoriados no recebimento para assegurar que correspondem aos da NF de compra.
@@ -131,7 +131,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
     };
 
-    const resetFields = () => {
+    const resetFields = (excludeMainOptions = false) => {
         // Limpa todos os inputs de texto e tel
         document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(input => input.value = '');
         
@@ -139,10 +139,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
             'destinatario_container', 'tipo_operacao_container', 'pdaf_options',
             'solar_options', 
             'ticket_correios_options', 
-            'email_preview', 'recusa_nf_options', 'sac_options',
-            'apoio_vendas_options', 'primeiro_ticket_options', 'ticket_expirado_options'
+            'email_preview', 'recusa_nf_options', 
+            'primeiro_ticket_options', 'ticket_expirado_options'
         ];
-        containersToHide.forEach(id => setVisibility(elements[id], false));
+
+        // Só esconde os menus principais se NÃO for uma mudança de script interno
+        if (!excludeMainOptions) {
+            containersToHide.push('sac_options', 'apoio_vendas_options');
+        }
+
+        containersToHide.forEach(id => {
+            if (elements[id]) setVisibility(elements[id], false);
+        });
         
         if (elements.destinatario) elements.destinatario.value = '';
         if (elements.tipo_operacao) elements.tipo_operacao.value = '';
@@ -358,22 +366,23 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const handleTemplateChange = (templateId, value) => {
-        // SEMPRE que mudar qualquer template principal ou sub-template, limpamos os campos
-        resetFields();
-
         if (templateId === 'email-template') {
+            resetFields(false); // Reset total
             if (templateMap['email-template'][value]) {
                 templateMap['email-template'][value]();
             }
         } 
         
         if (templateId === 'sac-template') {
+            resetFields(true); // Reset, mas mantém SAC aberto
             const sacSubContainersToHide = [
                 'destinatario_container', 'tipo_operacao_container', 'pdaf_options', 
                 'solar_options', 'recusa_nf_options', 'email_preview', 'ticket_correios_options',
                 'primeiro_ticket_options'
             ];
-            sacSubContainersToHide.forEach(id => setVisibility(elements[id], false));
+            sacSubContainersToHide.forEach(id => {
+                if(elements[id]) setVisibility(elements[id], false);
+            });
             
             if (templateMap['sac-template'][value]) {
                 templateMap['sac-template'][value]();
