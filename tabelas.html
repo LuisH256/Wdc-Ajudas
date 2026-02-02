@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Tabelas</title>
+    <style>
+        :root { --excel-color: #217346; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .header-app { text-align: center; border-bottom: 2px solid var(--excel-color); margin-bottom: 20px; padding-bottom: 10px; }
+        
+        #colunas-container { display: flex; flex-direction: column; gap: 15px; }
+        .coluna-config { border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #fafafa; position: relative; border-left: 5px solid var(--excel-color); }
+        
+        .grid-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #555; }
+        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; box-sizing: border-box; }
+        
+        .controles { margin-top: 20px; display: flex; gap: 10px; }
+        .btn { border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add { background-color: #34495e; color: white; }
+        .btn-generate { background-color: var(--excel-color); color: white; flex-grow: 1; font-size: 16px; }
+        .btn-generate:hover { background-color: #1a5a37; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        /* Estilo para Cópia - Bordas Finas e Alinhadas */
+        #preview-area { margin-top: 30px; display: flex; justify-content: center; }
+        .master-table { border-collapse: collapse; }
+        .excel-table { border-collapse: collapse; display: inline-table; margin-right: -1px; } 
+        .excel-table th, .excel-table td { 
+            border: 1px solid black !important; 
+            padding: 4px 8px; 
+            min-height: 20px; /* Garante altura mínima */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-app">
+        <h2>Gerador de Tabelas</h2>
+    </div>
+
+    <div id="colunas-container">
+        <div class="coluna-config">
+            <div class="grid-campos">
+                <div><label>Título:</label><input type="text" class="titulo" placeholder="Informe um titulo"></div>
+                <div><label>Cor do Título:</label><input type="color" class="corHeader" value="#00ffff"></div>
+                <div><label>Tamanho Fonte:</label><input type="number" class="fontSize" value="14"></div>
+                <div><label>Negrito:</label>
+                    <select class="isBold">
+                        <option value="normal">Não</option>
+                        <option value="bold">Sim (Dados)</option>
+                        <option value="both">Sim (Tudo)</option>
+                    </select>
+                </div>
+                <div style="grid-column: span 4;">
+                    <label>Dados:</label>
+                    <textarea class="dados" rows="5" placeholder="Um item por linha..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controles">
+        <button class="btn btn-add" onclick="adicionarColuna()">+ Adicionar Coluna</button>
+        <button class="btn btn-generate" onclick="gerarTabelaFinal()">Gerar e Copiar Tudo</button>
+    </div>
+
+    <div id="preview-area"></div>
+</div>
+
+<script>
+    function adicionarColuna() {
+        const container = document.getElementById('colunas-container');
+        const novaDiv = document.createElement('div');
+        novaDiv.className = 'coluna-config';
+        novaDiv.innerHTML = `
+            <button onclick="this.parentElement.remove()" style="position:absolute; top:5px; right:5px; border:none; background:none; color:#e74c3c; cursor:pointer; font-weight:bold;">[X] Remover</button>
+            <div class="grid-campos">
+                <div><label>Título:</label><input type="text" class="titulo" placeholder="Informe um titulo"></div>
+                <div><label>Cor do Título:</label><input type="color" class="corHeader" value="#007bff"></div>
+                <div><label>Tamanho Fonte:</label><input type="number" class="fontSize" value="14"></div>
+                <div><label>Negrito:</label>
+                    <select class="isBold">
+                        <option value="normal">Não</option>
+                        <option value="bold">Sim (Dados)</option>
+                        <option value="both">Sim (Tudo)</option>
+                    </select>
+                </div>
+                <div style="grid-column: span 4;"><textarea class="dados" rows="5"></textarea></div>
+            </div>`;
+        container.appendChild(novaDiv);
+    }
+
+    function gerarTabelaFinal() {
+        const blocos = document.querySelectorAll('.coluna-config');
+        let todasAsListas = [];
+        let maxLinhas = 0;
+
+        // 1. Coleta os dados e descobre qual a maior lista
+        blocos.forEach(bloco => {
+            const lista = bloco.querySelector('.dados').value.trim().split('\n').filter(l => l !== "");
+            if (lista.length > maxLinhas) maxLinhas = lista.length;
+            
+            todasAsListas.push({
+                titulo: bloco.querySelector('.titulo').value,
+                cor: bloco.querySelector('.corHeader').value,
+                size: bloco.querySelector('.fontSize').value + 'px',
+                boldOpt: bloco.querySelector('.isBold').value,
+                itens: lista
+            });
+        });
+
+        if (maxLinhas === 0) return alert("Insira dados em pelo menos uma coluna.");
+
+        // 2. Monta a Tabela Mestre (Lado a Lado)
+        let htmlFinal = `<table id="tabelaMaster" class="master-table"><tr>`;
+
+        todasAsListas.forEach(col => {
+            const boldT = (col.boldOpt === 'both') ? 'bold' : 'normal';
+            const boldD = (col.boldOpt === 'bold' || col.boldOpt === 'both') ? 'bold' : 'normal';
+
+            htmlFinal += `<td style="vertical-align: top; padding: 0;">
+                <table class="excel-table" style="font-family: Arial; font-size: ${col.size};">
+                    <thead>
+                        <tr><th style="background-color: ${col.cor}; font-weight: ${boldT}; border: 1px solid black;">${col.titulo}</th></tr>
+                    </thead>
+                    <tbody>`;
+
+            // 3. Verificação de nivelamento: Preenche até o maxLinhas
+            for (let i = 0; i < maxLinhas; i++) {
+                const textoCelular = col.itens[i] || "&nbsp;"; // Adiciona espaço vazio se não houver dado
+                htmlFinal += `<tr><td style="border: 1px solid black; font-weight: ${boldD};">${textoCelular}</td></tr>`;
+            }
+
+            htmlFinal += `</tbody></table></td>`;
+        });
+
+        htmlFinal += `</tr></table>`;
+        
+        document.getElementById('preview-area').innerHTML = htmlFinal;
+
+        // Copiar
+        const range = document.createRange();
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        range.selectNodeContents(document.getElementById('tabelaMaster'));
+        sel.addRange(range);
+        document.execCommand('copy');
+        
+        alert("Tabela nivelada e copiada com sucesso!");
+    }
+</script>
+
+</body>
+</html>
