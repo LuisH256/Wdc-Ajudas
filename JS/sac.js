@@ -77,7 +77,7 @@ EAN {{ean}}
         devolucao_rma: `<div>{{saudacao}}</div><br>
         <div>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a {{anexo}} e notas fiscais de compras, favor seguir com a instrução abaixo para realizarmos o processo de devolução.</div><br>
         <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
-        <div>QTD {{quantidade}}: {{produtoLabel}} <b>{{descricao}}</b></div><br>
+        <div>QTD {{quantidade}} : {{produtoLabel}} <b>{{descricao}}</b></div><br>
         <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
         <div>• <b>CFOP:</b> {{cfop}}</div>
         <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
@@ -176,6 +176,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
             if (elements.tipo_select) elements.tipo_select.value = 'PD'; 
             if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
         }
+
+        // Garante que subcampos do solar voltem ao normal ao resetar
+        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input'];
+        subSolarFields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) setVisibility(el.parentElement, true);
+        });
     };
 
     // 3. Funções de Atualização de Email
@@ -189,8 +196,23 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         const descricao = elements.descricao_input.value || '...';
+        
+        // Lógica de Plural: 1 = produto, >1 = produtos
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
-        const emailText = TEMPLATES.devolucao_rma.replace('{{saudacao}}', getSaudacao()).replace('{{crg}}', crg).replace('{{anexo}}', anexo).replace('{{tituloOperacao}}', opData.titulo).replace('{{quantidade}}', qtd || '___').replace('{{produtoLabel}}', produtoLabel).replace('{{descricao}}', descricao).replace('{{natureza}}', opData.natureza).replace('{{cfop}}', opData.cfop).replace('{{destinatario}}', destData).replace('{{instrucaoValores}}', opData.instrucao);
+
+        const emailText = TEMPLATES.devolucao_rma
+            .replace('{{saudacao}}', getSaudacao())
+            .replace('{{crg}}', crg)
+            .replace('{{anexo}}', anexo)
+            .replace('{{tituloOperacao}}', opData.titulo)
+            .replace('{{quantidade}}', qtd || '___')
+            .replace('{{produtoLabel}}', produtoLabel)
+            .replace('{{descricao}}', descricao)
+            .replace('{{natureza}}', opData.natureza)
+            .replace('{{cfop}}', opData.cfop)
+            .replace('{{destinatario}}', destData)
+            .replace('{{instrucaoValores}}', opData.instrucao);
+
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -300,27 +322,23 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.tipo_operacao_container, true); 
             },
             devolucao_rma: () => { 
-                // CORREÇÃO: Mostra apenas o necessário conforme as fotos
                 setVisibility(elements.destinatario_container, true); 
                 setVisibility(elements.tipo_operacao_container, true); 
-                setVisibility(elements.rma_fields, true); // CRG e Anexo
-                setVisibility(elements.solar_options, true); // O container pai
-                
-                // Garante que campos extras do container solar fiquem escondidos
-                if(elements.nf_input) setVisibility(elements.nf_input.closest('.mb-3') || elements.nf_input, false);
-                if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.closest('.mb-3') || elements.valor_unitario_input, false);
-                if(elements.ncm_input) setVisibility(elements.ncm_input.closest('.mb-3') || elements.ncm_input, false);
-                
-                // Garante que campos que DEVEM aparecer estejam visíveis
-                if(elements.quantidade_input) setVisibility(elements.quantidade_input.closest('.mb-3') || elements.quantidade_input, true);
-                if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input, true);
+                setVisibility(elements.rma_fields, true); 
+                setVisibility(elements.solar_options, true); 
+
+                // ESCONDER campos não necessários para Devolução-RMA
+                if(elements.anexo_info_input) setVisibility(elements.anexo_info_input.parentElement, false);
+                if(elements.nf_input) setVisibility(elements.nf_input.parentElement, false);
+                if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.parentElement, false);
+                if(elements.ncm_input) setVisibility(elements.ncm_input.parentElement, false);
             },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => {
                 setVisibility(elements.solar_options, true);
-                // No troca solar, todos os campos do container aparecem
+                // No troca solar, todos os campos aparecem
                 [elements.nf_input, elements.valor_unitario_input, elements.ncm_input, elements.quantidade_input, elements.descricao_input].forEach(el => {
-                    if(el) setVisibility(el.closest('.mb-3') || el, true);
+                    if(el) setVisibility(el.parentElement, true);
                 });
             }, 
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); },
