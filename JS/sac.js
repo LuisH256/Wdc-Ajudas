@@ -168,7 +168,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             if (elements[id]) setVisibility(elements[id], false);
         });
 
-        // Correção principal: Sempre esconde os campos de correio ao trocar de SAC
         if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
         
         if (mode !== 'dest_only') {
@@ -296,10 +295,34 @@ Cep: 43721-450 SIMOES FILHO/BA`
             apoio_vendas: () => setVisibility(elements.apoio_vendas_options, true),
         },
         'sac-template': {
-            devolucao: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); },
-            devolucao_rma: () => { setVisibility(elements.destinatario_container, true); setVisibility(elements.tipo_operacao_container, true); setVisibility(elements.rma_fields, true); setVisibility(elements.solar_options, true); },
+            devolucao: () => { 
+                setVisibility(elements.destinatario_container, true); 
+                setVisibility(elements.tipo_operacao_container, true); 
+            },
+            devolucao_rma: () => { 
+                // CORREÇÃO: Mostra apenas o necessário conforme as fotos
+                setVisibility(elements.destinatario_container, true); 
+                setVisibility(elements.tipo_operacao_container, true); 
+                setVisibility(elements.rma_fields, true); // CRG e Anexo
+                setVisibility(elements.solar_options, true); // O container pai
+                
+                // Garante que campos extras do container solar fiquem escondidos
+                if(elements.nf_input) setVisibility(elements.nf_input.closest('.mb-3') || elements.nf_input, false);
+                if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.closest('.mb-3') || elements.valor_unitario_input, false);
+                if(elements.ncm_input) setVisibility(elements.ncm_input.closest('.mb-3') || elements.ncm_input, false);
+                
+                // Garante que campos que DEVEM aparecer estejam visíveis
+                if(elements.quantidade_input) setVisibility(elements.quantidade_input.closest('.mb-3') || elements.quantidade_input, true);
+                if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input, true);
+            },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
-            troca_solar: () => setVisibility(elements.solar_options, true), 
+            troca_solar: () => {
+                setVisibility(elements.solar_options, true);
+                // No troca solar, todos os campos do container aparecem
+                [elements.nf_input, elements.valor_unitario_input, elements.ncm_input, elements.quantidade_input, elements.descricao_input].forEach(el => {
+                    if(el) setVisibility(el.closest('.mb-3') || el, true);
+                });
+            }, 
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); },
             ticket_para_advanceds: () => { setVisibility(elements.ticket_correios_options, true); },
             recusa_nf: () => setVisibility(elements.recusa_nf_options, true),
@@ -354,11 +377,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
             const val = elements.postagem_correios_template.value;
             setVisibility(elements.primeiro_ticket_options, val === 'primeiro_ticket');
             setVisibility(elements.ticket_expirado_options, val === 'ticket_expirado');
-            
-            // Correção para Ticket Advanceds: Descrição e Data só aparecem na "Primeira emissão"
             if (val === 'primeiro_ticket') setVisibility(camposExclusivosCorreios, true);
             else setVisibility(camposExclusivosCorreios, false);
-
             if (val) updateTicketParaAdvancedsEmail(val); else setVisibility(elements.email_preview, false);
         });
     }
