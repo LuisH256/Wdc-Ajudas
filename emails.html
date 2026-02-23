@@ -23,9 +23,7 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="/Wdc-Ajudas/index.html">Página Principal</a></li>
-                
                 <li><a href="/Wdc-Ajudas/emails.html">Script de E-mails</a></li>
-
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Automação/Atalhos</a>
                     <div class="dropdown-content">
@@ -125,17 +123,25 @@
             <div id="rma-fields" class="hidden">
                 <label for="crg-input">N° do CRG:</label>
                 <input type="text" id="crg-input">
-                <label for="anexo-info-input">Informação do Anexo:</label>
-                <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de RMA">
+                <div id="anexo-info-container">
+                    <label for="anexo-info-input">Informação do Anexo:</label>
+                    <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de RMA">
+                </div>
             </div>
 
             <div id="solar-options" class="hidden">
-                <label for="nf-input">Número da NF:</label>
-                <input type="text" id="nf-input">
-                <label for="valor-unitario-input">Valor Unitário:</label>
-                <input type="text" id="valor-unitario-input">
-                <label for="ncm-input">NCM:</label>
-                <input type="text" id="ncm-input">
+                <div id="nf-container">
+                    <label for="nf-input">Número da NF:</label>
+                    <input type="text" id="nf-input">
+                </div>
+                <div id="valor-unitario-container">
+                    <label for="valor-unitario-input">Valor Unitário:</label>
+                    <input type="text" id="valor-unitario-input">
+                </div>
+                <div id="ncm-container">
+                    <label for="ncm-input">NCM:</label>
+                    <input type="text" id="ncm-input">
+                </div>
                 <label for="quantidade-input">Quantidade:</label>
                 <input type="text" id="quantidade-input">
                 <label for="descricao-input">Descrição do Item / Produto(s):</label>
@@ -206,9 +212,5 @@
     </main>
 
     <script src="/Wdc-Ajudas/JS/sac.js"></script>
-    <script src="/Wdc-Ajudas/JS/apoio_vendas.js"></script>
-    <script src="/Wdc-Ajudas/JS/emails.js"></script>
 </body>
 </html>
-
-
