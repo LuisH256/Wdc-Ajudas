@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Pesquisa Contato Cliente", url: "/Wdc-Ajudas/pesquisas/cliente-protheus.html" }, 
         { title: "Pesquisa NF Remessa", url: "/Wdc-Ajudas/pesquisas/nf-remessa.html" }, 
         { title: "Pesquisa Serial KIT", url: "/Wdc-Ajudas/pesquisas/serial-kit.html" }, 
-        { title: "Pesquisa Serial KIT", url: "/Wdc-Ajudas/tabelas.html" }
+        { title: "Criar tabelas", url: "/Wdc-Ajudas/tabelas.html" }
     ];
 
     // 2. Cria o contêiner de resultados
@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleGlobalAlert(false); // <---- Altere aqui, false para esta invisivel, true para visivel 
 
 });
+
 
 
 
