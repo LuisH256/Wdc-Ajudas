@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Mapeamento de Elementos (IDs convertidos para snake_case no objeto elements)
+    // 1. Mapeamento de Elementos
     const elements = [
         'email-template', 'sac-template', 'sac-options', 'apoio-vendas-options',
         'destinatario-container', 'tipo-operacao-container', 'pdaf-options',
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios');
 
-    // Mantenha os templates e dados estáticos
+    // 2. Templates
     const TEMPLATES = {
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
         primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
@@ -136,7 +136,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
     };
 
-    // 2. Funções Auxiliares
+    // 3. Funções Auxiliares
     const getSaudacao = () => new Date().getHours() < 12 ? "Bom dia!" : "Boa tarde!";
 
     const setVisibility = (element, isVisible) => {
@@ -170,22 +170,22 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
         
+        // Resetar visibilidade de labels e inputs internos que podem ter sido escondidos manualmente
+        document.querySelectorAll('#solar-options input, #solar-options label, #rma-fields input, #rma-fields label').forEach(el => {
+            el.classList.remove('hidden');
+            const parent = el.closest('div');
+            if(parent && parent.id !== 'solar-options' && parent.id !== 'rma-fields') parent.classList.remove('hidden');
+        });
+
         if (mode !== 'dest_only') {
             if (elements.destinatario) elements.destinatario.value = '';
             if (elements.tipo_operacao) elements.tipo_operacao.value = '';
             if (elements.tipo_select) elements.tipo_select.value = 'PD'; 
             if (elements.postagem_correios_template) elements.postagem_correios_template.value = '';
         }
-
-        // Garante que subcampos do solar voltem ao normal ao resetar
-        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input', 'descricao_input'];
-        subSolarFields.forEach(id => {
-            const el = elements[id];
-            if (el) setVisibility(el.closest('.mb-3') || el.parentElement, true);
-        });
     };
 
-    // 3. Funções de Atualização de Email
+    // 4. Funções de Atualização de Email
     const updateDevolucaoRmaEmail = () => {
         const opKey = elements.tipo_operacao.value;
         const destKey = elements.destinatario.value;
@@ -295,7 +295,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         setVisibility(elements.email_preview, true);
     };
     
-    // 4. Lógica de Eventos
+    // 5. Lógica de Eventos (Onde a mágica acontece)
     const templateMap = {
         'email-template': {
             sac: () => setVisibility(elements.sac_options, true),
@@ -309,25 +309,47 @@ Cep: 43721-450 SIMOES FILHO/BA`
             devolucao_rma: () => { 
                 setVisibility(elements.destinatario_container, true); 
                 setVisibility(elements.tipo_operacao_container, true); 
-                setVisibility(elements.rma_fields, true); // CRG
-                setVisibility(elements.solar_options, true); // Pai dos campos de quantidade/descrição
+                setVisibility(elements.rma_fields, true); 
+                setVisibility(elements.solar_options, true); 
                 
-                // ESCONDER campos solicitados conforme imagem (NF, Valor Unitário, NCM, Anexo E DESCRIÇÃO)
-                if(elements.nf_input) setVisibility(elements.nf_input.closest('.mb-3') || elements.nf_input.parentElement, false);
-                if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.closest('.mb-3') || elements.valor_unitario_input.parentElement, false);
-                if(elements.ncm_input) setVisibility(elements.ncm_input.closest('.mb-3') || elements.ncm_input.parentElement, false);
-                if(elements.anexo_info_input) setVisibility(elements.anexo_info_input.closest('.mb-3') || elements.anexo_info_input.parentElement, false);
-                if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input.parentElement, false); // CAMPO REMOVIDO AQUI
+                // ESCONDER campos e seus labels para o RMA
+                const idsParaEsconder = ['nf-input', 'valor-unitario-input', 'ncm-input', 'anexo-info-input', 'descricao-input'];
+                idsParaEsconder.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input) {
+                        input.classList.add('hidden');
+                        const label = document.querySelector(`label[for="${id}"]`);
+                        if (label) label.classList.add('hidden');
+                        const parent = input.closest('div');
+                        if(parent && parent.id !== 'solar-options' && parent.id !== 'rma-fields') parent.classList.add('hidden');
+                    }
+                });
                 
-                // GARANTIR visibilidade dos campos que devem aparecer
-                if(elements.crg_input) setVisibility(elements.crg_input.closest('.mb-3') || elements.crg_input.parentElement, true);
-                if(elements.quantidade_input) setVisibility(elements.quantidade_input.closest('.mb-3') || elements.quantidade_input.parentElement, true);
+                // GARANTIR visibilidade do que sobra
+                if(elements.crg_input) {
+                    elements.crg_input.classList.remove('hidden');
+                    const lbl = document.querySelector('label[for="crg-input"]');
+                    if(lbl) lbl.classList.remove('hidden');
+                }
+                if(elements.quantidade_input) {
+                    elements.quantidade_input.classList.remove('hidden');
+                    const lbl = document.querySelector('label[for="quantidade-input"]');
+                    if(lbl) lbl.classList.remove('hidden');
+                }
             },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => {
                 setVisibility(elements.solar_options, true);
-                [elements.nf_input, elements.valor_unitario_input, elements.ncm_input, elements.quantidade_input, elements.descricao_input].forEach(el => {
-                    if(el) setVisibility(el.closest('.mb-3') || el.parentElement, true);
+                // No solar, todos devem aparecer, então garantimos que estejam visíveis
+                ['nf-input', 'valor-unitario-input', 'ncm-input', 'quantidade-input', 'descricao-input'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        el.classList.remove('hidden');
+                        const lbl = document.querySelector(`label[for="${id}"]`);
+                        if(lbl) lbl.classList.remove('hidden');
+                        const parent = el.closest('div');
+                        if(parent && parent.id !== 'solar-options') parent.classList.remove('hidden');
+                    }
                 });
             }, 
             envio_material_devolucao: () => { setVisibility(elements.destinatario_container, true); },
@@ -345,7 +367,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
 
-    // 5. Listeners
+    // 6. Listeners
     if (elements.email_template) elements.email_template.addEventListener('change', () => handleTemplateChange('email-template', elements.email_template.value));
     if (elements.sac_template) elements.sac_template.addEventListener('change', () => handleTemplateChange('sac-template', elements.sac_template.value));
     
