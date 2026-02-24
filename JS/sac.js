@@ -70,7 +70,7 @@ EAN {{ean}}
 
 <br><br><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b>`,
 
-        advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico della mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div>Número da(s) nota (s) de Venda de cada produto descrito.</div><div>Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
+        advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico da mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div>Número da(s) nota (s) de Venda de cada produto descrito.</div><div>Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
 
         advanced_apenas_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div><b>Favor seguir com o envio do material:</b></div><br><div>O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
 
@@ -178,7 +178,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
 
         // Garante que subcampos do solar voltem ao normal ao resetar
-        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input', 'descricao_input'];
+        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input'];
         subSolarFields.forEach(id => {
             const el = elements[id];
             if (el) setVisibility(el.closest('.mb-3') || el.parentElement, true);
@@ -312,16 +312,16 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.rma_fields, true); // CRG
                 setVisibility(elements.solar_options, true); // Pai dos campos de quantidade/descrição
                 
-                // ESCONDER campos solicitados conforme imagem (NF, Valor Unitário, NCM, Anexo E DESCRIÇÃO)
+                // ESCONDER campos solicitados conforme imagem (NF, Valor Unitário, NCM, Anexo)
                 if(elements.nf_input) setVisibility(elements.nf_input.closest('.mb-3') || elements.nf_input.parentElement, false);
                 if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.closest('.mb-3') || elements.valor_unitario_input.parentElement, false);
                 if(elements.ncm_input) setVisibility(elements.ncm_input.closest('.mb-3') || elements.ncm_input.parentElement, false);
                 if(elements.anexo_info_input) setVisibility(elements.anexo_info_input.closest('.mb-3') || elements.anexo_info_input.parentElement, false);
-                if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input.parentElement, false); // CAMPO REMOVIDO AQUI
                 
                 // GARANTIR visibilidade dos campos que devem aparecer
                 if(elements.crg_input) setVisibility(elements.crg_input.closest('.mb-3') || elements.crg_input.parentElement, true);
                 if(elements.quantidade_input) setVisibility(elements.quantidade_input.closest('.mb-3') || elements.quantidade_input.parentElement, true);
+                if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input.parentElement, true);
             },
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => {
