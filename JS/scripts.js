@@ -25,13 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!searchBar || !mainHeader) return;
 
-    // 1. Mapeamento de todos os links do seu site
+    // 1. Mapeamento de todos os links do seu site (Para a barra de pesquisa)
     const siteLinks = [
-        // Links Principais e de E-mails
         { title: "Página Principal", url: "/Wdc-Ajudas/index.html" }, 
         { title: "Script de E-mails", url: "/Wdc-Ajudas/emails.html" },
         
-        // Links de Automação/Atalhos
         { title: "Atalhos", url: "/Wdc-Ajudas/atalhos.html" },
         { title: "Comparar Lista", url: "/Wdc-Ajudas/comprar-lista.html" },
         { title: "Adicionar S", url: "/Wdc-Ajudas/adds.html" },
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Verificar NF", url: "/Wdc-Ajudas/verificarnf.html" },
         { title: "Conferir Valores Unitário", url: "/Wdc-Ajudas/conferencia-valores.html" },
         
-        // Links de Pesquisas (Incluindo os que faltavam)
         { title: "Pesquisa Serial", url: "/Wdc-Ajudas/pesquisas/serial.html" },
         { title: "Pesquisa PA (LVP)", url: "/Wdc-Ajudas/pesquisas/lvp.html" },
         { title: "Abrir OS", url: "/Wdc-Ajudas/pesquisas/os.html" },
@@ -50,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: "Pesquisa Contato Cliente", url: "/Wdc-Ajudas/pesquisas/cliente-protheus.html" }, 
         { title: "Pesquisa NF Remessa", url: "/Wdc-Ajudas/pesquisas/nf-remessa.html" }, 
         { title: "Pesquisa Serial KIT", url: "/Wdc-Ajudas/pesquisas/serial-kit.html" }, 
+        { title: "Pesquisa Serial KIT", url: "/Wdc-Ajudas/tabelas.html" }
     ];
 
     // 2. Cria o contêiner de resultados
@@ -128,5 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleGlobalAlert(false); // <---- Altere aqui, false para esta invisivel, true para visivel 
 
 });
+
 
 
