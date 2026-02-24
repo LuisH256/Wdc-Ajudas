@@ -77,7 +77,7 @@ EAN {{ean}}
         devolucao_rma: `<div>{{saudacao}}</div><br>
         <div>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a {{anexo}} e notas fiscais de compras, favor seguir com a instrução abaixo para realizarmos o processo de devolução.</div><br>
         <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
-        <div>QTD {{quantidade}}: {{produtoLabel}} <b>{{descricao}}</b></div><br>
+        <div>QTD {{quantidade}} : {{produtoLabel}} <b>{{descricao}}</b></div><br>
         <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
         <div>• <b>CFOP:</b> {{cfop}}</div>
         <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
@@ -196,11 +196,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         
-        // CORREÇÃO: Remove os "..." se o campo de descrição estiver escondido
+        // CORREÇÃO: Pega a descrição APENAS se o campo estiver visível
         const descricao = elements.descricao_input.classList.contains('hidden') ? '' : (elements.descricao_input.value || '...');
-        
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
         
+        // CORREÇÃO DA NATUREZA: O replace estava trocando as variáveis de lugar
         const emailText = TEMPLATES.devolucao_rma
             .replace('{{saudacao}}', getSaudacao())
             .replace('{{crg}}', crg)
@@ -209,7 +209,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{quantidade}}', qtd || '___')
             .replace('{{produtoLabel}}', produtoLabel)
             .replace('{{descricao}}', descricao)
-            .replace('{{natureza}}', opData.natureza)
+            .replace('{{natureza}}', opData.natureza) // Agora substitui corretamente a natureza
             .replace('{{cfop}}', opData.cfop)
             .replace('{{destinatario}}', destData)
             .replace('{{instrucaoValores}}', opData.instrucao);
@@ -328,7 +328,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.rma_fields, true); 
                 setVisibility(elements.solar_options, true); 
                 
-                // ESCONDER campos e labels para o RMA
                 const idsParaEsconder = ['nf-input', 'valor-unitario-input', 'ncm-input', 'anexo-info-input', 'descricao-input'];
                 idsParaEsconder.forEach(id => {
                     const input = document.getElementById(id);
