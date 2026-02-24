@@ -92,6 +92,7 @@ EAN {{ean}}
         <div>• <b>CFOP:</b> {{cfop}}</div><br>
         <div><b>Destinatário:</b><br>{{destinatario}}</div><br>
         <div>{{instrucaoValores}}</div><br>
+        instrucao: "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)."
         <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
         <div>· Devolução recebida por meio da NF nº.......</div>`,
 
@@ -487,3 +488,4 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
