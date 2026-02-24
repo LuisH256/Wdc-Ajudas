@@ -479,18 +479,28 @@ Cep: 43721-450 SIMOES FILHO/BA`
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 
-    // Lógica do botão de copiar (Correção do fundo cinza e IDs)
+   // Lógica do botão de copiar (Correção definitiva para fundo cinza)
     if (elements.copy_email) {
         elements.copy_email.addEventListener('click', () => {
             const content = elements.email_content;
             if (!content) return;
 
+            // 1. Cria um elemento temporário fora da tela
+            const tempDiv = document.createElement('div');
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            tempDiv.style.backgroundColor = '#ffffff'; // Garante fundo branco
+            tempDiv.innerHTML = content.innerHTML;
+            document.body.appendChild(tempDiv);
+
+            // 2. Seleciona o conteúdo deste elemento temporário
             const range = document.createRange();
-            range.selectNode(content);
+            range.selectNodeContents(tempDiv);
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
 
             try {
+                // 3. Executa a cópia
                 const successful = document.execCommand('copy');
                 if (successful) {
                     const originalText = elements.copy_email.innerText;
@@ -507,7 +517,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 alert('Não foi possível copiar o e-mail.');
             }
 
+            // 4. Limpa tudo
             window.getSelection().removeAllRanges();
+            document.body.removeChild(tempDiv);
         });
     }
 });
+
