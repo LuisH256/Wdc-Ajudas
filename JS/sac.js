@@ -178,7 +178,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         }
 
         // Garante que subcampos do solar voltem ao normal ao resetar
-        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input'];
+        const subSolarFields = ['nf_input', 'valor_unitario_input', 'ncm_input', 'anexo_info_input', 'quantidade_input', 'descricao_input'];
         subSolarFields.forEach(id => {
             const el = elements[id];
             if (el) setVisibility(el.closest('.mb-3') || el.parentElement, true);
@@ -309,17 +309,16 @@ Cep: 43721-450 SIMOES FILHO/BA`
             devolucao_rma: () => { 
                 setVisibility(elements.destinatario_container, true); 
                 setVisibility(elements.tipo_operacao_container, true); 
-                setVisibility(elements.rma_fields, true); // CRG
-                setVisibility(elements.solar_options, true); // Pai dos campos de quantidade/descrição
+                setVisibility(elements.rma_fields, true); // Exibe campo CRG
+                setVisibility(elements.solar_options, true); // Exibe container que contém Qtd e Descrição
                 
-                // ESCONDER campos solicitados conforme imagem (NF, Valor Unitário, NCM, Anexo)
+                // ESCONDER campos solicitados (NF, Valor Unitário, NCM, Anexo)
                 if(elements.nf_input) setVisibility(elements.nf_input.closest('.mb-3') || elements.nf_input.parentElement, false);
                 if(elements.valor_unitario_input) setVisibility(elements.valor_unitario_input.closest('.mb-3') || elements.valor_unitario_input.parentElement, false);
                 if(elements.ncm_input) setVisibility(elements.ncm_input.closest('.mb-3') || elements.ncm_input.parentElement, false);
                 if(elements.anexo_info_input) setVisibility(elements.anexo_info_input.closest('.mb-3') || elements.anexo_info_input.parentElement, false);
                 
-                // GARANTIR visibilidade dos campos que devem aparecer
-                if(elements.crg_input) setVisibility(elements.crg_input.closest('.mb-3') || elements.crg_input.parentElement, true);
+                // GARANTIR visibilidade dos campos que devem continuar aparecendo
                 if(elements.quantidade_input) setVisibility(elements.quantidade_input.closest('.mb-3') || elements.quantidade_input.parentElement, true);
                 if(elements.descricao_input) setVisibility(elements.descricao_input.closest('.mb-3') || elements.descricao_input.parentElement, true);
             },
@@ -339,8 +338,14 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const handleTemplateChange = (templateId, value) => {
-        if (templateId === 'email-template') { resetFields('total'); if (templateMap['email-template'][value]) templateMap['email-template'][value](); } 
-        if (templateId === 'sac-template') { resetFields('sac_change'); if (templateMap['sac-template'][value]) templateMap['sac-template'][value](); }
+        if (templateId === 'email-template') { 
+            resetFields('total'); 
+            if (templateMap['email-template'][value]) templateMap['email-template'][value](); 
+        } 
+        if (templateId === 'sac-template') { 
+            resetFields('sac_change'); 
+            if (templateMap['sac-template'][value]) templateMap['sac-template'][value](); 
+        }
         if (value === 'recusa_nf') updateRecusaNfEmail();
         if (value === 'solicitar_entrada_nf') updatePdAfEmail();
     };
