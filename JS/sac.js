@@ -474,19 +474,46 @@ Cep: 43721-450 SIMOES FILHO/BA`
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 
-    const copyBtn = document.getElementById('copy-email');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-            const range = document.createRange();
-            range.selectNode(elements.email_content);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            alert('E-mail copiado com sucesso!');
-        });
-    }
+
+    
+    
+    
+// Logica do botão de copiar    
+    
+if (elements.copy_email) {
+    elements.copy_email.addEventListener('click', () => {
+        const content = document.getElementById('email-content');
+        
+        // Cria um intervalo de seleção
+        const range = document.createRange();
+        range.selectNode(content);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        try {
+            // Executa o comando de cópia
+            const successful = document.execCommand('copy');
+            if (successful) {
+                const originalText = elements.copy_email.innerText;
+                elements.copy_email.innerText = "Copiado!";
+                elements.copy_email.style.backgroundColor = "#28a745";
+                
+                setTimeout(() => {
+                    elements.copy_email.innerText = originalText;
+                    elements.copy_email.style.backgroundColor = "#007bff";
+                }, 2000);
+            }
+        } catch (err) {
+            console.error('Erro ao copiar:', err);
+            alert('Não foi possível copiar o e-mail.');
+        }
+
+        // Limpa a seleção após copiar
+        window.getSelection().removeAllRanges();
+    });
+}
 });
+
 
 
 
