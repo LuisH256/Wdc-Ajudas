@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Mapeamento de Elementos
+    // 1. Mapeamento de Elementos (Incluído copy-email)
     const elements = [
         'email-template', 'sac-template', 'sac-options', 'apoio-vendas-options',
         'destinatario-container', 'tipo-operacao-container', 'pdaf-options',
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'data-validade-input-expired', 'postagem-correios-template',
         'primeiro-ticket-options', 'ticket-expirado-options',
         'nf-input-postagem', 'crg-input', 'anexo-info-input',
-        'pendencias-options', 'edi-select', 'nf-select'
+        'pendencias-options', 'edi-select', 'nf-select', 'copy-email'
     ].reduce((acc, id) => {
         const el = document.getElementById(id);
         if (el) {
@@ -91,7 +91,7 @@ EAN {{ean}}
         <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
         <div>• <b>CFOP:</b> {{cfop}}</div><br>
         <div><b>Destinatário:</b><br>{{destinatario}}</div><br>
-        <div>A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos).</div>
+        <div>{{instrucaoValores}}</div><br>
         <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
         <div>· Devolução recebida por meio da NF nº.......</div>`,
 
@@ -148,7 +148,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             titulo: "Troca em Garantia",
             natureza: "Troca em garantia",
             cfop: "5949 ou 6949 (Conforme dentro ou fora do estado)",
-            instrucao: ""
+            instrucao: "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários (não destacar impostos)."
         }
     };
 
@@ -232,7 +232,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         
-        const descricao = elements.descricao_input.classList.contains('hidden') ? '' : (elements.descricao_input.value || '...');
+        const descricao = elements.descricao_input.value || '...';
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
         
         const emailText = TEMPLATES.devolucao_rma
@@ -368,8 +368,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.rma_fields, true); 
                 setVisibility(elements.solar_options, true); 
                 
-                const idsParaEsconder = ['nf-input', 'valor-unitario-input', 'ncm-input', 'anexo-info-input', 'descricao-input'];
-                idsParaEsconder.forEach(id => {
+                // Remove campos não usados no RMA
+                ['nf-input', 'valor-unitario-input', 'ncm-input', 'anexo-info-input'].forEach(id => {
                     const input = document.getElementById(id);
                     if (input) {
                         input.classList.add('hidden');
@@ -388,6 +388,11 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 if(elements.quantidade_input) {
                     elements.quantidade_input.classList.remove('hidden');
                     const lbl = document.querySelector('label[for="quantidade-input"]');
+                    if(lbl) lbl.classList.remove('hidden');
+                }
+                if(elements.descricao_input) {
+                    elements.descricao_input.classList.remove('hidden');
+                    const lbl = document.querySelector('label[for="descricao-input"]');
                     if(lbl) lbl.classList.remove('hidden');
                 }
             },
@@ -474,46 +479,35 @@ Cep: 43721-450 SIMOES FILHO/BA`
     ['nf_input_postagem', 'ticket_input', 'data_validade_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'primeiro_ticket') updateTicketParaAdvancedsEmail('primeiro_ticket'); }); });
     ['ticket_expirado_input', 'ticket_input_expired', 'data_emissao_input_expired', 'data_validade_input_expired'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', () => { if (elements.postagem_correios_template?.value === 'ticket_expirado') updateTicketParaAdvancedsEmail('ticket_expirado'); }); });
 
+    // Lógica do botão de copiar (Correção do fundo cinza e IDs)
+    if (elements.copy_email) {
+        elements.copy_email.addEventListener('click', () => {
+            const content = elements.email_content;
+            if (!content) return;
 
-    
-    
-    
-// Logica do botão de copiar    
-    
-if (elements.copy_email) {
-    elements.copy_email.addEventListener('click', () => {
-        const content = document.getElementById('email-content');
-        
-        // Cria um intervalo de seleção
-        const range = document.createRange();
-        range.selectNode(content);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
 
-        try {
-            // Executa o comando de cópia
-            const successful = document.execCommand('copy');
-            if (successful) {
-                const originalText = elements.copy_email.innerText;
-                elements.copy_email.innerText = "Copiado!";
-                elements.copy_email.style.backgroundColor = "#28a745";
-                
-                setTimeout(() => {
-                    elements.copy_email.innerText = originalText;
-                    elements.copy_email.style.backgroundColor = "#007bff";
-                }, 2000);
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    const originalText = elements.copy_email.innerText;
+                    elements.copy_email.innerText = "Copiado! ✅";
+                    elements.copy_email.style.backgroundColor = "#28a745";
+                    
+                    setTimeout(() => {
+                        elements.copy_email.innerText = originalText;
+                        elements.copy_email.style.backgroundColor = ""; 
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Erro ao copiar:', err);
+                alert('Não foi possível copiar o e-mail.');
             }
-        } catch (err) {
-            console.error('Erro ao copiar:', err);
-            alert('Não foi possível copiar o e-mail.');
-        }
 
-        // Limpa a seleção após copiar
-        window.getSelection().removeAllRanges();
-    });
-}
+            window.getSelection().removeAllRanges();
+        });
+    }
 });
-
-
-
-
