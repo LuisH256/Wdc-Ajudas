@@ -10,10 +10,33 @@
     <style>
         .hidden { display: none !important; }
         .email-box { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; }
-        #email-content { white-space: pre-wrap; font-family: Arial, sans-serif; line-height: 1.5; color: #000; }
+        
+        /* Garante que o conteúdo seja legível e fundo branco na cópia */
+        #email-content { 
+            white-space: pre-wrap; 
+            font-family: Arial, sans-serif; 
+            line-height: 1.5; 
+            color: #000; 
+            background-color: #ffffff; 
+            padding: 15px;
+            border-radius: 4px;
+        }
+        
         label { display: block; margin-top: 10px; font-weight: bold; }
         input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-        #copy-email { width: 100%; margin-top: 20px; padding: 10px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold; }
+        
+        #copy-email { 
+            width: 100%; 
+            margin-top: 20px; 
+            padding: 12px; 
+            cursor: pointer; 
+            background-color: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            transition: background 0.3s;
+        }
         #copy-email:hover { background-color: #0056b3; }
     </style>
 </head>
@@ -84,13 +107,6 @@
                 </select>
             </div>
 
-            <div id="campos-exclusivos-correios" class="hidden">
-                <label for="produto-desc-input">Descrição do Produto:</label>
-                <input type="text" id="produto-desc-input" placeholder="Ex: ONU Huawei">
-                <label for="data-emissao-input">Data de Emissão / Recebimento:</label>
-                <input type="tel" id="data-emissao-input" placeholder="dd/mm/aaaa" maxlength="10">
-            </div>
-
             <div id="apoio-vendas-options" class="hidden">
                 <label for="apoio-vendas-template">Tipo de Apoio a Vendas:</label>
                 <select id="apoio-vendas-template">
@@ -122,32 +138,45 @@
                 </select>
             </div>
 
+            <div id="campos-exclusivos-correios" class="hidden">
+                <label for="produto-desc-input">Descrição do Produto:</label>
+                <input type="text" id="produto-desc-input" placeholder="Ex: ONU Huawei">
+                <label for="data-emissao-input">Data de Emissão / Recebimento:</label>
+                <input type="tel" id="data-emissao-input" placeholder="dd/mm/aaaa" maxlength="10">
+            </div>
+
             <div id="rma-fields" class="hidden">
                 <label for="crg-input">N° do CRG:</label>
                 <input type="text" id="crg-input">
-                <div id="anexo-info-container">
-                    <label for="anexo-info-input">Informação do Anexo:</label>
-                    <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de RMA">
-                </div>
+                <label for="anexo-info-input">Informação do Anexo:</label>
+                <input type="text" id="anexo-info-input" placeholder="Ex: Planilha de RMA">
             </div>
 
             <div id="solar-options" class="hidden">
-                <div id="nf-container">
-                    <label for="nf-input">Número da NF:</label>
-                    <input type="text" id="nf-input">
-                </div>
-                <div id="valor-unitario-container">
-                    <label for="valor-unitario-input">Valor Unitário:</label>
-                    <input type="text" id="valor-unitario-input">
-                </div>
-                <div id="ncm-container">
-                    <label for="ncm-input">NCM:</label>
-                    <input type="text" id="ncm-input">
-                </div>
+                <label for="nf-input">Número da NF:</label>
+                <input type="text" id="nf-input">
+                <label for="valor-unitario-input">Valor Unitário:</label>
+                <input type="text" id="valor-unitario-input">
+                <label for="ncm-input">NCM:</label>
+                <input type="text" id="ncm-input">
                 <label for="quantidade-input">Quantidade:</label>
                 <input type="text" id="quantidade-input">
                 <label for="descricao-input">Descrição do Item / Produto(s):</label>
                 <input type="text" id="descricao-input">
+            </div>
+
+            <div id="pendencias-options" class="hidden">
+                <label for="edi-select">EDI (Ocorrência):</label>
+                <input type="text" id="edi-select" placeholder="Ex: Endereço não localizado">
+                <label for="nf-select">NF(s):</label>
+                <input type="text" id="nf-select" placeholder="Ex: 12345 ou 123, 456">
+            </div>
+
+            <div id="recusa-nf-options" class="hidden">
+                <label for="nf-recusa-input">Número da NF:</label>
+                <input type="text" id="nf-recusa-input">
+                <label for="descricao-recusa-input">Situação/Descrição:</label>
+                <input type="text" id="descricao-recusa-input" placeholder="Ex: cliente recusou por falta de pedido">
             </div>
 
             <div id="ticket-correios-options" class="hidden">
@@ -179,31 +208,6 @@
                 <input type="tel" id="data-validade-input-expired" placeholder="dd/mm/aaaa">
             </div>
 
-            <div id="pdaf-options" class="hidden"> 
-                <label for="tipo-select">Tipo:</label>
-                <select id="tipo-select"><option value="PD">PD</option><option value="AF">AF</option></select>
-                <label for="nfs-input">NFs:</label>
-                <input type="text" id="nfs-input">
-                <label for="ean-input">EAN:</label>
-                <input type="text" id="ean-input">
-                <label for="swqt-input">SW/QT:</label>
-                <input type="text" id="swqt-input">
-            </div>
-
-            <div id="recusa-nf-options" class="hidden">
-                <label for="nf-recusa-input">NF:</label>
-                <input type="text" id="nf-recusa-input">
-                <label for="descricao-recusa-input">Situação/Descrição:</label>
-                <input type="text" id="descricao-recusa-input">
-            </div>
-
-            <div id="pendencias-options" class="hidden">
-                <label for="edi-select">EDI:</label>
-                <input type="text" id="edi-select">
-                <label for="nf-select">NF:</label>
-                <input type="text" id="nf-select">
-            </div>
-
             <div id="email-preview" class="email-box hidden">
                 <h3>Pré-visualização do E-mail</h3>
                 <div id="email-content"></div>
@@ -214,6 +218,6 @@
     </main>
 
     <script src="/Wdc-Ajudas/JS/sac.js"></script>
+    <script src="/Wdc-Ajudas/JS/apoio_vendas.js"></script>
 </body>
 </html>
-
