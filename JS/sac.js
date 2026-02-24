@@ -170,7 +170,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
 
         if (camposExclusivosCorreios) setVisibility(camposExclusivosCorreios, false);
         
-        // Resetar visibilidade de labels e inputs internos que podem ter sido escondidos manualmente
         document.querySelectorAll('#solar-options input, #solar-options label, #rma-fields input, #rma-fields label').forEach(el => {
             el.classList.remove('hidden');
             const parent = el.closest('div');
@@ -190,14 +189,31 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const opKey = elements.tipo_operacao.value;
         const destKey = elements.destinatario.value;
         if (!opKey || !destKey) return;
+        
         const opData = OPERACOES[opKey];
         const destData = DESTINATARIOS[destKey];
         const crg = elements.crg_input.value || '...';
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
-        const descricao = elements.descricao_input.value || '...';
+        
+        // CORREÇÃO: Remove os "..." se o campo de descrição estiver escondido
+        const descricao = elements.descricao_input.classList.contains('hidden') ? '' : (elements.descricao_input.value || '...');
+        
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
-        const emailText = TEMPLATES.devolucao_rma.replace('{{saudacao}}', getSaudacao()).replace('{{crg}}', crg).replace('{{anexo}}', anexo).replace('{{tituloOperacao}}', opData.titulo).replace('{{quantidade}}', qtd || '___').replace('{{produtoLabel}}', produtoLabel).replace('{{descricao}}', opData.natureza).replace('{{cfop}}', opData.cfop).replace('{{destinatario}}', destData).replace('{{instrucaoValores}}', opData.instrucao);
+        
+        const emailText = TEMPLATES.devolucao_rma
+            .replace('{{saudacao}}', getSaudacao())
+            .replace('{{crg}}', crg)
+            .replace('{{anexo}}', anexo)
+            .replace('{{tituloOperacao}}', opData.titulo)
+            .replace('{{quantidade}}', qtd || '___')
+            .replace('{{produtoLabel}}', produtoLabel)
+            .replace('{{descricao}}', descricao)
+            .replace('{{natureza}}', opData.natureza)
+            .replace('{{cfop}}', opData.cfop)
+            .replace('{{destinatario}}', destData)
+            .replace('{{instrucaoValores}}', opData.instrucao);
+            
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -295,7 +311,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         setVisibility(elements.email_preview, true);
     };
     
-    // 5. Lógica de Eventos (Onde a mágica acontece)
+    // 5. Lógica de Eventos
     const templateMap = {
         'email-template': {
             sac: () => setVisibility(elements.sac_options, true),
@@ -312,7 +328,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.rma_fields, true); 
                 setVisibility(elements.solar_options, true); 
                 
-                // ESCONDER campos e seus labels para o RMA
+                // ESCONDER campos e labels para o RMA
                 const idsParaEsconder = ['nf-input', 'valor-unitario-input', 'ncm-input', 'anexo-info-input', 'descricao-input'];
                 idsParaEsconder.forEach(id => {
                     const input = document.getElementById(id);
@@ -325,7 +341,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
                     }
                 });
                 
-                // GARANTIR visibilidade do que sobra
                 if(elements.crg_input) {
                     elements.crg_input.classList.remove('hidden');
                     const lbl = document.querySelector('label[for="crg-input"]');
@@ -340,7 +355,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
             solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
             troca_solar: () => {
                 setVisibility(elements.solar_options, true);
-                // No solar, todos devem aparecer, então garantimos que estejam visíveis
                 ['nf-input', 'valor-unitario-input', 'ncm-input', 'quantidade-input', 'descricao-input'].forEach(id => {
                     const el = document.getElementById(id);
                     if(el) {
@@ -428,4 +442,3 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
-
