@@ -197,7 +197,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         const descricao = elements.descricao_input.value || '...';
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
-        const emailText = TEMPLATES.devolucao_rma.replace('{{saudacao}}', getSaudacao()).replace('{{crg}}', crg).replace('{{anexo}}', anexo).replace('{{tituloOperacao}}', opData.titulo).replace('{{quantidade}}', qtd || '___').replace('{{produtoLabel}}', produtoLabel).replace('{{descricao}}', descricao).replace('{{natureza}}', opData.natureza).replace('{{cfop}}', opData.cfop).replace('{{destinatario}}', destData).replace('{{instrucaoValores}}', opData.instrucao);
+        const emailText = TEMPLATES.devolucao_rma.replace('{{saudacao}}', getSaudacao()).replace('{{crg}}', crg).replace('{{anexo}}', anexo).replace('{{tituloOperacao}}', opData.titulo).replace('{{quantidade}}', qtd || '___').replace('{{produtoLabel}}', produtoLabel).replace('{{descricao}}', opData.natureza).replace('{{cfop}}', opData.cfop).replace('{{destinatario}}', destData).replace('{{instrucaoValores}}', opData.instrucao);
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
     };
@@ -428,3 +428,4 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
