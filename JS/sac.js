@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Templates
     const TEMPLATES = {
         recusa_nf: `{{saudacao}}\n\nReferente a NF {{nf}} na qual {{descricao}} \n\nPrecisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação. \n\n*Manifestar como operação não realizada \n\n<b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b>\n\n<img src="imgs/teste.png" alt="Instrução de Manifestação"> \n\nFavor sinalizar caso haja alguma divergência no processo. \n\nFicamos a disposição para maiores esclarecimentos.`,
-        primeiro_ticket: `{{saudacao}}\n\nO seu produto {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
+        primeiro_ticket: `{{saudacao}}\n\nO seu product {{produto}} trocado referente a NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>\n\nTicket: {{ticket}}\n\nData de emissão: {{data_emissao}}\n\nData de validade: {{data_validade}}\n\n<b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b>\n\nFavor sinalizar caso haja alguma divergência no processo.\n\nFicamos a disposição para maiores esclarecimentos.`,
         devolucao: `Informamos que a sua solicitação de devolução da NF foi aprovada.
         
 Importante: Os produtos remetidos para retorno devem ser embalados de forma que garantam sua integridade física, permitindo a conferência do Número de Série e/ou MAC Address. Os produtos serão vistoriados no recebimento para assegurar que correspondem aos da NF de compra.
@@ -85,6 +85,16 @@ EAN {{ean}}
         <div>No campo de “dados adicionais” da NF, favor mencionar:</div>
         <div>· Devolução recebida por meio da NF nº.......</div>`,
 
+        troca_garantia_nova: `<div>{{saudacao}}</div><br>
+        <div>Após testes identificamos que não será possível reparar o seu produto, sendo assim atenderemos com operação de troca em garantia. Segue em anexo recusa da nota favor seguir com a instrução abaixo para realizarmos o processo da troca do produto.</div><br>
+        <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
+        <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
+        <div>• <b>CFOP:</b> {{cfop}}</div><br>
+        <div><b>Destinatário:</b><br>{{destinatario}}</div><br>
+        <div>{{instrucaoValores}}</div><br>
+        <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
+        <div>· Devolução recebida por meio da NF nº.......</div>`,
+
         ticket_para_advanceds: { 
             primeiro_ticket: `O seu produto {{produtoDesc}} trocado referente à NF {{nf}} de compra, já consta como entregue. Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b>
 
@@ -133,6 +143,12 @@ Cep: 43721-450 SIMOES FILHO/BA`
             natureza: "Devolução de Compra para Comercialização",
             cfop: "6202 (Para fora da UF) E 5202 (Para a própria UF)",
             instrucao: "A NF de devolução deverá ser devolvida com os mesmos valores correspondentes aos itens da NF de origem a serem devolvidos. Devem constar os mesmos valores unitários, valor total, IPI, ICMS e alíquota."
+        },
+        troca_garantia: {
+            titulo: "Troca em Garantia",
+            natureza: "Troca em garantia",
+            cfop: "5949 ou 6949 (Conforme dentro ou fora do estado)",
+            instrucao: ""
         }
     };
 
@@ -185,6 +201,26 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     // 4. Funções de Atualização de Email
+    const updateTrocaGarantiaEmail = () => {
+        const opKey = elements.tipo_operacao.value;
+        const destKey = elements.destinatario.value;
+        if (!opKey || !destKey) return;
+
+        const opData = OPERACOES[opKey];
+        const destData = DESTINATARIOS[destKey];
+
+        const emailText = TEMPLATES.troca_garantia_nova
+            .replace('{{saudacao}}', getSaudacao())
+            .replace('{{tituloOperacao}}', opData.titulo)
+            .replace('{{natureza}}', opData.natureza)
+            .replace('{{cfop}}', opData.cfop)
+            .replace('{{destinatario}}', destData)
+            .replace('{{instrucaoValores}}', opData.instrucao || "");
+
+        elements.email_content.innerHTML = emailText.trim();
+        setVisibility(elements.email_preview, true);
+    };
+
     const updateDevolucaoRmaEmail = () => {
         const opKey = elements.tipo_operacao.value;
         const destKey = elements.destinatario.value;
@@ -196,11 +232,9 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         
-        // CORREÇÃO: Pega a descrição APENAS se o campo estiver visível
         const descricao = elements.descricao_input.classList.contains('hidden') ? '' : (elements.descricao_input.value || '...');
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
         
-        // CORREÇÃO DA NATUREZA: O replace estava trocando as variáveis de lugar
         const emailText = TEMPLATES.devolucao_rma
             .replace('{{saudacao}}', getSaudacao())
             .replace('{{crg}}', crg)
@@ -209,7 +243,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{quantidade}}', qtd || '___')
             .replace('{{produtoLabel}}', produtoLabel)
             .replace('{{descricao}}', descricao)
-            .replace('{{natureza}}', opData.natureza) // Agora substitui corretamente a natureza
+            .replace('{{natureza}}', opData.natureza)
             .replace('{{cfop}}', opData.cfop)
             .replace('{{destinatario}}', destData)
             .replace('{{instrucaoValores}}', opData.instrucao);
@@ -229,6 +263,8 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const updateDevolucaoEmail = () => {
         const sacVal = elements.sac_template.value;
         if (sacVal === 'devolucao_rma') { updateDevolucaoRmaEmail(); return; }
+        if (sacVal === 'troca_garantia_nova') { updateTrocaGarantiaEmail(); return; }
+        
         const destinatario = DESTINATARIOS[elements.destinatario.value] || '';
         const opMap = {
             locacao: { operacao: "Retorno de Locação", cfop: "5909 ou 6909 (Conforme dentro ou fora do estado)", dados_adicionais: "Retorno de locação, referente à NF nº ......., emitida em ....../....../........" },
@@ -322,6 +358,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
                 setVisibility(elements.destinatario_container, true); 
                 setVisibility(elements.tipo_operacao_container, true); 
             },
+            troca_garantia_nova: () => {
+                setVisibility(elements.destinatario_container, true);
+                setVisibility(elements.tipo_operacao_container, true);
+            },
             devolucao_rma: () => { 
                 setVisibility(elements.destinatario_container, true); 
                 setVisibility(elements.tipo_operacao_container, true); 
@@ -388,10 +428,16 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const sacVal = elements.sac_template.value;
         if (sacVal === 'envio_material_devolucao') updateEnvioMaterialEmail();
         else if (sacVal === 'devolucao' || sacVal === 'devolucao_rma') updateDevolucaoEmail();
+        else if (sacVal === 'troca_garantia_nova') updateTrocaGarantiaEmail();
         else if (sacVal === 'advanced_emissao_envio' || sacVal === 'advanced_apenas_envio') updateAdvancedNovosTemplates();
     });
 
-    if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', updateDevolucaoEmail);
+    if (elements.tipo_operacao) elements.tipo_operacao.addEventListener('change', () => {
+        const sacVal = elements.sac_template.value;
+        if (sacVal === 'troca_garantia_nova') updateTrocaGarantiaEmail();
+        else updateDevolucaoEmail();
+    });
+
     if (elements.tipo_select) elements.tipo_select.addEventListener('change', updatePdAfEmail);
     ['nfs_input', 'ean_input', 'swqt_input'].forEach(id => { if (elements[id]) elements[id].addEventListener('input', updatePdAfEmail); });
     ['nf_input', 'valor_unitario_input', 'quantidade_input', 'ncm_input', 'descricao_input'].forEach(id => { 
