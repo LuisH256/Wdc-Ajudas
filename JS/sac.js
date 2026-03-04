@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return acc;
     }, {});
 
-    const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios');
+    const camposExclusivosCorreios = document.getElementById('campos-exclusivos-correios') || elements.campos_exclusivos_correios;
 
     // 2. Templates
     const TEMPLATES = {
@@ -217,7 +217,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
             .replace('{{destinatario}}', destData)
             .replace('{{instrucaoValores}}', opData.instrucao || "");
 
-        elements.email_content.innerHTML = emailText.trim();
+        elements.email_content.innerHTML = emailText.trim().replace(/\n/g, '<br>');
         setVisibility(elements.email_preview, true);
     };
 
@@ -396,7 +396,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
                     if(lbl) lbl.classList.remove('hidden');
                 }
             },
-            solicitar_entrada_nf: () => setVisibility(elements.pdaf_options, true), 
+            solicitar_entrada_nf: () => {
+                setVisibility(elements.pdaf_options, true);
+                updatePdAfEmail(); // Força a atualização do texto ao selecionar
+            },
             troca_solar: () => {
                 setVisibility(elements.solar_options, true);
                 ['nf-input', 'valor-unitario-input', 'ncm-input', 'quantidade-input', 'descricao-input'].forEach(id => {
@@ -523,4 +526,3 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
-
