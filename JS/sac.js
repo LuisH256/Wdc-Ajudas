@@ -306,39 +306,45 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
     const updatePdAfEmail = () => {
-        const tipo = elements.tipo_select.value || 'PD';
-        const ean = elements.ean_input.value || '...';
-        const nfs = elements.nfs_input.value || '...';
-        const swqt = elements.swqt_input.value || '';
-        const nfsArray = nfs.split(',').map(item => item.trim());
-        const nfsMessage = nfsArray.length === 1 && nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : `as notas fiscais ${nfsArray.filter(n => n).join(', ')}`;
-        const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
-        const notasServicoMessage = swqtArray.length <= 1 ? 'a nota de serviço' : 'as notas de serviço';
-        // Se houver itens, adiciona as quebras, se não, fica vazio
-const swqtFinal = swqtArray.length > 0 ? `<br><br>${swqtFormatado}` : '';
+    const tipo = elements.tipo_select.value || 'PD';
+    const ean = elements.ean_input.value || '...';
+    const nfs = elements.nfs_input.value || '...';
+    const swqt = elements.swqt_input.value || '';
 
-let emailText = TEMPLATES.pdaf
-    .replace('{{tipo}}', tipo)
-    .replace('{{notas_servico}}', notasServicoMessage)
-    .replace('{{nfs}}', nfsMessage || '...')
-    .replace('{{ean}}', ean)
-    .replace('{{swqt}}', swqtFinal);
-        if (tipo === 'AF') emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
-        elements.email_content.innerHTML = emailText.trim();
-        setVisibility(elements.email_preview, true);
-    };
+    // Tratamento das Notas Fiscais (nfs)
+    const nfsArray = nfs.split(',').map(item => item.trim()).filter(i => i);
+    const nfsMessage = nfsArray.length > 1 
+        ? `as notas fiscais ${nfsArray.join(', ')}` 
+        : (nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : '...');
 
-    const updateSolarEmail = (templateKey) => {
-        const nf = elements.nf_input.value || '...';
-        const valorUnitario = elements.valor_unitario_input.value || '...';
-        const quantidade = elements.quantidade_input.value || '...';
-        const ncm = elements.ncm_input.value || '...';
-        const descricao = elements.descricao_input.value || '...';
-        const nfText = nf.includes(',') ? `das NFs ${nf}` : `da NF ${nf}`;
-        const emailText = TEMPLATES[templateKey].replace('{{saudacao}}', getSaudacao()).replace('{{nfText}}', nfText).replace('{{valorUnitario}}', valorUnitario).replace('{{quantidade}}', quantidade).replace('{{ncm}}', ncm).replace('{{descricao}}', descricao);
-        elements.email_content.innerHTML = emailText.trim();
-        setVisibility(elements.email_preview, true);
-    };
+    // Tratamento das Notas de Serviço (swqt)
+    const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
+    const notasServicoMessage = swqtArray.length > 1 ? 'as notas de serviço' : 'a nota de serviço';
+    
+    // Formata a lista de SWQT/Notas de Serviço com quebras de linha para o HTML
+    const swqtFormatado = swqtArray.join('<br>');
+    const swqtFinal = swqtArray.length > 0 ? `<br><br>${swqtFormatado}` : '';
+
+    // Montagem inicial baseada no template
+    let emailText = TEMPLATES.pdaf
+        .replace('{{tipo}}', tipo)
+        .replace('{{notas_servico}}', notasServicoMessage)
+        .replace('{{nfs}}', nfsMessage)
+        .replace('{{ean}}', ean)
+        .replace('{{swqt}}', swqtFinal);
+
+    // Lógica específica para AF (Apoio de Fabricação)
+    // Se for AF, remove a menção a notas de serviço e a linha do EAN
+    if (tipo === 'AF') {
+        emailText = emailText
+            .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
+            .replace(/EAN .*\n?/g, ''); 
+    }
+
+    // Atualiza o preview e garante que as quebras de linha do template virem <br>
+    elements.email_content.innerHTML = emailText.trim().replace(/\n/g, '<br>');
+    setVisibility(elements.email_preview, true);
+};
 
     const updateTicketParaAdvancedsEmail = (templateKey) => {
         const templateData = TEMPLATES.ticket_para_advanceds[templateKey];
@@ -534,4 +540,5 @@ let emailText = TEMPLATES.pdaf
         });
     }
 });
+
 
