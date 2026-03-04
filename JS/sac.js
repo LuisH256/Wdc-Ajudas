@@ -314,7 +314,15 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const nfsMessage = nfsArray.length === 1 && nfsArray[0] ? `a nota fiscal ${nfsArray[0]}` : `as notas fiscais ${nfsArray.filter(n => n).join(', ')}`;
         const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
         const notasServicoMessage = swqtArray.length <= 1 ? 'a nota de serviço' : 'as notas de serviço';
-        let emailText = TEMPLATES.pdaf.replace('{{tipo}}', tipo).replace('{{notas_servico}}', notasServicoMessage).replace('{{nfs}}', nfsMessage).replace('{{ean}}', ean).replace('{{swqt}}', swqtArray.join('\n'));
+        // Se houver itens, adiciona as quebras, se não, fica vazio
+const swqtFinal = swqtArray.length > 0 ? `<br><br>${swqtFormatado}` : '';
+
+let emailText = TEMPLATES.pdaf
+    .replace('{{tipo}}', tipo)
+    .replace('{{notas_servico}}', notasServicoMessage)
+    .replace('{{nfs}}', nfsMessage || '...')
+    .replace('{{ean}}', ean)
+    .replace('{{swqt}}', swqtFinal);
         if (tipo === 'AF') emailText = emailText.replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '').replace(/EAN .*\n/g, ''); 
         elements.email_content.innerHTML = emailText.trim();
         setVisibility(elements.email_preview, true);
@@ -526,3 +534,4 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
