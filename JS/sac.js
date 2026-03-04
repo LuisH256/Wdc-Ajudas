@@ -305,8 +305,16 @@ Cep: 43721-450 SIMOES FILHO/BA`
         } else { setVisibility(elements.email_preview, false); }
     };
 
-    const updatePdAfEmail = () => {
-    const tipo = elements.tipo_select.value || 'PD';
+   const updatePdAfEmail = () => {
+    // 1. Pegue o valor puro. Se estiver vazio, a variável 'tipo' será uma string vazia.
+    const tipo = elements.tipo_select.value; 
+
+    // 2. Agora a trava funciona! Se for vazio, ele para aqui e esconde o preview.
+    if (!tipo) {
+        setVisibility(elements.email_preview, false);
+        return;
+    }
+
     const ean = elements.ean_input.value || '...';
     const nfs = elements.nfs_input.value || '...';
     const swqt = elements.swqt_input.value || '';
@@ -321,7 +329,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
     const notasServicoMessage = swqtArray.length > 1 ? 'as notas de serviço' : 'a nota de serviço';
     
-    // Formata a lista de SWQT/Notas de Serviço com quebras de linha para o HTML
+    // Formata a lista de SWQT/Notas de Serviço
     const swqtFormatado = swqtArray.join('<br>');
     const swqtFinal = swqtArray.length > 0 ? `<br><br>${swqtFormatado}` : '';
 
@@ -333,15 +341,13 @@ Cep: 43721-450 SIMOES FILHO/BA`
         .replace('{{ean}}', ean)
         .replace('{{swqt}}', swqtFinal);
 
-    // Lógica específica para AF (Apoio de Fabricação)
-    // Se for AF, remove a menção a notas de serviço e a linha do EAN
+    // Lógica específica para AF
     if (tipo === 'AF') {
         emailText = emailText
             .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
             .replace(/EAN .*\n?/g, ''); 
     }
 
-    // Atualiza o preview e garante que as quebras de linha do template virem <br>
     elements.email_content.innerHTML = emailText.trim().replace(/\n/g, '<br>');
     setVisibility(elements.email_preview, true);
 };
@@ -540,5 +546,6 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
 
 
