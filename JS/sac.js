@@ -306,10 +306,10 @@ Cep: 43721-450 SIMOES FILHO/BA`
     };
 
    const updatePdAfEmail = () => {
-    // 1. Pegue o valor puro. Se estiver vazio, a variável 'tipo' será uma string vazia.
+    // 1. Pega o valor do select (PD, AF ou vazio)
     const tipo = elements.tipo_select.value; 
 
-    // 2. Agora a trava funciona! Se for vazio, ele para aqui e esconde o preview.
+    // 2. Se estiver no "Selecione uma opção", esconde o preview e para
     if (!tipo) {
         setVisibility(elements.email_preview, false);
         return;
@@ -329,11 +329,12 @@ Cep: 43721-450 SIMOES FILHO/BA`
     const swqtArray = swqt.split(',').map(item => item.trim()).filter(i => i);
     const notasServicoMessage = swqtArray.length > 1 ? 'as notas de serviço' : 'a nota de serviço';
     
-    // Formata a lista de SWQT/Notas de Serviço
+    // Formata a lista de SWQT/Notas de Serviço com quebras de linha
     const swqtFormatado = swqtArray.join('<br>');
     const swqtFinal = swqtArray.length > 0 ? `<br><br>${swqtFormatado}` : '';
 
-    // Montagem inicial baseada no template
+    // Montagem do texto base usando o template
+    // IMPORTANTE: Certifique-se que no seu objeto TEMPLATES o pdaf usa {{tipo}} e não 'PD' fixo
     let emailText = TEMPLATES.pdaf
         .replace('{{tipo}}', tipo)
         .replace('{{notas_servico}}', notasServicoMessage)
@@ -341,13 +342,18 @@ Cep: 43721-450 SIMOES FILHO/BA`
         .replace('{{ean}}', ean)
         .replace('{{swqt}}', swqtFinal);
 
-    // Lógica específica para AF
+    // Lógica específica para AF (Apoio de Fabricação)
     if (tipo === 'AF') {
         emailText = emailText
+            // Remove a menção às notas de serviço e a vírgula que sobra
             .replace(/seguir também com (a nota de serviço|as notas de serviço),/g, '')
-            .replace(/EAN .*\n?/g, ''); 
+            // Remove a linha do EAN inteira (do "EAN" até o fim da linha ou quebra de linha)
+            .replace(/EAN .*/g, '')
+            // Remove espaços extras que podem sobrar após as remoções
+            .replace(/\s{2,}/g, ' ');
     }
 
+    // Renderiza no HTML convertendo quebras de linha em <br>
     elements.email_content.innerHTML = emailText.trim().replace(/\n/g, '<br>');
     setVisibility(elements.email_preview, true);
 };
@@ -546,6 +552,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
 
 
 
