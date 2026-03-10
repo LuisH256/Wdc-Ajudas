@@ -30,100 +30,90 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     const TEMPLATES = {
-    recusa_nf: `<div>{{saudacao}}</div><br>
-        <div>Referente a NF <b>{{nf}}</b> na qual {{descricao}}</div><br>
-        <div>Precisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação.</div><br>
-        <div><b>*Manifestar como operação não realizada</b></div><br>
-        <div><b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b></div><br>
-        <img src="imgs/teste.png" alt="Instrução de Manifestação"><br><br>
-        <div>Favor sinalizar caso haja alguma divergência no processo.</div>
-        <div>Ficamos a disposição para maiores esclarecimentos.</div>`,
-
-    primeiro_ticket: `<div>{{saudacao}}</div><br>
-        <div>O seu produto <b>{{produto}}</b> trocado referente a NF <b>{{nf}}</b> de compra, já consta como entregue.</div><br>
-        <div>Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b></div><br>
-        <div><b>Ticket:</b> {{ticket}}</div>
-        <div><b>Data de emissão:</b> {{data_emissao}}</div>
-        <div><b>Data de validade:</b> {{data_validade}}</div><br>
-        <div><b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b></div><br>
-        <div>Favor sinalizar caso haja alguma divergência no processo.</div>
-        <div>Ficamos a disposição para maiores esclarecimentos.</div>`,
-
-    devolucao: `<div>Informamos que a sua solicitação de devolução da NF foi aprovada.</div><br>
-        <div><b>Importante:</b> Os produtos remetidos para retorno devem ser embalados de forma que garantam sua integridade física, permitindo a conferência do Número de Série e/ou MAC Address. Os produtos serão vistoriados no recebimento para assegurar que correspondem aos da NF de compra.</div><br>
-        <div>Segue abaixo a instrução para emissão da Nota Fiscal de devolução:</div>
-        <div>O envio do anexo da NF em resposta a este e-mail é obrigatório para validação antes do envio do material.</div><br>
-        <div>• <b>Natureza de Operação:</b> {{operacao}}</div>
-        <div>• <b>CFOP:</b> {{cfop}}</div>
-        <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
-        <div>A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota original. Não é necessário devolver a NF inteira, caso se trate de devolução parcial.</div><br>
-        <div>No campo de “dados adicionais” da NF, mencionar:</div>
-        <div>{{dados_adicionais}}</div><br>
-        <div>Aguardamos a nota fiscal emitida para prosseguimento.</div>`,
-
-    pdaf: `<div>Favor verificar entrada no <b>{{tipo}}</b> RMA que virou devolução,</div>
-        <div>seguir também com <b>{{notas_servico}}</b>, ref <b>{{nfs}}</b>.</div><br>
-        <div><b>EAN:</b> {{ean}}</div><br>
-        <div>{{swqt}}</div>`,
-
-    troca_solar: `<div>{{saudacao}}</div><br>
-        <div>Seguem instruções para emissão da nota fiscal de retorno de troca em garantia para seguirmos com o processo de troca do seu produto <b>{{nfText}}</b>.</div><br>
-        <div>• <b>Natureza da Operação:</b> Entrada para troca em garantia.</div>
-        <div>• <b>CFOP:</b> 6949 (outros estados) / 5949</div><br>
-        <div><b>VALOR UNITÁRIO:</b> R$ {{valorUnitario}}</div>
-        <div><b>QUANTIDADE:</b> {{quantidade}}</div>
-        <div><b>NCM DO ITEM:</b> {{ncm}}</div>
-        <div><b>DESCRIÇÃO ITEM:</b> {{descricao}}</div><br>
-        <div><b>DESTINATÁRIO:</b><br>LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>
-        CNPJ: 05.917.486/0001-40 - I.E: 63250303<br>
-        ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8<br>
-        IGUAPE – ILHÉUS/BA - CEP: 45658-335</div><br>
-        <div><b>OBS:</b> No aguardo da pré nota para validação.</div>`,
-
-    envio_material_devolucao: `<div><b>ENVIO DE MATERIAL - DEVOLUÇÃO</b></div><br>
-        <div>Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.</div><br>
-        <div><span style="color: #FF0000;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.</div><br>
-        <div>O material deve acompanhar a nota fiscal física de devolução emitida.</div><br>
-        <div><b>Segue endereço para envio do material:</b></div>
-        <div>{{endereco}}</div><br>
-        <div>{{observacao_simoes}}</div><br>
-        <div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
-
-    advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico della mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div>Número da(s) nota (s) de Venda de cada produto descrito.</div><div>Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
-
-    advanced_apenas_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div><b>Favor seguir com o envio do material:</b></div><br><div>O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
-
-    devolucao_rma: `<div>{{saudacao}}</div><br>
-        <div>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a {{anexo}} e notas fiscais de compras, favor seguir com a instrução abaixo para realizarmos o processo de devolução.</div><br>
-        <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
-        <div>QTD {{quantidade}} : {{produtoLabel}} <b>{{descricao}}</b></div><br>
-        <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
-        <div>• <b>CFOP:</b> {{cfop}}</div>
-        <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
-        <div>{{instrucaoValores}}</div><br>
-        <div>No campo de “dados adicionais” da NF, favor mencionar:</div>
-        <div>· Devolução recebida por meio da NF nº.......</div>`,
-
-    troca_garantia_nova: `<div>{{saudacao}}</div><br>
-        <div>Após testes identificamos que não será possível reparar o seu produto, sendo assim atenderemos com operação de troca em garantia. Segue em anexo recusa da nota favor seguir com a instrução abaixo para realizarmos o processo da troca do produto.</div><br>
-        <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
-        <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
-        <div>• <b>CFOP:</b> {{cfop}}</div><br>
-        <div><b>Destinatário:</b><br>{{destinatario}}</div><br>
-        <div>{{instrucaoValores}}</div><br>
-        <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
-        <div>· Devolução recebida por meio da NF nº.......</div>`,
-
-    ticket_para_advanceds: { 
-        primeiro_ticket: `<div>O seu produto <b>{{produtoDesc}}</b> trocado referente à NF <b>{{nf}}</b> de compra, já consta como entregue.</div><br>
-            <div>Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b></div><br>
-            <div><b>Ticket:</b> {{ticket}}</div>
-            <div><b>Data de emissão:</b> {{dataEmissao}}</div>
-            <div><b>Data de validade:</b> {{dataValidade}}</div><br>
-            <div>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</div><br>
+        recusa_nf: `<div>{{saudacao}}</div><br>
+            <div>Referente a NF <b>{{nf}}</b> na qual {{descricao}}</div><br>
+            <div>Precisamos da recusa eletrônica para que possamos realizar a entrada fiscal, favor seguir instrução abaixo. Favor nos confirmar assim que efetuar a operação.</div><br>
+            <div><b>*Manifestar como operação não realizada</b></div><br>
+            <div><b>Pode realizar a Manifestação de maneira on-line, sem precisar baixar o aplicativo, basta ter acesso ao e-cnpj da empresa e a chave de acesso a nota fiscal.</b></div><br>
+            <img src="imgs/teste.png" alt="Instrução de Manifestação"><br><br>
             <div>Favor sinalizar caso haja alguma divergência no processo.</div>
-            <div>Ficamos à disposição para maiores esclarecimentos.</div>`,
-        
+            <div>Ficamos a disposição para maiores esclarecimentos.</div>`,
+
+        primeiro_ticket: `<div>{{saudacao}}</div><br>
+            <div>O seu produto <b>{{produto}}</b> trocado referente a NF <b>{{nf}}</b> de compra, já consta como entregue.</div><br>
+            <div>Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído, você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b></div><br>
+            <div><b>Ticket:</b> {{ticket}}</div>
+            <div><b>Data de emissão:</b> {{data_emissao}}</div>
+            <div><b>Data de validade:</b> {{data_validade}}</div><br>
+            <div><b>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</b></div><br>
+            <div>Favor sinalizar caso haja alguma divergência no processo.</div>
+            <div>Ficamos a disposição para maiores esclarecimentos.</div>`,
+
+        devolucao: `<div>Informamos que a sua solicitação de devolução da NF foi aprovada.</div><br>
+            <div><b>Importante:</b> Os produtos remetidos para retorno devem ser embalados de forma que garantam sua integridade física, permitindo a conferência do Número de Série e/ou MAC Address. Os produtos serão vistoriados no recebimento para assegurar que correspondem aos da NF de compra.</div><br>
+            <div>Segue abaixo a instrução para emissão da Nota Fiscal de devolução:</div>
+            <div>O envio do anexo da NF em resposta a este e-mail é obrigatório para validação antes do envio do material.</div><br>
+            <div>• <b>Natureza de Operação:</b> {{operacao}}</div>
+            <div>• <b>CFOP:</b> {{cfop}}</div>
+            <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
+            <div>A NF deverá conter os mesmos valores unitários, totais e alíquotas da nota original. Não é necessário devolver a NF inteira, caso se trate de devolução parcial.</div><br>
+            <div>No campo de “dados adicionais” da NF, mencionar:</div>
+            <div>{{dados_adicionais}}</div><br>
+            <div>Aguardamos a nota fiscal emitida para prosseguimento.</div>`,
+
+        pdaf: `<div>Favor verificar entrada no <b>{{tipo}}</b> RMA que virou devolução,</div>
+            <div>seguir também com <b>{{notas_servico}}</b>, ref <b>{{nfs}}</b>.</div><br>
+            <div><b>EAN:</b> {{ean}}</div><br>
+            <div>{{swqt}}</div>`,
+
+        troca_solar: `<div>{{saudacao}}</div><br>
+            <div>Seguem instruções para emissão da nota fiscal de retorno de troca em garantia para seguirmos com o processo de troca do seu produto <b>{{nfText}}</b>.</div><br>
+            <div>• <b>Natureza da Operação:</b> Entrada para troca em garantia.</div>
+            <div>• <b>CFOP:</b> 6949 (outros estados) / 5949</div><br>
+            <div><b>VALOR UNITÁRIO:</b> R$ {{valorUnitario}}</div>
+            <div><b>QUANTIDADE:</b> {{quantidade}}</div>
+            <div><b>NCM DO ITEM:</b> {{ncm}}</div>
+            <div><b>DESCRIÇÃO ITEM:</b> {{descricao}}</div><br>
+            <div><b>DESTINATÁRIO:</b><br>LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>
+            CNPJ: 05.917.486/0001-40 - I.E: 63250303<br>
+            ROD BA 262, RODOVIA ILHEUS X URUCUCA, S/N KM 2,8<br>
+            IGUAPE – ILHÉUS/BA - CEP: 45658-335</div><br>
+            <div><b>OBS:</b> No aguardo da pré nota para validação.</div>`,
+
+        envio_material_devolucao: `<div><b>ENVIO DE MATERIAL - DEVOLUÇÃO</b></div><br>
+            <div>Mediante validação da Nota fiscal de devolução enviada, segue abaixo procedimento para envio do material a ser devolvido.</div><br>
+            <div><span style="color: #FF0000;"><b>Lembrete:</b></span> Os produtos remetidos para retorno devem ser devolvidos embalados de forma que garantam sua integridade física, que seja possível conferir o Número de série e/ou Mac Address. Os produtos necessariamente serão vistoriados no recebimento, de forma a garantir que sejam os mesmos remetidos na NF de compra.</div><br>
+            <div>O material deve acompanhar a nota fiscal física de devolução emitida.</div><br>
+            <div><b>Segue endereço para envio do material:</b></div>
+            <div>{{endereco}}</div><br>
+            <div>{{observacao_simoes}}</div><br>
+            <div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
+
+        advanced_emissao_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div>Para finalização do fechamento fiscal e da operação de troca, precisamos que emita uma NF referente a unidade trocada (defeituosa) e o envio físico dela mesma.</div><br><div>Segue em anexo a nota de compra para embasamento.</div><br><div><b>Favor seguir com a instrução abaixo:</b></div><br><div>Enviar nota fiscal de natureza da operação <b><u>REMESSA DE TROCA EM GARANTIA</u></b> (em resposta a este email para validação)</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div>Usar na nota fiscal o <b>Código Fiscal de Operação 5.949 ou 6.949</b>, dependendo se for fora ou dentro do estado da Bahia.</div><br><div>Destacar impostos com a mesma alíquota da NF de compra</div><br><div><b>Utilizar o valor de venda de cada produto destacado na nota original de venda;</b></div><br><div><b>No campo informações complementares, inserir:</b></div><div>Número da(s) nota (s) de Venda de cada produto descrito.</div><div>Número da nota de Retorno de conserto (que segue anexa neste email)</div><br><div>Se for contribuinte (ter I.E.) e não emitir nota fiscal, deve enviar Nota Fiscal Avulsa emitida pela Sefaz;</div><br><div><b>Antes da emissão validada, gentileza encaminhar o arquivo da nfe sem valor fiscal, apenas para conferência.</b></div><br><div>Aguardamos o mais breve retorno e ficamos à disposição.</div>`,
+
+        advanced_apenas_envio: `<div>{{saudacao}}</div><br><div>Referente ao envio do seu produto <b>{{produto}}</b> trocado em advanced, identificamos que recebeu em <b>{{data_recebimento}}</b>.</div><br><div><b>Favor seguir com o envio do material:</b></div><br><div>O material deve acompanhar a nota fiscal física de retorno, anteriormente emitida para o endereço:</div><br><div><b>Destinatário:</b><br>{{destinatario}}</div><br><div><b>Favor nos sinalizar assim que o material for enviado e se possível informar o código de rastreio!</b></div>`,
+
+        devolucao_rma: `<div>{{saudacao}}</div><br>
+            <div>Após testes identificamos que não será possível reparar os seus produtos referentes ao CRG <b>{{crg}}</b> e não temos novos em estoque para substituição, sendo assim oferecemos crédito em relação aos produtos. Segue em anexo a {{anexo}} e notas fiscais de compras, favor seguir com a instrução abaixo para realizarmos o processo de devolução.</div><br>
+            <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
+            <div>QTD {{quantidade}} : {{produtoLabel}} <b>{{descricao}}</b></div><br>
+            <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
+            <div>• <b>CFOP:</b> {{cfop}}</div>
+            <div>• <b>Destinatário:</b><br>{{destinatario}}</div><br>
+            <div>{{instrucaoValores}}</div><br>
+            <div>No campo de “dados adicionais” da NF, favor mencionar:</div>
+            <div>· Devolução recebida por meio da NF nº.......</div>`,
+
+        troca_garantia_nova: `<div>{{saudacao}}</div><br>
+            <div>Após testes identificamos que não será possível reparar o seu produto, sendo assim atenderemos com operação de troca em garantia. Segue em anexo recusa da nota favor seguir com a instrução abaixo para realizarmos o processo da troca do produto.</div><br>
+            <div><b>Emitir Nota Fiscal de {{tituloOperacao}} (enviar anexa em resposta a este email):</b></div><br>
+            <div>• <b>Natureza de Operação:</b> {{natureza}}</div>
+            <div>• <b>CFOP:</b> {{cfop}}</div><br>
+            <div><b>Destinatário:</b><br>{{destinatario}}</div><br>
+            <div>{{instrucaoValores}}</div><br>
+            <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
+            <div>· Devolução recebida por meio da NF nº.......</div>`,
+
         ticket_expirado: `<div>Informamos que devido à expiração do ticket <b>{{ticketExpirado}}</b> anteriormente emitido, enviamos um novo e-mail com uma nova Autorização de Postagem.</div><br>
             <div>Você deverá se dirigir a uma Agência dos Correios levando: o Número do e-ticket, o objeto e a nota fiscal em anexo.</div><br>
             <div><b>Ticket:</b> {{ticket}}</div>
@@ -132,8 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div><span style="color: red;"><b>A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto.</b></span></div><br>
             <div>Favor sinalizar caso haja alguma divergência no processo.</div>
             <div>Ficamos à disposição para maiores esclarecimentos.</div>`
-    }
-};
+    };
 
     const DESTINATARIOS = {
         matriz: `LIVETECH DA BAHIA INDÚSTRIA E COMERCIO LTDA<br>
@@ -566,6 +555,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
 
 
 
