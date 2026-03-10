@@ -114,14 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
             <div>No campo de "dados adicionais" da NF, favor mencionar:</div>
             <div>· Devolução recebida por meio da NF nº.......</div>`,
 
-        ticket_expirado: `<div>Informamos que devido à expiração do ticket <b>{{ticketExpirado}}</b> anteriormente emitido, enviamos um novo e-mail com uma nova Autorização de Postagem.</div><br>
-            <div>Você deverá se dirigir a uma Agência dos Correios levando: o Número do e-ticket, o objeto e a nota fiscal em anexo.</div><br>
-            <div><b>Ticket:</b> {{ticket}}</div>
-            <div><b>Data de emissão:</b> {{dataEmissao}}</div>
-            <div><b>Data de validade:</b> {{dataValidade}}</div><br>
-            <div><span style="color: red;"><b>A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto.</b></span></div><br>
-            <div>Favor sinalizar caso haja alguma divergência no processo.</div>
-            <div>Ficamos à disposição para maiores esclarecimentos.</div>`
+        ticket_para_advanceds: { 
+            primeiro_ticket: `<div>O seu produto <b>{{produtoDesc}}</b> trocado referente à NF <b>{{nf}}</b> de compra, já consta como entregue.</div><br>
+                <div>Informamos que enviamos um email a parte junto aos correios com uma Autorização de Postagem do produto substituído. Você deverá se dirigir a uma Agência Própria ou Franqueada dos Correios, <b>levando consigo, obrigatoriamente, o Número do e-ticket, o objeto para postagem e a nota fiscal que consta em anexo neste email (a nota deverá acompanhar o produto).</b></div><br>
+                <div><b>Ticket:</b> {{ticket}}</div>
+                <div><b>Data de emissão:</b> {{dataEmissao}}</div>
+                <div><b>Data de validade:</b> {{dataValidade}}</div><br>
+                <div>*A data de validade do ticket deverá ser respeitada como prazo para postagem.</div><br>
+                <div>Favor sinalizar caso haja alguma divergência no processo.</div>
+                <div>Ficamos à disposição para maiores esclarecimentos.</div>`,
+            
+            ticket_expirado: `<div>Informamos que devido à expiração do ticket <b>{{ticketExpirado}}</b> anteriormente emitido, enviamos um novo e-mail com uma nova Autorização de Postagem.</div><br>
+                <div>Você deverá se dirigir a uma Agência dos Correios levando: o Número do e-ticket, o objeto e a nota fiscal em anexo.</div><br>
+                <div><b>Ticket:</b> {{ticket}}</div>
+                <div><b>Data de emissão:</b> {{dataEmissao}}</div>
+                <div><b>Data de validade:</b> {{dataValidade}}</div><br>
+                <div><span style="color: red;"><b>A data de validade do ticket deverá ser respeitada como prazo para postagem evitando risco de uma nova expiração e o faturamento do produto.</b></span></div><br>
+                <div>Favor sinalizar caso haja alguma divergência no processo.</div>
+                <div>Ficamos à disposição para maiores esclarecimentos.</div>`
+        }
     };
 
     const DESTINATARIOS = {
@@ -555,6 +566,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         });
     }
 });
+
 
 
 
