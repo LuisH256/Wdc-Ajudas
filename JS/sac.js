@@ -246,7 +246,7 @@ Cep: 43721-450 SIMOES FILHO/BA`
         const anexo = elements.anexo_info_input.value || '...';
         const qtd = parseInt(elements.quantidade_input.value) || 0;
         
-        
+        const descricao = elements.descricao_input.value || '';
         const produtoLabel = qtd > 1 ? "produtos" : "produto";
         
         const emailText = TEMPLATES.devolucao_rma
