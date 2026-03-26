@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instruções de Triagem - WDC AJUDAS</title>
+    <link rel="stylesheet" href="/Wdc-Ajudas/CSS/emails.css">
+    <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
+    <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
+    <style>
+        .instruction-section { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .instruction-section h2 { color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+        .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: #f8f9fa; border-left: 5px solid #007bff; padding: 15px; border-radius: 4px; }
+        .card h4 { margin-top: 0; color: #333; }
+        .alert-box { background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        .step-list { list-style: none; padding: 0; }
+        .step-list li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+        .step-list li::before { content: "➜"; position: absolute; left: 0; color: #007bff; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .badge-protheus { background: #e2e3e5; color: #383d41; }
+        .badge-auto { background: #d1ecf1; color: #0c5460; }
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">WDC AJUDAS</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/Wdc-Ajudas/index.html">Página Principal</a></li>
+                <li><a href="/Wdc-Ajudas/emails.html">Script de E-mails</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Automação/Atalhos</a>
+                    <div class="dropdown-content">
+                        <a href="/Wdc-Ajudas/atalhos.html">Atalhos</a>
+                        <a href="/Wdc-Ajudas/comprar-lista.html">Comparar Lista</a>
+                        <a href="/Wdc-Ajudas/garantia.html">Definir Garantia</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="/Wdc-Ajudas/pesquisas/serial.html">Pesquisa Serial</a>
+                        <a href="/Wdc-Ajudas/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="/Wdc-Ajudas/pesquisas/nf.html">Baixar NF</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Pesquisar..." class="search-bar">
+    </header>
+
+    <main class="content">
+        <div class="instruction-section">
+            <h2>Processo de Triagem de Equipamentos</h2>
+            <p>Siga os passos abaixo para realizar a triagem correta dos seriais contidos na planilha <strong>"RELAÇÃO DE PRODUTOS WDC NETWORK"</strong> enviada pelo cliente.</p>
+            
+            <div class="alert-box">
+                <strong>⚠️ Regra de Ouro da Garantia:</strong> No Protheus, sempre adicione <strong>1 ano</strong> à data encontrada. 
+                Se o cliente for <strong>Revendedor</strong>, adicione <strong>+3 meses</strong> (Total: 1 ano e 3 meses).
+            </div>
+
+            <div class="card-container">
+                <div class="card">
+                    <h4><span class="badge badge-protheus">Método 1</span> Protheus (Módulo 04)</h4>
+                    <ul class="step-list">
+                        <li><strong>Componentes:</strong> Pesquise o serial para identificar o código do SN e o PA. <a href="/pesquisas/serial.html" target="_blank">(Ver tutorial)</a></li>
+                        <li><strong>Produto Acabado:</strong> Com o PA, busque o EAN e Descrição.</li>
+                        <li><strong>Histórico:</strong> Localize a movimentação de romaneio para o cliente para identificar a NF e data original.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4><span class="badge badge-auto">Método 2</span> Automações (Teams)</h4>
+                    <ul class="step-list">
+                        <li><strong>Visão:</strong> Digite "Oi" no chat, escolha "Pesquisar Número Serial" e envie o SN.</li>
+                        <li><strong>Serial VL (Escala):</strong> Botão direito na conversa > Serial VL > Abrir Planilha.</li>
+                        <li><strong>Dica:</strong> No Serial VL, use <code>CTRL + SHIFT + V</code> para colar os dados.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="instruction-section">
+            <h2>Regras Específicas por Fabricante</h2>
+            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                <thead>
+                    <tr style="background:#007bff; color:white;">
+                        <th style="padding:10px; text-align:left;">Fabricante/Linha</th>
+                        <th style="padding:10px; text-align:left;">Regra de Garantia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:10px;"><strong>Fujikura</strong></td>
+                        <td style="padding:10px;">3 anos a partir da compra. (Automação traz 1 ano, adicione +2).</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:10px;"><strong>Grandstream (Telefones)</strong></td>
+                        <td style="padding:10px;">1 ano</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:10px;"><strong>Grandstream (PABX)</strong></td>
+                        <td style="padding:10px;">2 anos</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td style="padding:10px;"><strong>Grandstream (GWN/GCC)</strong></td>
+                        <td style="padding:10px;">3 anos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="instruction-section">
+            <h2>Finalização na Planilha</h2>
+            <ul class="step-list">
+                <li>Crie uma nova aba chamada <strong>TRIAGEM</strong> na planilha do cliente.</li>
+                <li>Cole as informações obtidas no link do Serial VL.</li>
+                <li><strong>Identificação de CFOP:</strong>
+                    <ul>
+                        <li><code>5101 / 6101</code>: Venda</li>
+                        <li><code>5949 / 6949</code>: Locação</li>
+                        <li>Se for <strong>Conserto</strong>, localize a NF correta dentro do Protheus.</li>
+                    </ul>
+                </li>
+                <li>Baixe a Nota Fiscal no Protheus para concluir. <a href="/pesquisas/nf.html" target="_blank">(Como baixar NF)</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // Lógica de pesquisa simples se necessário
+        document.querySelector('.search-bar').addEventListener('keyup', function(e) {
+            console.log('Pesquisando por:', e.target.value);
+        });
+    </script>
+</body>
+</html>
