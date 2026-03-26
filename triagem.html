@@ -38,6 +38,7 @@
         }
         .highlight-blue { color: #007BFF; font-weight: bold; }
         .highlight-green { color: #1abc9c; font-weight: bold; }
+        .rule-box { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background: #fafafa; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -104,9 +105,10 @@
             </ul>
             
             <div class="news-item alert-tip">
-                <strong>Regra de Cálculo Protheus:</strong> 
-                <br>• Garantia Padrão: Adicionar 1 ano à data encontrada.
-                <br>• Se for Revendedor: Adicionar 1 ano e 3 meses.
+                <strong>Regra de Cálculo Exclusiva para Protheus:</strong> 
+                <br>A adição de tempo abaixo aplica-se <u>apenas</u> para datas coletadas diretamente no Protheus:
+                <br>• <strong>Garantia Padrão:</strong> Adicionar 1 ano à data encontrada.
+                <br>• <strong>Se for Revendedor:</strong> Adicionar 1 ano e 3 meses.
             </div>
         </div>
 
@@ -124,6 +126,10 @@
                 <li>Clique em <strong>Abrir Planilha</strong> e cole os seriais usando <span class="kbd-key">CTRL</span> + <span class="kbd-key">SHIFT</span> + <span class="kbd-key">V</span>.</li>
                 <li>Após fechar e confirmar, você receberá um link com o resultado completo.</li>
             </ul>
+
+            <div class="news-item alert-update">
+                <strong>Nota sobre Automações:</strong> Para datas coletadas via automação, siga a data informada normalmente (sem somar 1 ano), com exceção apenas para produtos <strong>Fujikura</strong> (ver tabela abaixo).
+            </div>
         </div>
 
         <div class="step">
@@ -162,7 +168,10 @@
             </table>
 
             <div class="news-item alert-important">
-                <strong>FORA DE GARANTIA:</strong> Caso o equipamento esteja fora de garantia, seja uma VENDA e o cliente seja REVENDEDOR, você deve obrigatoriamente adicionar <strong>3 meses</strong> extras.
+                <strong>EQUIPAMENTO FORA DE GARANTIA:</strong> 
+                <br>Caso esteja fora de garantia e o cliente seja <strong>REVENDEDOR</strong>:
+                <br>• Adicione <strong>+3 meses</strong> extras <u>somente</u> se a operação for <strong>VENDA</strong>.
+                <br>• Se for operação de <strong>LOCAÇÃO</strong>, não adicionar os 3 meses.
             </div>
         </div>
 
@@ -184,11 +193,9 @@
                 <br>➔ <a href="/Wdc-Ajudas/pesquisas/nf.html">Clique aqui para ver como baixar a NF</a>
             </p>
         </div>
-
     </main>
 
     <script>
-        // Lógica simples para a barra de pesquisa (exemplo)
         document.querySelector('.search-bar').addEventListener('focus', function() {
             this.placeholder = 'Digite o que procura...';
         });
