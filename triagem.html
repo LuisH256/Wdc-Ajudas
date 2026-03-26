@@ -7,83 +7,115 @@
     <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
+        /* Estilização Geral */
         .step {
             background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-left: 5px solid #007BFF;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 6px solid #007BFF;
+            transition: transform 0.2s;
+        }
+        .step:hover {
+            transform: translateY(-2px);
         }
         .step h2 {
             margin-top: 0;
-            color: #333;
+            color: #2c3e50;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            gap: 12px;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 15px;
+            font-size: 1.5rem;
         }
         .step-table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
+            font-size: 0.95em;
         }
         .step-table th, .step-table td {
-            border: 1px solid #eee;
-            padding: 12px;
+            border: 1px solid #edf2f7;
+            padding: 14px;
             text-align: left;
         }
         .step-table th {
-            background-color: #fcfcfc;
-            color: #555;
-            font-weight: 600;
+            background-color: #f8fafc;
+            color: #4a5568;
+            font-weight: 700;
         }
         .kbd-key {
-            background-color: #f8f9fa;
+            background-color: #f1f3f5;
             border-radius: 4px;
-            border: 1px solid #adb5bd;
+            border: 1px solid #ced4da;
             box-shadow: 0 2px 0 #adb5bd;
-            color: #333;
+            color: #212529;
             display: inline-block;
             font-size: 0.8em;
-            font-weight: 700;
-            padding: 2px 6px;
-            margin: 0 2px;
+            font-weight: 800;
+            padding: 3px 8px;
+            margin: 0 3px;
         }
         .highlight-blue { color: #007BFF; font-weight: bold; }
         .highlight-green { color: #1abc9c; font-weight: bold; }
-        .highlight-orange { color: #e67e22; font-weight: bold; }
+        .highlight-orange { color: #f39c12; font-weight: bold; }
         
         .ui-icon {
             display: inline-flex;
             align-items: center;
-            background: #f1f3f5;
-            padding: 2px 8px;
-            border-radius: 4px;
+            background: #e9ecef;
+            padding: 3px 10px;
+            border-radius: 6px;
             font-size: 0.85em;
-            font-weight: 600;
+            font-weight: 700;
             border: 1px solid #dee2e6;
-            color: #495057;
+            color: #343a40;
         }
 
         .cfop-badge {
             background: #e7f5ff;
             border: 1px solid #a5d8ff;
-            color: #1971c2;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
+            color: #00529b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
         }
 
-        .alert-supervisor {
+        /* Estilização Específica do Passo 5 */
+        .step-model {
+            border-left-color: #e67e22;
+            background: linear-gradient(to right, #ffffff, #fffdfb);
+        }
+        .supervisor-card {
             background: #fff4e6;
-            border: 1px solid #ffd8a8;
-            color: #d9480f;
+            border: 2px dashed #fd7e14;
+            color: #854d0e;
+            padding: 18px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .supervisor-card .title {
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .grid-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .field-item {
+            background: #fff;
+            border: 1px solid #ffe8cc;
             padding: 12px;
-            border-radius: 6px;
-            margin: 10px 0;
-            font-weight: bold;
+            border-radius: 8px;
+            list-style: none;
         }
     </style>
 </head>
@@ -121,7 +153,7 @@
                 <li><strong>Módulo Produto Acabado:</strong> Verifique a <strong>Data de Garantia</strong> e <strong>NF</strong>.</li>
             </ul>
             <div class="news-item alert-tip">
-                <strong>Cálculo:</strong> Padrão (+1 ano) | Revendedor (+1 ano e 3 meses).
+                <strong>Regra de Cálculo:</strong> Padrão (+1 ano) | Revendedor (+1 ano e 3 meses).
             </div>
         </div>
 
@@ -141,7 +173,7 @@
             <h2>3. Tabela de Garantia por Fabricante</h2>
             <table class="step-table">
                 <thead>
-                    <tr><th>Fabricante</th><th>Tempo</th><th>Ação na Automação</th></tr>
+                    <tr><th>Fabricante</th><th>Tempo Total</th><th>Ação na Automação</th></tr>
                 </thead>
                 <tbody>
                     <tr><td><strong>Fujikura</strong></td><td>3 Anos</td><td>Adicionar +2 anos.</td></tr>
@@ -153,38 +185,46 @@
         <div class="step" style="border-left-color: #6741d9;">
             <h2>4. Padronização e SharePoint</h2>
             <p><strong class="highlight-blue">Nomenclatura (Zeros):</strong> Filial Padrão (<strong>000</strong>) | Filial 08 (<strong>0000</strong>).</p>
-            <p><strong class="highlight-blue">Link:</strong> <span class="ui-icon">⚙️ Engrenagem</span> ➔ "Somente pessoas com acesso existente".</p>
+            <p><strong class="highlight-blue">Link SharePoint:</strong> <span class="ui-icon">⚙️ Engrenagem</span> ➔ <strong>"Somente pessoas com acesso existente"</strong>.</p>
         </div>
 
-        <div class="step" style="border-left-color: #e67e22;">
+        <div class="step step-model">
             <h2>5. Criação do Modelo de Nota</h2>
-            <p>O modelo de nota deve ser gerado obrigatoriamente a partir dos dados consolidados na triagem.</p>
+            <p>O modelo de nota deve ser preenchido criteriosamente com base nos dados consolidados na triagem anterior.</p>
             
-            <div class="alert-supervisor">
-                ⚠️ Importante: Solicitar ao Supervisor (Angela) o arquivo oficial do modelo de nota para triagem.
+            <div class="supervisor-card">
+                <span class="title">📋 Procedimento com Supervisão</span>
+                <span>Se esta for a <strong>sua primeira vez</strong> realizando este processo, você deve solicitar o arquivo oficial do modelo de nota diretamente à supervisora <strong>Angela</strong>.</span>
             </div>
 
-            <p><strong>Campos que devem ser alterados:</strong></p>
-            <ul>
-                <li><strong class="highlight-orange">Código do Produto:</strong> 
-                    Se o item for <strong>PA</strong>, use o código PA. Se for <strong>ME</strong>, use o código ME.
-                </li>
-                <li><strong class="highlight-orange">Descrição e EAN:</strong> 
-                    Se houver mais de um EAN para o mesmo modelo, insira uma linha para cada (apenas um EAN de cada tipo).
-                </li>
-                <li><strong class="highlight-orange">Quantidade:</strong> 
-                    Faça a <span class="highlight-green">somatória total</span> de todos os produtos pertencentes a cada EAN específico.
-                </li>
-                <li><strong class="highlight-orange">Valor Unitário:</strong> 
-                    Utilize o valor de uma das Notas Fiscais do EAN correspondente (<strong>Prioridade:</strong> valor da 1ª NF encontrada).
-                </li>
-                <li><strong class="highlight-orange">Solicitação de Reparo/Garantia:</strong> 
-                    Inserir o número do <strong>CRG</strong>.
-                </li>
-                <li><strong class="highlight-orange">Nota Fiscal de Aquisição:</strong> 
-                    Listar os números de todas as Notas Fiscais relacionadas àqueles itens.
-                </li>
-            </ul>
+            <p><strong>Orientações de Preenchimento:</strong></p>
+            
+            <div class="grid-fields">
+                <div class="field-item">
+                    <strong class="highlight-orange">Código do Produto:</strong><br>
+                    Se o item for <strong>PA</strong>, use código PA. Se for <strong>ME</strong>, use código ME.
+                </div>
+                <div class="field-item">
+                    <strong class="highlight-orange">EAN e Descrição:</strong><br>
+                    Um EAN de cada tipo por linha. Não repita o mesmo EAN se o modelo for idêntico.
+                </div>
+                <div class="field-item">
+                    <strong class="highlight-orange">Quantidade:</strong><br>
+                    Faça a <span class="highlight-green">somatória total</span> de todos os equipamentos de cada EAN.
+                </div>
+                <div class="field-item">
+                    <strong class="highlight-orange">Valor Unitário:</strong><br>
+                    Use o valor de uma NF do EAN (priorize os dados da 1ª NF encontrada).
+                </div>
+                <div class="field-item">
+                    <strong class="highlight-orange">Solicitação/CRG:</strong><br>
+                    Preencha o campo de "Solicitação de reparo" com o número do <strong>CRG</strong>.
+                </div>
+                <div class="field-item">
+                    <strong class="highlight-orange">Notas de Aquisição:</strong><br>
+                    Liste todos os números das NFs de aquisição correspondentes aos itens.
+                </div>
+            </div>
         </div>
     </main>
 
