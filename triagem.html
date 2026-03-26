@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
-        /* Estilização Moderna e Organizada */
         .step {
             background: #fff;
             border-radius: 8px;
@@ -54,6 +53,7 @@
         }
         .highlight-blue { color: #007BFF; font-weight: bold; }
         .highlight-green { color: #1abc9c; font-weight: bold; }
+        .highlight-orange { color: #e67e22; font-weight: bold; }
         
         .ui-icon {
             display: inline-flex;
@@ -75,6 +75,16 @@
             border-radius: 6px;
             margin-top: 10px;
         }
+
+        .alert-supervisor {
+            background: #fff4e6;
+            border: 1px solid #ffd8a8;
+            color: #d9480f;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -91,25 +101,6 @@
                         <a href="/Wdc-Ajudas/comprar-lista.html">Comparar Lista</a>
                         <a href="/Wdc-Ajudas/adds.html">Adicionar S</a>
                         <a href="/Wdc-Ajudas/garantia.html">Definir Garantia</a>
-                        <a href="/Wdc-Ajudas/verificarnf.html">Verificar NF</a>
-                        <a href="/Wdc-Ajudas/revendagarantia.html">Definir Garantia Revenda</a>
-                        <a href="/Wdc-Ajudas/conferencia-valores.html">Conferir Valores Unitário</a>
-                        <a href="/Wdc-Ajudas/tabelas.html">Criar Tabelas</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Pesquisas</a>
-                    <div class="dropdown-content">
-                        <a href="/Wdc-Ajudas/pesquisas/triagem.html">Instruções Triagem</a>
-                        <a href="/Wdc-Ajudas/pesquisas/serial.html">Pesquisa Serial</a>
-                        <a href="/Wdc-Ajudas/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
-                        <a href="/Wdc-Ajudas/pesquisas/os.html">Abrir OS</a>
-                        <a href="/Wdc-Ajudas/pesquisas/nf.html">Baixar NF</a>
-                        <a href="/Wdc-Ajudas/pesquisas/visao.html">Romaneio Visão</a>
-                        <a href="/Wdc-Ajudas/pesquisas/garantiafabricante.html">Pesquisa Fabricante</a>
-                        <a href="/Wdc-Ajudas/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
-                        <a href="/Wdc-Ajudas/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
-                        <a href="/Wdc-Ajudas/pesquisas/serial-kit.html">Pesquisa Serial KIT</a>
                     </div>
                 </li>
             </ul>
@@ -122,48 +113,27 @@
             <h1>Instruções para Triagem de Equipamentos</h1>
         </div>
 
-        <p class="welcome-description">
-            Siga este fluxo para realizar a triagem dos equipamentos inseridos na planilha <strong>"RELAÇÃO DE PRODUTOS WDC NETWORK"</strong>.
-        </p>
-
         <div class="step">
             <h2>1. Consulta no Protheus (Módulo 04)</h2>
             <p>Utilize os seriais fornecidos pelo cliente para localizar as informações de cadastro:</p>
             <ul>
-                <li><strong>Módulo Componentes:</strong> Pesquise o serial para encontrar o <span class="highlight-green">Código SN</span> e o <span class="highlight-green">PA</span>.
-                    <br>➔ <a href="/Wdc-Ajudas/pesquisas/serial.html">Clique aqui para ver o passo a passo</a>
-                </li>
-                <br>
-                <li><strong>Módulo Produto Acabado:</strong> Verifique o histórico de romaneio para identificar a <strong>Data de Garantia</strong> e <strong>NF</strong>.
-                    <br>➔ <a href="/Wdc-Ajudas/pesquisas/lvp.html">Clique aqui para ver o passo a passo</a>
-                </li>
+                <li><strong>Módulo Componentes:</strong> Pesquise o serial para encontrar o <span class="highlight-green">Código SN</span> e o <span class="highlight-green">PA</span>.</li>
+                <li><strong>Módulo Produto Acabado:</strong> Verifique a <strong>Data de Garantia</strong> e <strong>NF</strong>.</li>
             </ul>
             <div class="news-item alert-tip">
-                <strong>Regra de Cálculo (Exclusiva Protheus):</strong> 
-                <br>• <strong>Garantia Padrão:</strong> Data encontrada + 1 ano.
-                <br>• <strong>Se for Revendedor:</strong> Data encontrada + 1 ano e 3 meses.
+                <strong>Cálculo:</strong> Padrão (+1 ano) | Revendedor (+1 ano e 3 meses).
             </div>
         </div>
 
         <div class="step" style="border-left-color: #1abc9c;">
             <h2>2. Triagem com Automações (Serial VL)</h2>
-            <p>A automação <strong>Serial VL</strong> é a principal forma de triagem em massa via Microsoft Teams:</p>
-            <ul>
-                <li>Clique com o botão direito em uma conversa > <span class="ui-icon">Serial VL</span>.</li>
-                <li>Clique em <span class="ui-icon">Abrir Planilha</span> e cole os seriais usando <span class="kbd-key">CTRL</span> + <span class="kbd-key">SHIFT</span> + <span class="kbd-key">V</span> OBS: CASO SEJA NOKIA DEVE-SE TER O S ANTES DO SN.</li>
-                <li>O link de resultado trará os dados que devem ser colados na aba <strong>TRIAGEM</strong>.</li>
-            </ul>
-
+            <p>Use o <span class="ui-icon">Serial VL</span> no Teams para processar em massa e alimentar a aba <strong>TRIAGEM</strong>.</p>
+            
             <div class="cfop-badge">
                 <strong>Identificação de Operação via CFOP:</strong>
-                <br>Ao analisar o resultado do Serial VL, identifique a natureza da operação:
-                <br>• <span class="highlight-blue">Venda:</span> CFOP <strong>5101</strong> ou <strong>6101</strong>.
-                <br>• <span class="highlight-blue">Locação:</span> CFOP <strong>5949</strong> ou <strong>6949</strong>.
-                <br>• <span class="highlight-blue">Conserto:</span> Localizar NF original de remessa no Protheus.
-            </div>
-
-            <div class="news-item alert-update">
-                <strong>Atenção:</strong> Para datas coletadas via automação, siga a data informada normalmente (sem somar 1 ano), exceto para produtos <strong>Fujikura</strong>.
+                <br>• <span class="highlight-blue">Venda:</span> 5101 / 6101
+                <br>• <span class="highlight-blue">Locação:</span> 5949 / 6949
+                <br>• <span class="highlight-blue">Conserto:</span> Localizar NF de remessa original.
             </div>
         </div>
 
@@ -171,43 +141,49 @@
             <h2>3. Tabela de Garantia por Fabricante</h2>
             <table class="step-table">
                 <thead>
-                    <tr><th>Fabricante / Produto</th><th>Tempo Total</th><th>Ação na Automação</th></tr>
+                    <tr><th>Fabricante</th><th>Tempo</th><th>Ação na Automação</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Fujikura</strong></td><td>3 Anos</td><td>Adicionar +2 anos ao resultado da automação.</td></tr>
+                    <tr><td><strong>Fujikura</strong></td><td>3 Anos</td><td>Adicionar +2 anos.</td></tr>
                     <tr><td><strong>Grandstream (Telefones)</strong></td><td>1 Ano</td><td>Manter padrão.</td></tr>
-                    <tr><td><strong>Grandstream (PABX)</strong></td><td>2 Anos</td><td>Validar conforme data de compra.</td></tr>
-                    <tr><td><strong>Grandstream (GWN / GCC)</strong></td><td>3 Anos</td><td>Validar conforme data de compra.</td></tr>
-                    <tr><td><strong>Os demais produtos</strong></td><td>1 Ano</td><td>Validar conforme data de compra.</td></tr>
                 </tbody>
             </table>
-            <div class="news-item alert-important">
-                <strong>REVENDEDOR (Fora de Garantia):</strong> 
-                <br>• Se for <strong>VENDA</strong>: Adicione <strong>+3 meses</strong> extras.
-                <br>• Se for <strong>LOCAÇÃO</strong>: <u>Não</u> adicionar os 3 meses.
-            </div>
         </div>
 
         <div class="step" style="border-left-color: #6741d9;">
             <h2>4. Padronização e SharePoint</h2>
+            <p><strong class="highlight-blue">Nomenclatura (Zeros):</strong> Filial Padrão (<strong>000</strong>) | Filial 08 (<strong>0000</strong>).</p>
+            <p><strong class="highlight-blue">Link:</strong> <span class="ui-icon">⚙️ Engrenagem</span> ➔ "Somente pessoas com acesso existente".</p>
+        </div>
+
+        <div class="step" style="border-left-color: #e67e22;">
+            <h2>5. Criação do Modelo de Nota</h2>
+            <p>O modelo de nota deve ser gerado obrigatoriamente a partir dos dados consolidados na triagem.</p>
             
-            <p><strong class="highlight-blue">Nomenclatura da NF:</strong></p>
-            <ul>
-                <li><strong>Filial Padrão:</strong> Adicionar <strong>000</strong> antes do número (Ex: 000921421).</li>
-                <li><strong>Filial 08:</strong> Adicionar <strong>0000</strong> antes do número (Ex: 000021521).</li>
-            </ul>
+            <div class="alert-supervisor">
+                ⚠️ Importante: Solicitar ao Supervisor (Angela) o arquivo oficial do modelo de nota para triagem.
+            </div>
 
-            <p><strong class="highlight-blue">Fluxo de Salvamento:</strong></p>
+            <p><strong>Campos que devem ser alterados:</strong></p>
             <ul>
-                <li>Suba o arquivo em: <span class="ui-icon">Suporte & Garantia</span> ➔ <span class="ui-icon">Notas</span> ➔ <span class="ui-icon">NFs Triagem</span>.</li>
-                <li>Clique em <span class="ui-icon">Compartilhar</span> ➔ Ícone da Engrenagem <span class="ui-icon">⚙️</span>.</li>
-                <li>Selecione <strong>"Somente pessoas com acesso existente"</strong> e clique em <span class="ui-icon">Aplicar</span>.</li>
-                <li>Copie o link gerado.</li>
-            </ul>
-
-            <p><strong class="highlight-blue">Vínculo na Planilha:</strong></p>
-            <ul>
-                <li>Na célula da NF na planilha de triagem, use <span class="kbd-key">CTRL</span> + <span class="kbd-key">K</span> e cole o link do SharePoint.</li>
+                <li><strong class="highlight-orange">Código do Produto:</strong> 
+                    Se o item for <strong>PA</strong>, use o código PA. Se for <strong>ME</strong>, use o código ME.
+                </li>
+                <li><strong class="highlight-orange">Descrição e EAN:</strong> 
+                    Se houver mais de um EAN para o mesmo modelo, insira uma linha para cada (apenas um EAN de cada tipo).
+                </li>
+                <li><strong class="highlight-orange">Quantidade:</strong> 
+                    Faça a <span class="highlight-green">somatória total</span> de todos os produtos pertencentes a cada EAN específico.
+                </li>
+                <li><strong class="highlight-orange">Valor Unitário:</strong> 
+                    Utilize o valor de uma das Notas Fiscais do EAN correspondente (<strong>Prioridade:</strong> valor da 1ª NF encontrada).
+                </li>
+                <li><strong class="highlight-orange">Solicitação de Reparo/Garantia:</strong> 
+                    Inserir o número do <strong>CRG</strong>.
+                </li>
+                <li><strong class="highlight-orange">Nota Fiscal de Aquisição:</strong> 
+                    Listar os números de todas as Notas Fiscais relacionadas àqueles itens.
+                </li>
             </ul>
         </div>
     </main>
