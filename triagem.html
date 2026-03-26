@@ -39,6 +39,17 @@
         .highlight-blue { color: #007BFF; font-weight: bold; }
         .highlight-green { color: #1abc9c; font-weight: bold; }
         .rule-box { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background: #fafafa; margin-top: 10px; }
+        
+        /* Estilo para ícones de interface */
+        .ui-icon {
+            display: inline-flex;
+            align-items: center;
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            border: 1px solid #ced4da;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +114,6 @@
                     <br>➔ <a href="/Wdc-Ajudas/pesquisas/lvp.html">Clique aqui para ver o passo a passo de pesquisa de PA (LVP)</a>
                 </li>
             </ul>
-            
             <div class="news-item alert-tip">
                 <strong>Regra de Cálculo Exclusiva para Protheus:</strong> 
                 <br>A adição de tempo abaixo aplica-se <u>apenas</u> para datas coletadas diretamente no Protheus:
@@ -114,59 +124,32 @@
 
         <div class="step">
             <h2>2. Utilizando Automações (Microsoft Teams)</h2>
-            
             <p><strong class="highlight-blue">Visão (Unitário):</strong></p>
-            <ul>
-                <li>No chat do Visão, digite "Oi", selecione "Pesquisar Número Serial" e envie o SN.</li>
-            </ul>
-
+            <ul><li>No chat do Visão, digite "Oi", selecione "Pesquisar Número Serial" e envie o SN.</li></ul>
             <p><strong class="highlight-blue">Serial VL (Em Escala):</strong></p>
             <ul>
                 <li>Clique com o botão direito em uma conversa > <strong>Serial VL</strong>.</li>
                 <li>Clique em <strong>Abrir Planilha</strong> e cole os seriais usando <span class="kbd-key">CTRL</span> + <span class="kbd-key">SHIFT</span> + <span class="kbd-key">V</span>.</li>
                 <li>Após fechar e confirmar, você receberá um link com o resultado completo.</li>
             </ul>
-
             <div class="news-item alert-update">
-                <strong>Nota sobre Automações:</strong> Para datas coletadas via automação, siga a data informada normalmente (sem somar 1 ano), com exceção apenas para produtos <strong>Fujikura</strong> (ver tabela abaixo).
+                <strong>Nota sobre Automações:</strong> Para datas coletadas via automação, siga a data informada normalmente (sem somar 1 ano), com exceção apenas para produtos <strong>Fujikura</strong>.
             </div>
         </div>
 
         <div class="step">
             <h2>3. Tabela de Garantia por Fabricante</h2>
-            <p>Fique atento às exceções de tempo de garantia para estes fabricantes:</p>
             <table class="step-table">
                 <thead>
-                    <tr>
-                        <th>Fabricante / Produto</th>
-                        <th>Tempo Total</th>
-                        <th>Ação na Automação</th>
-                    </tr>
+                    <tr><th>Fabricante / Produto</th><th>Tempo Total</th><th>Ação na Automação</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Fujikura</strong></td>
-                        <td>3 Anos</td>
-                        <td>Adicionar +2 anos ao resultado da automação.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Grandstream (Telefones)</strong></td>
-                        <td>1 Ano</td>
-                        <td>Manter padrão.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Grandstream (PABX)</strong></td>
-                        <td>2 Anos</td>
-                        <td>Validar conforme data de compra.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Grandstream (GWN / GCC)</strong></td>
-                        <td>3 Anos</td>
-                        <td>Validar conforme data de compra.</td>
-                    </tr>
+                    <tr><td><strong>Fujikura</strong></td><td>3 Anos</td><td>Adicionar +2 anos ao resultado da automação.</td></tr>
+                    <tr><td><strong>Grandstream (Telefones)</strong></td><td>1 Ano</td><td>Manter padrão.</td></tr>
+                    <tr><td><strong>Grandstream (PABX)</strong></td><td>2 Anos</td><td>Validar conforme data de compra.</td></tr>
+                    <tr><td><strong>Grandstream (GWN / GCC)</strong></td><td>3 Anos</td><td>Validar conforme data de compra.</td></tr>
                 </tbody>
             </table>
-
             <div class="news-item alert-important">
                 <strong>EQUIPAMENTO FORA DE GARANTIA:</strong> 
                 <br>Caso esteja fora de garantia e o cliente seja <strong>REVENDEDOR</strong>:
@@ -177,21 +160,45 @@
 
         <div class="step">
             <h2>4. Organização da Planilha e NF</h2>
-            <p>Após coletar os dados:</p>
-            <ol>
-                <li>Crie uma nova aba na planilha do cliente chamada <span class="highlight-blue">TRIAGEM</span>.</li>
-                <li>Cole as informações trazidas pelo Serial VL.</li>
-                <li>Valide o <strong>CFOP</strong> para identificar a operação:
+            
+            <p><strong class="highlight-blue">Padronização do Arquivo NF:</strong></p>
+            <ul>
+                <li>Realize o download da NF: ➔ <a href="/Wdc-Ajudas/pesquisas/nf.html">Como baixar NF</a></li>
+                <li>Renomeie o arquivo adicionando os zeros à esquerda conforme a filial:
                     <ul>
-                        <li><span class="highlight-green">5101 / 6101:</span> Venda</li>
-                        <li><span class="highlight-green">5949 / 6949:</span> Locação</li>
-                        <li><strong>Conserto:</strong> Localizar a NF original de remessa no Protheus.</li>
+                        <li><strong>Filial Padrão:</strong> Adicionar <strong>000</strong> (Ex: <span class="highlight-green">000921421</span>).</li>
+                        <li><strong>Filial 08:</strong> Adicionar <strong>0000</strong> (Ex: <span class="highlight-green">000021521</span>).</li>
                     </ul>
                 </li>
+            </ul>
+
+            <p><strong class="highlight-blue">Salvamento no SharePoint:</strong></p>
+            <ul>
+                <li>Acesse o grupo <strong>Suporte & Garantia</strong>.</li>
+                <li>Caminho: <span class="ui-icon">Documentos</span> ➔ <span class="ui-icon">Notas</span> ➔ <span class="ui-icon">NFs Triagem</span>.</li>
+                <li>Faça o upload do arquivo padronizado nesta pasta.</li>
+            </ul>
+
+            <p><strong class="highlight-blue">Compartilhamento e Link:</strong></p>
+            <ol>
+                <li>Clique em <span class="ui-icon">Compartilhar</span> no arquivo carregado.</li>
+                <li>Clique no ícone da <strong>Engrenagem</strong> <span class="ui-icon">⚙️</span> (Configurações).</li>
+                <li>Selecione a opção: <strong>"Somente pessoas com acesso existente"</strong>.</li>
+                <li>Clique em <span class="ui-icon">Aplicar</span> e depois em <span class="ui-icon">Copiar link</span>.</li>
             </ol>
-            <p>Por fim, realize o download da Nota Fiscal no Protheus:
-                <br>➔ <a href="/Wdc-Ajudas/pesquisas/nf.html">Clique aqui para ver como baixar a NF</a>
-            </p>
+
+            <p><strong class="highlight-blue">Vinculando na Planilha:</strong></p>
+            <ul>
+                <li>Volte para a aba <span class="highlight-blue">TRIAGEM</span> da sua planilha.</li>
+                <li>Selecione a célula da NF, clique com o botão direito e vá em <strong>"Inserir Link"</strong> ou use o atalho <span class="kbd-key">CTRL</span> + <span class="kbd-key">K</span>.</li>
+                <li>Cole o link do SharePoint e confirme.</li>
+            </ul>
+
+            <div class="news-item alert-tip">
+                <strong>Dica de Validação CFOP:</strong>
+                <br>• <span class="highlight-green">5101 / 6101:</span> Venda
+                <br>• <span class="highlight-green">5949 / 6949:</span> Locação
+            </div>
         </div>
     </main>
 
