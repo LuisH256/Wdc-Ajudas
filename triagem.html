@@ -4,56 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instruções de Triagem - WDC Network</title>
-    <link rel="stylesheet" href="/Wdc-Ajudas/CSS/emails.css">
     <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
-        .instruction-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            border-left: 5px solid #007bff;
-        }
-        .instruction-card h4 {
-            color: #007bff;
-            margin-top: 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        .alert-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 10px 0;
-        }
-        .step-link {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        table {
+        /* Ajustes finos específicos para esta página */
+        .step-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 15px 0;
+            background-color: #fff;
         }
-        table, th, td {
+        .step-table th, .step-table td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
         }
-        th { background-color: #f2f2f2; }
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            background: #e2e2e2;
-            font-size: 0.85em;
-            font-weight: bold;
+        .step-table th {
+            background-color: #f8f9fa;
+            color: #333;
         }
+        .kbd-key {
+            background-color: #eee;
+            border-radius: 3px;
+            border: 1px solid #b4b4b4;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+            color: #333;
+            display: inline-block;
+            font-size: 0.85em;
+            font-weight: 700;
+            line-height: 1;
+            padding: 2px 4px;
+            white-space: nowrap;
+        }
+        .highlight-blue { color: #007BFF; font-weight: bold; }
+        .highlight-green { color: #1abc9c; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -97,98 +81,119 @@
     </header>
 
     <main class="content">
-        <h2>Fluxo de Triagem de Equipamentos</h2>
-        <p>Siga os passos abaixo para realizar a triagem utilizando os seriais da planilha <strong>"RELAÇÃO DE PRODUTOS WDC NETWORK"</strong>.</p>
+        <div id="pesquisa-cliente-protheus">
+            <h1>Instruções para Triagem de Equipamentos</h1>
+        </div>
 
-        <div class="instruction-card">
-            <h4>1. Consulta via Protheus (Módulo 04)</h4>
-            <p><strong>A. Componentes:</strong> Pesquise o serial para obter o Código SN e o PA. 
-                <br>👉 <a href="/Wdc-Ajudas/pesquisas/serial.html" class="step-link">Ver como pesquisar Serial</a>
-            </p>
-            <p><strong>B. Produto Acabado:</strong> Com o PA em mãos, pesquise novamente para coletar EAN e Descrição.
-                <br>👉 <a href="/Wdc-Ajudas/pesquisas/lvp.html" class="step-link">Ver como pesquisar PA (LVP)</a>
-            </p>
-            <div class="alert-box">
-                <strong>Regra de Garantia (Protheus):</strong> Localize a data no histórico de movimentação (romaneado). 
-                <ul>
-                    <li><strong>Padrão:</strong> Data da NF + 1 ano.</li>
-                    <li><strong>Revendedor:</strong> Data da NF + 1 ano e 3 meses.</li>
-                </ul>
+        <p class="welcome-description">
+            Siga este fluxo para realizar a triagem dos equipamentos inseridos na planilha <strong>"RELAÇÃO DE PRODUTOS WDC NETWORK"</strong>.
+        </p>
+
+        <div class="step">
+            <h2>1. Consulta no Protheus (Módulo 04)</h2>
+            <p>Utilize os seriais fornecidos pelo cliente para localizar as informações de cadastro:</p>
+            <ul>
+                <li><strong>Módulo Componentes:</strong> Pesquise o serial para encontrar o <span class="highlight-green">Código SN</span> e o <span class="highlight-green">PA</span>.
+                    <br>➔ <a href="/Wdc-Ajudas/pesquisas/serial.html">Clique aqui para ver o passo a passo de pesquisa de Serial</a>
+                </li>
+                <br>
+                <li><strong>Módulo Produto Acabado:</strong> Use o PA coletado para verificar o <span class="highlight-green">EAN</span> e <span class="highlight-green">Descrição</span>. 
+                    Verifique no histórico a movimentação de romaneio para identificar a <strong>Data de Garantia</strong> e <strong>NF</strong>.
+                    <br>➔ <a href="/Wdc-Ajudas/pesquisas/lvp.html">Clique aqui para ver o passo a passo de pesquisa de PA (LVP)</a>
+                </li>
+            </ul>
+            
+            <div class="news-item alert-tip">
+                <strong>Regra de Cálculo Protheus:</strong> 
+                <br>• Garantia Padrão: Adicionar 1 ano à data encontrada.
+                <br>• Se for Revendedor: Adicionar 1 ano e 3 meses.
             </div>
         </div>
 
-        <div class="instruction-card">
-            <h4>2. Consulta via Automações (Teams)</h4>
+        <div class="step">
+            <h2>2. Utilizando Automações (Microsoft Teams)</h2>
             
-            <h5>🤖 Visão (Consulta Unitária)</h5>
-            <p>No chat <strong>Visão</strong>, digite "Oi" > "Pesquisar Número Serial" > Envie o SN.</p>
+            <p><strong class="highlight-blue">Visão (Unitário):</strong></p>
+            <ul>
+                <li>No chat do Visão, digite "Oi", selecione "Pesquisar Número Serial" e envie o SN.</li>
+            </ul>
 
-            <h5>📊 Serial VL (Consulta em Escala)</h5>
-            <ol>
-                <li>Clique com o botão direito em qualquer conversa e selecione <strong>Serial VL</strong>.</li>
-                <li>Clique em <strong>"Abrir planilha"</strong> e cole os seriais (Use <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>V</kbd>).</li>
-                <li>Feche a planilha e clique em <strong>"Pronto, preenchi"</strong>.</li>
-                <li>Aguarde o link com os resultados.</li>
-            </ol>
+            <p><strong class="highlight-blue">Serial VL (Em Escala):</strong></p>
+            <ul>
+                <li>Clique com o botão direito em uma conversa > <strong>Serial VL</strong>.</li>
+                <li>Clique em <strong>Abrir Planilha</strong> e cole os seriais usando <span class="kbd-key">CTRL</span> + <span class="kbd-key">SHIFT</span> + <span class="kbd-key">V</span>.</li>
+                <li>Após fechar e confirmar, você receberá um link com o resultado completo.</li>
+            </ul>
         </div>
 
-        <div class="instruction-card">
-            <h4>3. Regras Específicas de Fabricantes</h4>
-            <table>
+        <div class="step">
+            <h2>3. Tabela de Garantia por Fabricante</h2>
+            <p>Fique atento às exceções de tempo de garantia para estes fabricantes:</p>
+            <table class="step-table">
                 <thead>
                     <tr>
-                        <th>Fabricante/Modelo</th>
-                        <th>Tempo de Garantia</th>
-                        <th>Observação</th>
+                        <th>Fabricante / Produto</th>
+                        <th>Tempo Total</th>
+                        <th>Ação na Automação</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>Fujikura</strong></td>
-                        <td>3 anos</td>
-                        <td>Adicionar +2 anos ao que a automação trouxer.</td>
+                        <td>3 Anos</td>
+                        <td>Adicionar +2 anos ao resultado da automação.</td>
                     </tr>
                     <tr>
-                        <td><strong>Grandstream (Telefone)</strong></td>
-                        <td>1 ano</td>
-                        <td>-</td>
+                        <td><strong>Grandstream (Telefones)</strong></td>
+                        <td>1 Ano</td>
+                        <td>Manter padrão.</td>
                     </tr>
                     <tr>
                         <td><strong>Grandstream (PABX)</strong></td>
-                        <td>2 anos</td>
-                        <td>-</td>
+                        <td>2 Anos</td>
+                        <td>Validar conforme data de compra.</td>
                     </tr>
                     <tr>
-                        <td><strong>Grandstream (GWN/GCC)</strong></td>
-                        <td>3 anos</td>
-                        <td>-</td>
+                        <td><strong>Grandstream (GWN / GCC)</strong></td>
+                        <td>3 Anos</td>
+                        <td>Validar conforme data de compra.</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="alert-box">
-                <strong>Importante:</strong> Se estiver fora de garantia, for VENDA e for REVENDEDOR, adicione sempre <strong>3 meses</strong> extras.
+
+            <div class="news-item alert-important">
+                <strong>FORA DE GARANTIA:</strong> Caso o equipamento esteja fora de garantia, seja uma VENDA e o cliente seja REVENDEDOR, você deve obrigatoriamente adicionar <strong>3 meses</strong> extras.
             </div>
         </div>
 
-        <div class="instruction-card">
-            <h4>4. Finalização da Planilha e NF</h4>
-            <p>Crie uma aba chamada <span class="badge">TRIAGEM</span> na planilha do cliente e cole os dados da automação.</p>
-            <p><strong>Validação de CFOP:</strong></p>
-            <ul>
-                <li><span class="badge">5101 / 6101</span>: Venda</li>
-                <li><span class="badge">5949 / 6949</span>: Locação</li>
-                <li><strong>Conserto:</strong> Localizar a NF correta dentro do Protheus.</li>
-            </ul>
-            <p>Após concluir, realize o download da nota fiscal:
-                <br>👉 <a href="/Wdc-Ajudas/pesquisas/nf.html" class="step-link">Ver como baixar NF no Protheus</a>
+        <div class="step">
+            <h2>4. Organização da Planilha e NF</h2>
+            <p>Após coletar os dados:</p>
+            <ol>
+                <li>Crie uma nova aba na planilha do cliente chamada <span class="highlight-blue">TRIAGEM</span>.</li>
+                <li>Cole as informações trazidas pelo Serial VL.</li>
+                <li>Valide o <strong>CFOP</strong> para identificar a operação:
+                    <ul>
+                        <li><span class="highlight-green">5101 / 6101:</span> Venda</li>
+                        <li><span class="highlight-green">5949 / 6949:</span> Locação</li>
+                        <li><strong>Conserto:</strong> Localizar a NF original de remessa no Protheus.</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>Por fim, realize o download da Nota Fiscal no Protheus:
+                <br>➔ <a href="/Wdc-Ajudas/pesquisas/nf.html">Clique aqui para ver como baixar a NF</a>
             </p>
         </div>
+
     </main>
 
     <script>
-        // Lógica de pesquisa simples (opcional para manter consistência)
-        document.querySelector('.search-bar').addEventListener('keyup', function(e) {
-            console.log('Pesquisando por:', e.target.value);
+        // Lógica simples para a barra de pesquisa (exemplo)
+        document.querySelector('.search-bar').addEventListener('focus', function() {
+            this.placeholder = 'Digite o que procura...';
+        });
+        document.querySelector('.search-bar').addEventListener('blur', function() {
+            this.placeholder = 'Pesquisar...';
         });
     </script>
 </body>
