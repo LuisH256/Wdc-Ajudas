@@ -7,116 +7,92 @@
     <link rel="stylesheet" href="/Wdc-Ajudas/CSS/styles.css">
     <link rel="icon" href="/Wdc-Ajudas/imgs/wdc.png" type="image/x-icon">
     <style>
-        /* Estilização Geral */
+        /* Estilização Moderna e Organizada */
         .step {
             background: #fff;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-left: 6px solid #007BFF;
-            transition: transform 0.2s;
-        }
-        .step:hover {
-            transform: translateY(-2px);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #007BFF;
         }
         .step h2 {
             margin-top: 0;
-            color: #2c3e50;
+            color: #333;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-bottom: 2px solid #f8f9fa;
-            padding-bottom: 15px;
-            font-size: 1.5rem;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
         .step-table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
-            font-size: 0.95em;
         }
         .step-table th, .step-table td {
-            border: 1px solid #edf2f7;
-            padding: 14px;
+            border: 1px solid #eee;
+            padding: 12px;
             text-align: left;
         }
         .step-table th {
-            background-color: #f8fafc;
-            color: #4a5568;
-            font-weight: 700;
+            background-color: #fcfcfc;
+            color: #555;
+            font-weight: 600;
         }
         .kbd-key {
-            background-color: #f1f3f5;
+            background-color: #f8f9fa;
             border-radius: 4px;
-            border: 1px solid #ced4da;
+            border: 1px solid #adb5bd;
             box-shadow: 0 2px 0 #adb5bd;
-            color: #212529;
+            color: #333;
             display: inline-block;
             font-size: 0.8em;
-            font-weight: 800;
-            padding: 3px 8px;
-            margin: 0 3px;
+            font-weight: 700;
+            padding: 2px 6px;
+            margin: 0 2px;
         }
         .highlight-blue { color: #007BFF; font-weight: bold; }
         .highlight-green { color: #1abc9c; font-weight: bold; }
-        .highlight-orange { color: #f39c12; font-weight: bold; }
+        .highlight-purple { color: #8e44ad; font-weight: bold; }
         
         .ui-icon {
             display: inline-flex;
             align-items: center;
-            background: #e9ecef;
-            padding: 3px 10px;
-            border-radius: 6px;
+            background: #f1f3f5;
+            padding: 2px 8px;
+            border-radius: 4px;
             font-size: 0.85em;
-            font-weight: 700;
+            font-weight: 600;
             border: 1px solid #dee2e6;
-            color: #343a40;
+            color: #495057;
         }
 
         .cfop-badge {
             background: #e7f5ff;
             border: 1px solid #a5d8ff;
-            color: #00529b;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
+            color: #1971c2;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
         }
 
-        /* Estilização Específica do Passo 5 */
-        .step-model {
-            border-left-color: #e67e22;
-            background: linear-gradient(to right, #ffffff, #fffdfb);
-        }
-        .supervisor-card {
-            background: #fff4e6;
-            border: 2px dashed #fd7e14;
-            color: #854d0e;
-            padding: 18px;
-            border-radius: 10px;
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .supervisor-card .title {
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .grid-fields {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .field-item {
-            background: #fff;
-            border: 1px solid #ffe8cc;
-            padding: 12px;
+        /* Estilo Específico para o Passo 5 */
+        .model-card {
+            background: #fdfaff;
+            border: 1px dashed #dcdde1;
+            padding: 15px;
             border-radius: 8px;
-            list-style: none;
+            margin-top: 10px;
         }
+        .supervisor-box {
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .supervisor-box strong { color: #c0392b; }
     </style>
 </head>
 <body>
@@ -133,6 +109,25 @@
                         <a href="/Wdc-Ajudas/comprar-lista.html">Comparar Lista</a>
                         <a href="/Wdc-Ajudas/adds.html">Adicionar S</a>
                         <a href="/Wdc-Ajudas/garantia.html">Definir Garantia</a>
+                        <a href="/Wdc-Ajudas/verificarnf.html">Verificar NF</a>
+                        <a href="/Wdc-Ajudas/revendagarantia.html">Definir Garantia Revenda</a>
+                        <a href="/Wdc-Ajudas/conferencia-valores.html">Conferir Valores Unitário</a>
+                        <a href="/Wdc-Ajudas/tabelas.html">Criar Tabelas</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Pesquisas</a>
+                    <div class="dropdown-content">
+                        <a href="/Wdc-Ajudas/pesquisas/triagem.html">Instruções Triagem</a>
+                        <a href="/Wdc-Ajudas/pesquisas/serial.html">Pesquisa Serial</a>
+                        <a href="/Wdc-Ajudas/pesquisas/lvp.html">Pesquisa PA (LVP)</a>
+                        <a href="/Wdc-Ajudas/pesquisas/os.html">Abrir OS</a>
+                        <a href="/Wdc-Ajudas/pesquisas/nf.html">Baixar NF</a>
+                        <a href="/Wdc-Ajudas/pesquisas/visao.html">Romaneio Visão</a>
+                        <a href="/Wdc-Ajudas/pesquisas/garantiafabricante.html">Pesquisa Fabricante</a>
+                        <a href="/Wdc-Ajudas/pesquisas/cliente-protheus.html">Pesquisa Contato Cliente</a>
+                        <a href="/Wdc-Ajudas/pesquisas/nf-remessa.html">Pesquisa NF Remessa</a>
+                        <a href="/Wdc-Ajudas/pesquisas/serial-kit.html">Pesquisa Serial KIT</a>
                     </div>
                 </li>
             </ul>
@@ -145,12 +140,16 @@
             <h1>Instruções para Triagem de Equipamentos</h1>
         </div>
 
+        <p class="welcome-description">
+            Siga este fluxo para realizar a triagem dos equipamentos inseridos na planilha <strong>"RELAÇÃO DE PRODUTOS WDC NETWORK"</strong>.
+        </p>
+
         <div class="step">
             <h2>1. Consulta no Protheus (Módulo 04)</h2>
             <p>Utilize os seriais fornecidos pelo cliente para localizar as informações de cadastro:</p>
             <ul>
                 <li><strong>Módulo Componentes:</strong> Pesquise o serial para encontrar o <span class="highlight-green">Código SN</span> e o <span class="highlight-green">PA</span>.</li>
-                <li><strong>Módulo Produto Acabado:</strong> Verifique a <strong>Data de Garantia</strong> e <strong>NF</strong>.</li>
+                <li><strong>Módulo Produto Acabado:</strong> Verifique o histórico de romaneio para identificar a <strong>Data de Garantia</strong> e <strong>NF</strong>.</li>
             </ul>
             <div class="news-item alert-tip">
                 <strong>Regra de Cálculo:</strong> Padrão (+1 ano) | Revendedor (+1 ano e 3 meses).
@@ -159,13 +158,11 @@
 
         <div class="step" style="border-left-color: #1abc9c;">
             <h2>2. Triagem com Automações (Serial VL)</h2>
-            <p>Use o <span class="ui-icon">Serial VL</span> no Teams para processar em massa e alimentar a aba <strong>TRIAGEM</strong>.</p>
-            
+            <p>Use o <span class="ui-icon">Serial VL</span> para processar os dados e alimentar a aba <strong>TRIAGEM</strong>.</p>
+
             <div class="cfop-badge">
                 <strong>Identificação de Operação via CFOP:</strong>
-                <br>• <span class="highlight-blue">Venda:</span> 5101 / 6101
-                <br>• <span class="highlight-blue">Locação:</span> 5949 / 6949
-                <br>• <span class="highlight-blue">Conserto:</span> Localizar NF de remessa original.
+                <br>• <span class="highlight-blue">Venda:</span> 5101 ou 6101 | <span class="highlight-blue">Locação:</span> 5949 ou 6949.
             </div>
         </div>
 
@@ -173,68 +170,49 @@
             <h2>3. Tabela de Garantia por Fabricante</h2>
             <table class="step-table">
                 <thead>
-                    <tr><th>Fabricante</th><th>Tempo Total</th><th>Ação na Automação</th></tr>
+                    <tr><th>Fabricante / Produto</th><th>Tempo Total</th><th>Ação</th></tr>
                 </thead>
                 <tbody>
                     <tr><td><strong>Fujikura</strong></td><td>3 Anos</td><td>Adicionar +2 anos.</td></tr>
-                    <tr><td><strong>Grandstream (Telefones)</strong></td><td>1 Ano</td><td>Manter padrão.</td></tr>
+                    <tr><td><strong>Grandstream</strong></td><td>1 a 3 Anos</td><td>Validar conforme modelo.</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="step" style="border-left-color: #6741d9;">
             <h2>4. Padronização e SharePoint</h2>
-            <p><strong class="highlight-blue">Nomenclatura (Zeros):</strong> Filial Padrão (<strong>000</strong>) | Filial 08 (<strong>0000</strong>).</p>
-            <p><strong class="highlight-blue">Link SharePoint:</strong> <span class="ui-icon">⚙️ Engrenagem</span> ➔ <strong>"Somente pessoas com acesso existente"</strong>.</p>
+            <ul>
+                <li><strong>Nomenclatura:</strong> Adicionar <strong>000</strong> (Padrão) ou <strong>0000</strong> (Filial 08) antes da NF.</li>
+                <li><strong>Link:</strong> Engrenagem <span class="ui-icon">⚙️</span> > "Somente pessoas com acesso existente".</li>
+            </ul>
         </div>
 
-        <div class="step step-model">
-            <h2>5. Criação do Modelo de Nota</h2>
-            <p>O modelo de nota deve ser preenchido criteriosamente com base nos dados consolidados na triagem anterior.</p>
-            
-            <div class="supervisor-card">
-                <span class="title">📋 Procedimento com Supervisão</span>
-                <span>Se esta for a <strong>sua primeira vez</strong> realizando este processo, você deve solicitar o arquivo oficial do modelo de nota diretamente à supervisora <strong>Angela</strong>.</span>
+        <div class="step" style="border-left-color: #8e44ad;">
+            <h2>5. Elaboração do Modelo de Nota</h2>
+            <p>Após finalizar a triagem, você deve consolidar as informações para criar o modelo de nota fiscal.</p>
+
+            <div class="supervisor-box">
+                <strong>🚨 ATENÇÃO - PRIMEIRA VEZ:</strong> Se esta é a sua primeira triagem ou você ainda não possui o arquivo base, 
+                é <u>obrigatório</u> solicitar o <strong>Modelo de Nota para Triagem</strong> diretamente à Supervisora <strong>(Angela)</strong>.
             </div>
 
-            <p><strong>Orientações de Preenchimento:</strong></p>
-            
-            <div class="grid-fields">
-                <div class="field-item">
-                    <strong class="highlight-orange">Código do Produto:</strong><br>
-                    Se o item for <strong>PA</strong>, use código PA. Se for <strong>ME</strong>, use código ME.
-                </div>
-                <div class="field-item">
-                    <strong class="highlight-orange">EAN e Descrição:</strong><br>
-                    Um EAN de cada tipo por linha. Não repita o mesmo EAN se o modelo for idêntico.
-                </div>
-                <div class="field-item">
-                    <strong class="highlight-orange">Quantidade:</strong><br>
-                    Faça a <span class="highlight-green">somatória total</span> de todos os equipamentos de cada EAN.
-                </div>
-                <div class="field-item">
-                    <strong class="highlight-orange">Valor Unitário:</strong><br>
-                    Use o valor de uma NF do EAN (priorize os dados da 1ª NF encontrada).
-                </div>
-                <div class="field-item">
-                    <strong class="highlight-orange">Solicitação/CRG:</strong><br>
-                    Preencha o campo de "Solicitação de reparo" com o número do <strong>CRG</strong>.
-                </div>
-                <div class="field-item">
-                    <strong class="highlight-orange">Notas de Aquisição:</strong><br>
-                    Liste todos os números das NFs de aquisição correspondentes aos itens.
-                </div>
+            <div class="model-card">
+                <p><strong>Regras de Preenchimento:</strong></p>
+                <ul style="list-style-type: none; padding-left: 5px;">
+                    <li>📌 <strong>Código do Produto:</strong> Diferencie entre <span class="highlight-purple">PA</span> (Produto Acabado) e <span class="highlight-purple">ME</span> (Componente). Use o código correspondente ao tipo de entrada.</li>
+                    <li>📌 <strong>EAN e Descrição:</strong> Se houver múltiplos EANs, liste uma linha para cada (apenas um EAN de cada).</li>
+                    <li>📌 <strong>Quantidade:</strong> Realize a <strong>somatória total</strong> de todos os produtos que possuem o mesmo EAN.</li>
+                    <li>📌 <strong>Valor Unitário:</strong> Use o valor da NF de aquisição. Havendo vários, priorize o valor da <strong>1ª Nota Fiscal</strong> daquele EAN.</li>
+                    <li>📌 <strong>N° Solicitação:</strong> Preencher obrigatoriamente com o número do <strong>CRG</strong>.</li>
+                    <li>📌 <strong>Notas Fiscais:</strong> No campo de aquisição, cite <strong>todos</strong> os números das NFs envolvidas.</li>
+                </ul>
             </div>
         </div>
     </main>
 
     <script>
-        document.querySelector('.search-bar').addEventListener('focus', function() {
-            this.placeholder = 'Digite o que procura...';
-        });
-        document.querySelector('.search-bar').addEventListener('blur', function() {
-            this.placeholder = 'Pesquisar...';
-        });
+        document.querySelector('.search-bar').addEventListener('focus', function() { this.placeholder = 'Digite o que procura...'; });
+        document.querySelector('.search-bar').addEventListener('blur', function() { this.placeholder = 'Pesquisar...'; });
     </script>
 </body>
 </html>
