@@ -1,0 +1,1991 @@
+{
+  "dados": [
+    {
+      "id": 1,
+      "nf": "216963",
+      "abertura": "05/01/2026",
+      "modalidade": "Retorno de locação parcial",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(PRO) Produto com defeito",
+      "desc": "Devolvendo para adquirir novos conforme negociação com Fred e Bruno Rigatieri",
+      "razao": "—",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Lidiane Rodrigues",
+      "valor": 638566.37,
+      "finalizacao": ""
+    },
+    {
+      "id": 2,
+      "nf": "55522",
+      "abertura": "06/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente comprou errado",
+      "desc": "O cliente KANELS comprou o modelo errado (bases), precisa dos bastões.",
+      "razao": "—",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 61539.83,
+      "finalizacao": "20/02/2026"
+    },
+    {
+      "id": 3,
+      "nf": "53175",
+      "abertura": "06/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente comprou errado",
+      "desc": "A EletroEquip comprou unidades a mais do que realmente necessário.",
+      "razao": "—",
+      "tipoDev": "—",
+      "tipoCli": "Revendedor",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 33913.08,
+      "finalizacao": "23/02/2026"
+    },
+    {
+      "id": 4,
+      "nf": "56106",
+      "abertura": "07/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Devolução da mercadoria recebida, material não corresponde ao solicitado.",
+      "razao": "ATMO COMUNICACAO DIGITAL LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Karina Manzini",
+      "valor": 41332.48,
+      "finalizacao": "23/01/2026"
+    },
+    {
+      "id": 5,
+      "nf": "56231",
+      "abertura": "09/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Cancelamento do pedido não executado",
+      "desc": "Erro de sistema causou envio mesmo com refaturamento sinalizado.",
+      "razao": "—",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Barbara Brizoli",
+      "valor": 6968.72,
+      "finalizacao": "31/03/2026"
+    },
+    {
+      "id": 6,
+      "nf": "56126",
+      "abertura": "09/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Cliente aprovou dois links resultando em faturamento de dois pedidos.",
+      "razao": "—",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Aline Jordão",
+      "valor": 10951.55,
+      "finalizacao": "13/02/2026"
+    },
+    {
+      "id": 7,
+      "nf": "54031",
+      "abertura": "12/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Equívoco no faturamento, códigos de modelos muito semelhantes.",
+      "razao": "—",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Karina Manzini",
+      "valor": 1427.06,
+      "finalizacao": ""
+    },
+    {
+      "id": 8,
+      "nf": "55837",
+      "abertura": "13/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Cliente havia cancelado o pedido, mas acabaram enviando por engano.",
+      "razao": "ELETRICA CENTER LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Gislene Estefani",
+      "valor": 6161.84,
+      "finalizacao": "11/02/2026"
+    },
+    {
+      "id": 9,
+      "nf": "213313",
+      "abertura": "13/01/2026",
+      "modalidade": "Retorno de locação",
+      "status": "Finalizado",
+      "etapa": "Aguardando financeiro",
+      "bu": "—",
+      "motivo": "(CLI) Cliente desistiu da compra",
+      "desc": "Cliente enviou produtos sem autorização prévia.",
+      "razao": "MAGOFY TELECOMUNICACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Prospect",
+      "vendedor": "—",
+      "valor": 39907.5,
+      "finalizacao": "17/04/2026"
+    },
+    {
+      "id": 10,
+      "nf": "56253",
+      "abertura": "14/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Pedido enviado com especificação incorreta.",
+      "razao": "J Z ENGENHARIA E COMERCIO LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Paulo César de Govêa",
+      "valor": 71869.78,
+      "finalizacao": "20/02/2026"
+    },
+    {
+      "id": 11,
+      "nf": "56016",
+      "abertura": "14/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Pedido enviado com especificação incorreta.",
+      "razao": "J Z ENGENHARIA E COMERCIO LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Paulo César de Govêa",
+      "valor": 11347.86,
+      "finalizacao": "20/02/2026"
+    },
+    {
+      "id": 12,
+      "nf": "55759",
+      "abertura": "15/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Produto não atendeu a necessidade do cliente.",
+      "razao": "CIA ESTADUAL DE GERACAO E TRANSMISSAO DE ENERGIA ELETRI",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Erivan Batista",
+      "valor": 2820.77,
+      "finalizacao": ""
+    },
+    {
+      "id": 13,
+      "nf": "251101",
+      "abertura": "15/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(PRO) Produto com defeito",
+      "desc": "Compra de ativo defeituoso.",
+      "razao": "FIBRATECH PROVEDOR DE INTERNET",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Aline Jordão",
+      "valor": 52604.14,
+      "finalizacao": "26/05/2026"
+    },
+    {
+      "id": 14,
+      "nf": "254525",
+      "abertura": "22/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(CLI) Cliente comprou errado",
+      "desc": "Irá adquirir Switch Externo e solicita devolução do Switch Interno.",
+      "razao": "USE COMUNICACOES E TELECOMUNICACOES LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Adriana Gomes",
+      "valor": 16938.5,
+      "finalizacao": "11/05/2026"
+    },
+    {
+      "id": 15,
+      "nf": "53026",
+      "abertura": "28/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Produto no range de frequência diferente dos Bodypack.",
+      "razao": "AUDIO MISTER MIX LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Lidiane Rodrigues",
+      "valor": 18161.39,
+      "finalizacao": "07/05/2026"
+    },
+    {
+      "id": 16,
+      "nf": "56430",
+      "abertura": "28/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Foi faturado em duplicidade.",
+      "razao": "AXIA CONSULTORIA LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Aline Jordão",
+      "valor": 3386.99,
+      "finalizacao": "11/02/2026"
+    },
+    {
+      "id": 17,
+      "nf": "56032",
+      "abertura": "30/01/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Cliente necessita outro produto para seu projeto.",
+      "razao": "KVM SERVICOS EM INFORMATICA LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 3648.52,
+      "finalizacao": "11/05/2026"
+    },
+    {
+      "id": 18,
+      "nf": "54513",
+      "abertura": "09/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(PRO) Produto com defeito",
+      "desc": "Cabo apresenta defeito de fábrica, qualidade inferior ao padrão habitual.",
+      "razao": "HUBTEL SERVICOS DE TELECOMUNICACOES LTDA",
+      "tipoDev": "—",
+      "tipoCli": "Revendedor",
+      "vendedor": "Gislene Lopes",
+      "valor": 144870,
+      "finalizacao": "30/01/2026"
+    },
+    {
+      "id": 19,
+      "nf": "56139",
+      "abertura": "11/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Pedido não conforme com a solicitação.",
+      "razao": "ART INTEGRA LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 121572.36,
+      "finalizacao": "06/05/2026"
+    },
+    {
+      "id": 20,
+      "nf": "56140",
+      "abertura": "11/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Pedido não conforme com a solicitação.",
+      "razao": "ART INTEGRA LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 230287.65,
+      "finalizacao": "06/05/2026"
+    },
+    {
+      "id": 21,
+      "nf": "56838",
+      "abertura": "13/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente desistiu da compra",
+      "desc": "Prazo de entrega não cumprido, cliente cancelou o pedido.",
+      "razao": "ACCES CONTROL E SISTEMAS LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Vera Lucia Yukimi Sakamoto",
+      "valor": 8782.44,
+      "finalizacao": "31/03/2026"
+    },
+    {
+      "id": 22,
+      "nf": "254752",
+      "abertura": "20/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Cliente solicitou material com serigrafia, envio realizado sem personalização.",
+      "razao": "RM CONECT TELECOM LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Andrea Francine",
+      "valor": 15936,
+      "finalizacao": "06/04/2026"
+    },
+    {
+      "id": 23,
+      "nf": "56436",
+      "abertura": "23/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Cliente deseja devolver monitor 43\" para adquirir monitor 49\".",
+      "razao": "AC TECNOLOGIA E INSTALACOES ELETRICA LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 2749.73,
+      "finalizacao": "16/04/2026"
+    },
+    {
+      "id": 24,
+      "nf": "57381",
+      "abertura": "25/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "BDM",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Codificação errada: cliente recebeu etiquetas RF, usa apenas AM.",
+      "razao": "SECURITY ENERGY LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Susana Alves",
+      "valor": 10624.56,
+      "finalizacao": "03/06/2026"
+    },
+    {
+      "id": 25,
+      "nf": "56241",
+      "abertura": "26/02/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Câmeras M3085-V enviadas em vez de M3086-V.",
+      "razao": "PROCONNECT INSTALACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Vera Lucia Yukimi Sakamoto",
+      "valor": 6710.01,
+      "finalizacao": "16/04/2026"
+    },
+    {
+      "id": 26,
+      "nf": "252398",
+      "abertura": "02/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Telecom",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Modelo GPR2602P não compatível com função BLF.",
+      "razao": "SOMMA SOLUCOES EM COMUNICACAO LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Gislene Lopes",
+      "valor": 4242.98,
+      "finalizacao": ""
+    },
+    {
+      "id": 27,
+      "nf": "55160",
+      "abertura": "03/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Pedido enviado em duplicidade durante período de férias.",
+      "razao": "WPP BLAH PARTICIPACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Gislene Estefani",
+      "valor": 28207.36,
+      "finalizacao": "22/05/2026"
+    },
+    {
+      "id": 28,
+      "nf": "54820",
+      "abertura": "10/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Câmera não deu certo no teste de instalação.",
+      "razao": "CONSORCIO CONSTRUTOR MOEGAO",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Anisia Doralice",
+      "valor": 57797.35,
+      "finalizacao": "28/05/2026"
+    },
+    {
+      "id": 29,
+      "nf": "57410",
+      "abertura": "10/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente desistiu da compra",
+      "desc": "Cliente cancelou o projeto.",
+      "razao": "EVORA SP - REGULARIZACAO DOCUMENTAL LTDA.",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Jheniffer Okamura",
+      "valor": 12403.68,
+      "finalizacao": "28/04/2026"
+    },
+    {
+      "id": 30,
+      "nf": "57467",
+      "abertura": "12/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Caixa sofreu avarias durante o transporte.",
+      "razao": "GLOBAL AUDIO VISUAL LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Fabio Santos",
+      "valor": 270748.27,
+      "finalizacao": "06/05/2026"
+    },
+    {
+      "id": 31,
+      "nf": "56369",
+      "abertura": "12/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Itens enviados não estão de acordo com o projeto acordado.",
+      "razao": "CAIXA SEGURADORA S/A",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Nielson da Silva Melo",
+      "valor": 79447.23,
+      "finalizacao": "28/04/2026"
+    },
+    {
+      "id": 32,
+      "nf": "57129",
+      "abertura": "16/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Falha de comunicação. Cliente não deseja mais os produtos PSM 900.",
+      "razao": "GSYSTEMS LOG LOCACAO DE EQUIPAMENTOS DE SOM LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Fabio Santos",
+      "valor": 40512.06,
+      "finalizacao": "30/04/2026"
+    },
+    {
+      "id": 33,
+      "nf": "56631",
+      "abertura": "17/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "ISP",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Necessidade era apenas o módulo, enviado inversor completo.",
+      "razao": "W C V PROVEDORES DE INTERNET LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Claudia Celeste",
+      "valor": 2727.94,
+      "finalizacao": "29/05/2026"
+    },
+    {
+      "id": 34,
+      "nf": "250013",
+      "abertura": "19/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Material parado por não ter mais necessidade de uso.",
+      "razao": "FOCCO SOLUCOES EM TECNOLOGIA LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Renata de Lima",
+      "valor": 11236.23,
+      "finalizacao": ""
+    },
+    {
+      "id": 35,
+      "nf": "57703",
+      "abertura": "20/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "ISP",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "2 retificadoras enviadas sem os módulos disjuntores.",
+      "razao": "SPACE TELECOMUNICACAO LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Marcos Antonio",
+      "valor": 13346.9,
+      "finalizacao": "24/04/2026"
+    },
+    {
+      "id": 36,
+      "nf": "56682",
+      "abertura": "23/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Pedido colocado em duplicidade pelo time comercial.",
+      "razao": "ONCO D OR ONCOLOGIA BA LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Barbara Brisolla",
+      "valor": 7252.68,
+      "finalizacao": "19/05/2026"
+    },
+    {
+      "id": 37,
+      "nf": "57135",
+      "abertura": "24/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Comercial faturou novamente 15 produtos já incluídos em NF anterior.",
+      "razao": "PROTEGE SERVICOS ESPECIAIS LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Vera Sakamoto",
+      "valor": 48403.5,
+      "finalizacao": ""
+    },
+    {
+      "id": 38,
+      "nf": "56822",
+      "abertura": "27/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "Troca de EAN resultou em envio em duplicidade.",
+      "razao": "ESCOLA AMERICANA DE CAMPINAS",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Karina Manzini",
+      "valor": 456.9,
+      "finalizacao": "06/05/2026"
+    },
+    {
+      "id": 39,
+      "nf": "57740",
+      "abertura": "27/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Carregadores com código errado vendidos.",
+      "razao": "RUBENS DA COSTA SILVA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Karina Manzini",
+      "valor": 3390.04,
+      "finalizacao": "20/05/2026"
+    },
+    {
+      "id": 40,
+      "nf": "57610",
+      "abertura": "27/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Carregadores com código errado vendidos.",
+      "razao": "RUBENS DA COSTA SILVA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Karina Manzini",
+      "valor": 3471.37,
+      "finalizacao": "20/05/2026"
+    },
+    {
+      "id": 41,
+      "nf": "255478",
+      "abertura": "27/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Envio incorreto: pedido de DWDM, enviados produtos de outro projeto.",
+      "razao": "WAY.COM PROVEDOR BANDA LARGA LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Lucas Maciel",
+      "valor": 82529.5,
+      "finalizacao": ""
+    },
+    {
+      "id": 42,
+      "nf": "56958",
+      "abertura": "30/03/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Crédito a ser utilizado para abatimento em novo item negociado.",
+      "razao": "MENTES MILIONARIAS LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Lidiane Rodrigues",
+      "valor": 12487.15,
+      "finalizacao": "26/05/2026"
+    },
+    {
+      "id": 43,
+      "nf": "56065",
+      "abertura": "06/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Não é compatível com o leitor Mifare 13,56 MHz.",
+      "razao": "NTT BRASIL COMERCIO",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Geisa Silva",
+      "valor": 1100.53,
+      "finalizacao": ""
+    },
+    {
+      "id": 44,
+      "nf": "255376",
+      "abertura": "06/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Não é compatível com o leitor Mifare 13,56 MHz.",
+      "razao": "NTT BRASIL COMERCIO",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Geisa Silva",
+      "valor": 1090.09,
+      "finalizacao": ""
+    },
+    {
+      "id": 45,
+      "nf": "255838",
+      "abertura": "07/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Telecom",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "ONT Nokia não apresentou funcionamento compatível com OLT de terceiros.",
+      "razao": "SPEEDZONE TELECOMUNICACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Aline Jordão",
+      "valor": 1521.25,
+      "finalizacao": "19/05/2026"
+    },
+    {
+      "id": 46,
+      "nf": "57464",
+      "abertura": "07/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando material",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Enviado por engano na proposta.",
+      "razao": "MEDIANEIRO INSTALACOES LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Gislene Estefani",
+      "valor": 6662.5,
+      "finalizacao": ""
+    },
+    {
+      "id": 47,
+      "nf": "57939",
+      "abertura": "09/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(PRO) Produto com defeito",
+      "desc": "Produto faturado do armazém NC sem envio da base.",
+      "razao": "ESTILO NOSSO SOM COMERCIO",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Frederico Rosolia",
+      "valor": 1620.1,
+      "finalizacao": "19/05/2026"
+    },
+    {
+      "id": 48,
+      "nf": "243306",
+      "abertura": "10/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Telecom",
+      "motivo": "(PRO) Produto com defeito",
+      "desc": "Produto anteriormente enviado em RMA apresenta problemas.",
+      "razao": "WIRELESS DESENVOLVIMENTO DE SISTEMAS",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "—",
+      "valor": 678.2,
+      "finalizacao": ""
+    },
+    {
+      "id": 49,
+      "nf": "256010",
+      "abertura": "23/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando entrada",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "GWN7664ELR não é o modelo adequado; correto seria GWN7664E (indoor).",
+      "razao": "SERVICETEC SOLUCOES E TECNOLOGIA LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Patricia Carvalho",
+      "valor": 8860.34,
+      "finalizacao": ""
+    },
+    {
+      "id": 50,
+      "nf": "57909",
+      "abertura": "27/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando carta",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Cliente HERC quer devolver material por não cumprimento de prazos.",
+      "razao": "HERC SERVICOS ELETRONICOS LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Erivan Batista",
+      "valor": 11117.55,
+      "finalizacao": ""
+    },
+    {
+      "id": 51,
+      "nf": "57925",
+      "abertura": "28/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando carta",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Cliente HERC quer devolver material por não cumprimento de prazos.",
+      "razao": "HERC SERVICOS ELETRONICOS LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Erivan Batista",
+      "valor": 9224.82,
+      "finalizacao": ""
+    },
+    {
+      "id": 52,
+      "nf": "45278",
+      "abertura": "28/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente inadimplente",
+      "desc": "Projeto cancelado. Deseja usar crédito para pagar dívida.",
+      "razao": "NETPAL TELECOM LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Antonia Aparecida",
+      "valor": 37700,
+      "finalizacao": ""
+    },
+    {
+      "id": 53,
+      "nf": "234454",
+      "abertura": "28/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente inadimplente",
+      "desc": "Projeto cancelado. Deseja usar crédito para pagar dívida.",
+      "razao": "NETPAL TELECOM LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Antonia Aparecida",
+      "valor": 30750.01,
+      "finalizacao": ""
+    },
+    {
+      "id": 54,
+      "nf": "241524",
+      "abertura": "28/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente inadimplente",
+      "desc": "Projeto cancelado. Deseja usar crédito para pagar dívida.",
+      "razao": "NETPAL TELECOM LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Antonia Aparecida",
+      "valor": 22620,
+      "finalizacao": ""
+    },
+    {
+      "id": 55,
+      "nf": "56226",
+      "abertura": "28/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Câmeras Bullet enviadas não atendem necessidades; solicitam câmeras Dome.",
+      "razao": "ACCESS ARTIFICIAL INTELIGENCE PRODUTOS PARA INFORMATICA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Karina Bispo",
+      "valor": 26554.08,
+      "finalizacao": ""
+    },
+    {
+      "id": 56,
+      "nf": "57382",
+      "abertura": "30/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Entrada",
+      "bu": "Enterprise",
+      "motivo": "(COM) Cancelamento do pedido não executado",
+      "desc": "Produto cancelado, porém acabou sendo enviado.",
+      "razao": "CIA ESTADUAL DE GERACAO E TRANSMISSAO",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Erivan Batista",
+      "valor": 516.11,
+      "finalizacao": ""
+    },
+    {
+      "id": 57,
+      "nf": "256394",
+      "abertura": "30/04/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Fonte DC enviada quando cliente solicitou fonte AC.",
+      "razao": "SAMPA INTERNET TELECOMUNICACAO",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Edson Castro",
+      "valor": 1952.82,
+      "finalizacao": ""
+    },
+    {
+      "id": 58,
+      "nf": "58084",
+      "abertura": "05/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando entrada",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "Erro no sistema calculou 5 vezes a mais o valor do kit.",
+      "razao": "RTS TECNOLOGIA E SOLUCOES LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Anisia Doralice",
+      "valor": 2801.32,
+      "finalizacao": ""
+    },
+    {
+      "id": 59,
+      "nf": "58560",
+      "abertura": "05/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Finalizado",
+      "etapa": "",
+      "bu": "Enterprise",
+      "motivo": "(CLI) Cliente comprou errado",
+      "desc": "Cliente fez solicitação errada.",
+      "razao": "—",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Sabrina da Silva",
+      "valor": 837.81,
+      "finalizacao": "20/05/2026"
+    },
+    {
+      "id": 60,
+      "nf": "256121",
+      "abertura": "12/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(LOG) Produto avariado",
+      "desc": "Placas não compatíveis com a RX, com arranhões.",
+      "razao": "AC SOLUCOES INTEGRADAS DE INFORMATICA LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Erivan Batista",
+      "valor": 3367.28,
+      "finalizacao": ""
+    },
+    {
+      "id": 61,
+      "nf": "58765",
+      "abertura": "15/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando Material",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Cliente fez a compra de um produto errado.",
+      "razao": "A. M. HIROSE ELETRONICA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Karina Mendes",
+      "valor": 1780.2,
+      "finalizacao": ""
+    },
+    {
+      "id": 62,
+      "nf": "56924",
+      "abertura": "18/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Produtos não adequados para o data center.",
+      "razao": "JP PROVIDERS LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Lucas Maciel",
+      "valor": 2354.39,
+      "finalizacao": ""
+    },
+    {
+      "id": 63,
+      "nf": "58727",
+      "abertura": "19/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "FULLFILMENT SEAL",
+      "motivo": "(LOG) Produto avariado",
+      "desc": "Alto falante estourado.",
+      "razao": "VITORIA DE SOUZA FERRAZ",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Bruno Rigatieri",
+      "valor": 220.94,
+      "finalizacao": ""
+    },
+    {
+      "id": 64,
+      "nf": "58172",
+      "abertura": "20/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Telecom",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Falta de retorno do fabricante; cliente optou por devolver.",
+      "razao": "HE-NET TELECOMUNICACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Aline de Sousa",
+      "valor": 30051.72,
+      "finalizacao": ""
+    },
+    {
+      "id": 65,
+      "nf": "57933",
+      "abertura": "20/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Telecom",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Cliente não consegue mais esperar o inversor e Chassi 3U.",
+      "razao": "TAMAR - COMERCIO DE EQUIPAMENTOS PARA INFORMATICA LTDA.",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Antônia Aparecida",
+      "valor": 13434.64,
+      "finalizacao": ""
+    },
+    {
+      "id": 66,
+      "nf": "58483",
+      "abertura": "25/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Enterprise",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Equipamentos em desacordo: necessário APPLIANCE RED 60.",
+      "razao": "EVERCO GESTAO ESTRATEGICA EM INFORMACOES",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Barbara Brisolla",
+      "valor": 89595.78,
+      "finalizacao": ""
+    },
+    {
+      "id": 67,
+      "nf": "257421",
+      "abertura": "27/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "ISP",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "—",
+      "razao": "NORTETEL TELECOMUNICACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Claudia Celeste",
+      "valor": 17394.39,
+      "finalizacao": ""
+    },
+    {
+      "id": 68,
+      "nf": "58986",
+      "abertura": "28/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em duplicidade",
+      "desc": "—",
+      "razao": "FELTRIN SEMENTES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Helio Ferraz ventura",
+      "valor": 15257.85,
+      "finalizacao": ""
+    },
+    {
+      "id": 69,
+      "nf": "257377",
+      "abertura": "28/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "ISP",
+      "motivo": "(LOG) Produto avariado",
+      "desc": "—",
+      "razao": "SEM FRONTEIRAS TELECOMUNICACOES LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Cons. Final",
+      "vendedor": "Andrea Francine Pereira",
+      "valor": 18695.65,
+      "finalizacao": ""
+    },
+    {
+      "id": 70,
+      "nf": "59271",
+      "abertura": "28/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando info",
+      "bu": "Enterprise",
+      "motivo": "(COM) Pedido em desacordo",
+      "desc": "—",
+      "razao": "P L COLOR COMERCIO",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Susana Alves",
+      "valor": 112684.07,
+      "finalizacao": ""
+    },
+    {
+      "id": 71,
+      "nf": "257593",
+      "abertura": "28/05/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando aprovação",
+      "bu": "Enterprise",
+      "motivo": "(LOG) Erro de separação",
+      "desc": "—",
+      "razao": "ZHONET LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Aline de Sousa",
+      "valor": 9925,
+      "finalizacao": ""
+    },
+    {
+      "id": 72,
+      "nf": "257540",
+      "abertura": "03/06/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "OLT deveria vir com placas PON incluídas conforme informado na Abrint.",
+      "razao": "INFOR FIBRA TELECOM LTDA",
+      "tipoDev": "Total",
+      "tipoCli": "Revendedor",
+      "vendedor": "Renata de Lima",
+      "valor": 14880,
+      "finalizacao": ""
+    },
+    {
+      "id": 73,
+      "nf": "257506",
+      "abertura": "03/06/2026",
+      "modalidade": "Devolução de compras",
+      "status": "Em andamento",
+      "etapa": "Aguardando NF",
+      "bu": "ISP",
+      "motivo": "(COM) Não atende a necessidade do cliente",
+      "desc": "Revertida venda de 1000 peças com porta V5V2. Cliente terá crédito.",
+      "razao": "POWERNET SOLUTIONS LTDA",
+      "tipoDev": "Parcial",
+      "tipoCli": "Revendedor",
+      "vendedor": "Renata de Lima",
+      "valor": 75056.2,
+      "finalizacao": ""
+    }
+  ],
+  "prods": {
+    "45278": [
+      {
+        "codProduto": "1000141100082",
+        "quantidade": 100,
+        "fabricante": "YEALINK",
+        "produto": "TELEFONE"
+      }
+    ],
+    "53026": [
+      {
+        "codProduto": "1000186101731",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "TRANSMISSOR SEM FIO"
+      }
+    ],
+    "53175": [
+      {
+        "codProduto": "1000234200120",
+        "quantidade": 12,
+        "fabricante": "YAMAHA",
+        "produto": "CAIXA SOBREPOR"
+      }
+    ],
+    "54031": [
+      {
+        "codProduto": "1000186100498",
+        "quantidade": 2,
+        "fabricante": "SHURE",
+        "produto": "MÓDULO DE CARREGAMENTO"
+      }
+    ],
+    "54513": [
+      {
+        "codProduto": "1000487100024",
+        "quantidade": 600,
+        "fabricante": "EASY4LINK",
+        "produto": "CABO DE FIBRA"
+      }
+    ],
+    "54820": [
+      {
+        "codProduto": "1000547100825",
+        "quantidade": 20,
+        "fabricante": "AXIS",
+        "produto": "CAMERA"
+      }
+    ],
+    "55160": [
+      {
+        "codProduto": "1103028",
+        "quantidade": 9,
+        "fabricante": "AVIGILION",
+        "produto": "CONTROLE DE ACESSO"
+      }
+    ],
+    "55522": [
+      {
+        "codProduto": "1000186101314",
+        "quantidade": 8,
+        "fabricante": "SHURE",
+        "produto": "FONTE ENERGIA ANTENAS"
+      },
+      {
+        "codProduto": "1000186101717",
+        "quantidade": 2,
+        "fabricante": "SHURE",
+        "produto": "FONTE ENERGIA ANTENAS"
+      }
+    ],
+    "55759": [
+      {
+        "codProduto": "1101773",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "VÍDEO MONITORAMENTO"
+      }
+    ],
+    "55837": [
+      {
+        "codProduto": "1000547100972",
+        "quantidade": 1,
+        "fabricante": "AXIS",
+        "produto": "CAMERA"
+      }
+    ],
+    "56016": [
+      {
+        "codProduto": "1000039000144",
+        "quantidade": 3,
+        "fabricante": "LG",
+        "produto": "TELAS"
+      }
+    ],
+    "56032": [
+      {
+        "codProduto": "1000186101149",
+        "quantidade": 2,
+        "fabricante": "SHURE",
+        "produto": "HCM"
+      }
+    ],
+    "56065": [
+      {
+        "codProduto": "1002479",
+        "quantidade": 1,
+        "fabricante": "CONTROL ID",
+        "produto": "LEITOR FACIAL"
+      }
+    ],
+    "56106": [
+      {
+        "codProduto": "1000186101714",
+        "quantidade": 8,
+        "fabricante": "SHURE",
+        "produto": "SISTEMA SEM FIO"
+      }
+    ],
+    "56126": [
+      {
+        "codProduto": "1103033",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "FONTE RETIFICADORA"
+      },
+      {
+        "codProduto": "1103029",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "FONTE RETIFICADORA"
+      },
+      {
+        "codProduto": "1103030",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "FONTE RETIFICADORA"
+      },
+      {
+        "codProduto": "1000545100023",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER BATERIA"
+      }
+    ],
+    "56139": [
+      {
+        "codProduto": "3800170",
+        "quantidade": 2,
+        "fabricante": "LEYARD",
+        "produto": "KIT MANUTENÇÃO"
+      },
+      {
+        "codProduto": "3800115",
+        "quantidade": 2,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      },
+      {
+        "codProduto": "3800116",
+        "quantidade": 5,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      }
+    ],
+    "56140": [
+      {
+        "codProduto": "3800170",
+        "quantidade": 3,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      },
+      {
+        "codProduto": "3800116",
+        "quantidade": 15,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      }
+    ],
+    "56226": [
+      {
+        "codProduto": "1101268",
+        "quantidade": 49,
+        "fabricante": "DAHUA",
+        "produto": "VIDEO MONITORAMENTO"
+      }
+    ],
+    "56231": [
+      {
+        "codProduto": "1000196100727",
+        "quantidade": 1,
+        "fabricante": "SOPHOS",
+        "produto": "SECURITY APPLIANCE"
+      }
+    ],
+    "56241": [
+      {
+        "codProduto": "1000547100914",
+        "quantidade": 3,
+        "fabricante": "AXIS",
+        "produto": "CAMERA"
+      }
+    ],
+    "56253": [
+      {
+        "codProduto": "1000039000144",
+        "quantidade": 19,
+        "fabricante": "LG",
+        "produto": "TELAS"
+      }
+    ],
+    "56369": [
+      {
+        "codProduto": "1000186100200",
+        "quantidade": 2,
+        "fabricante": "SHURE",
+        "produto": "PONTO DE ACESSO"
+      },
+      {
+        "codProduto": "1000186100022",
+        "quantidade": 2,
+        "fabricante": "SHURE",
+        "produto": "CONVERSOR ESTÁTICO"
+      }
+    ],
+    "56430": [
+      {
+        "codProduto": "1000545100011",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER INVERSOR"
+      }
+    ],
+    "56436": [
+      {
+        "codProduto": "1000039000142",
+        "quantidade": 1,
+        "fabricante": "LG",
+        "produto": "MONITOR"
+      }
+    ],
+    "56631": [
+      {
+        "codProduto": "1000545100010",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "DP DATA CENTER"
+      },
+      {
+        "codProduto": "1000545100060",
+        "quantidade": 2,
+        "fabricante": "HUAWEI",
+        "produto": "DP DATA CENTER"
+      }
+    ],
+    "56682": [
+      {
+        "codProduto": "1000196100652",
+        "quantidade": 1,
+        "fabricante": "SOPHOS",
+        "produto": "SD RED"
+      }
+    ],
+    "56822": [
+      {
+        "codProduto": "1107528",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "CABO"
+      }
+    ],
+    "56838": [
+      {
+        "codProduto": "1107401",
+        "quantidade": 1,
+        "fabricante": "2N",
+        "produto": "CAMERA"
+      }
+    ],
+    "56924": [
+      {
+        "codProduto": "1103030",
+        "quantidade": 2,
+        "fabricante": "HUAWEI",
+        "produto": "RETIFICADORA"
+      }
+    ],
+    "56958": [
+      {
+        "codProduto": "1000039200076",
+        "quantidade": 1,
+        "fabricante": "LG",
+        "produto": "MONITOR"
+      }
+    ],
+    "57129": [
+      {
+        "codProduto": "1000186100575",
+        "quantidade": 4,
+        "fabricante": "SHURE",
+        "produto": "TRANSMISSOR SEM FIO"
+      },
+      {
+        "codProduto": "1000186101670",
+        "quantidade": 4,
+        "fabricante": "SHURE",
+        "produto": "RECEPTOR SEM FIO"
+      }
+    ],
+    "57135": [
+      {
+        "codProduto": "1000547101234",
+        "quantidade": 15,
+        "fabricante": "AXIS",
+        "produto": "MINIDOME"
+      }
+    ],
+    "57381": [
+      {
+        "codProduto": "1000289100332",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "ETIQUETA"
+      },
+      {
+        "codProduto": "1000289100334",
+        "quantidade": 100,
+        "fabricante": "DAHUA",
+        "produto": "ETIQUETA"
+      },
+      {
+        "codProduto": "1104499",
+        "quantidade": 5,
+        "fabricante": "DAHUA",
+        "produto": "FECHADURA"
+      }
+    ],
+    "57382": [
+      {
+        "codProduto": "1101928",
+        "quantidade": 2,
+        "fabricante": "DAHUA",
+        "produto": "VIDEO MONITORAMENTO"
+      }
+    ],
+    "57410": [
+      {
+        "codProduto": "1000196100",
+        "quantidade": 2,
+        "fabricante": "SOPHOS",
+        "produto": "POWER CORD"
+      }
+    ],
+    "57464": [
+      {
+        "codProduto": "1200172",
+        "quantidade": 250,
+        "fabricante": "NEOHOME",
+        "produto": "CARTAO MICRO SD"
+      }
+    ],
+    "57467": [
+      {
+        "codProduto": "3800224",
+        "quantidade": 8,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      },
+      {
+        "codProduto": "3800223",
+        "quantidade": 18,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE"
+      },
+      {
+        "codProduto": "3800229",
+        "quantidade": 4,
+        "fabricante": "LEYARD",
+        "produto": "KIT MANUTENÇÃO"
+      }
+    ],
+    "57610": [
+      {
+        "codProduto": "1000186100009",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "CARREGADOR DE BATERIA"
+      }
+    ],
+    "57703": [
+      {
+        "codProduto": "1000545100002",
+        "quantidade": 2,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER"
+      },
+      {
+        "codProduto": "1000545100003",
+        "quantidade": 2,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER"
+      }
+    ],
+    "57740": [
+      {
+        "codProduto": "1000186100009",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "CARREGADOR DE BATERIA"
+      }
+    ],
+    "57909": [
+      {
+        "codProduto": "1101888",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "ACESSÓRIOS"
+      },
+      {
+        "codProduto": "1000289100014",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "NVR"
+      }
+    ],
+    "57925": [
+      {
+        "codProduto": "1107510",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "CAMERA"
+      },
+      {
+        "codProduto": "1103573",
+        "quantidade": 1,
+        "fabricante": "DAHUA",
+        "produto": "ACESSÓRIOS"
+      },
+      {
+        "codProduto": "1107508",
+        "quantidade": 4,
+        "fabricante": "DAHUA",
+        "produto": "CAMERA"
+      },
+      {
+        "codProduto": "1107507",
+        "quantidade": 8,
+        "fabricante": "DAHUA",
+        "produto": "CAMERA"
+      }
+    ],
+    "57933": [
+      {
+        "codProduto": "1103030",
+        "quantidade": 4,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER FONTE"
+      },
+      {
+        "codProduto": "1000545100023",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER BATERIA"
+      }
+    ],
+    "57939": [
+      {
+        "codProduto": "1000186101429",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "TRANSMISSOR SEM FIO"
+      }
+    ],
+    "58084": [
+      {
+        "codProduto": "1000547100810",
+        "quantidade": 5,
+        "fabricante": "AXIS",
+        "produto": "PRENDEDOR PLÁSTICO"
+      }
+    ],
+    "58172": [
+      {
+        "codProduto": "1000545100023",
+        "quantidade": 6,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER BATERIA"
+      },
+      {
+        "codProduto": "1107432",
+        "quantidade": 6,
+        "fabricante": "HUAWEI",
+        "produto": "DATA CENTER PROJETOS"
+      }
+    ],
+    "58483": [
+      {
+        "codProduto": "1000196100713",
+        "quantidade": 24,
+        "fabricante": "SOPHOS",
+        "produto": "SD RED"
+      }
+    ],
+    "58560": [
+      {
+        "codProduto": "1000133200111",
+        "quantidade": 1,
+        "fabricante": "TP-LINK",
+        "produto": "PONTO DE ACESSO"
+      }
+    ],
+    "58727": [
+      {
+        "codProduto": "1000327200020",
+        "quantidade": 1,
+        "fabricante": "ECHO DOT",
+        "produto": "ALEXA"
+      }
+    ],
+    "58765": [
+      {
+        "codProduto": "1000186101819",
+        "quantidade": 1,
+        "fabricante": "SHURE",
+        "produto": "MICROFONE"
+      }
+    ],
+    "58986": [
+      {
+        "codProduto": "1000196100717",
+        "quantidade": 3,
+        "fabricante": "SOPHOS",
+        "produto": "ACCESS POINT"
+      },
+      {
+        "codProduto": "1000196100714",
+        "quantidade": 1,
+        "fabricante": "SOPHOS",
+        "produto": "ACCESS POINT"
+      }
+    ],
+    "59271": [
+      {
+        "codProduto": "1103944",
+        "quantidade": 4,
+        "fabricante": "DAHUA",
+        "produto": "MULTI CORE"
+      },
+      {
+        "codProduto": "1000289100089",
+        "quantidade": 4,
+        "fabricante": "DAHUA",
+        "produto": "MULTI CORE"
+      },
+      {
+        "codProduto": "1107509",
+        "quantidade": 4,
+        "fabricante": "DAHUA",
+        "produto": "MULTI CORE"
+      }
+    ],
+    "213313": [
+      {
+        "codProduto": "3000178800047",
+        "quantidade": 50,
+        "fabricante": "NOKIA",
+        "produto": "ONU"
+      }
+    ],
+    "216963": [
+      {
+        "codProduto": "3000443800054",
+        "quantidade": 7,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE LED"
+      },
+      {
+        "codProduto": "3000443800055",
+        "quantidade": 27,
+        "fabricante": "LEYARD",
+        "produto": "GABINETE LED"
+      }
+    ],
+    "234454": [
+      {
+        "codProduto": "1000141100082",
+        "quantidade": 150,
+        "fabricante": "YEALINK",
+        "produto": "TELEFONE"
+      }
+    ],
+    "241524": [
+      {
+        "codProduto": "1000141100082",
+        "quantidade": 60,
+        "fabricante": "YEALINK",
+        "produto": "TELEFONE"
+      }
+    ],
+    "243306": [
+      {
+        "codProduto": "3000140800014",
+        "quantidade": 20,
+        "fabricante": "EASY4LINK",
+        "produto": "ONU"
+      }
+    ],
+    "250013": [
+      {
+        "codProduto": "3000178800011",
+        "quantidade": 1,
+        "fabricante": "NOKIA",
+        "produto": "OLT"
+      }
+    ],
+    "251101": [
+      {
+        "codProduto": "3000178800031",
+        "quantidade": 301,
+        "fabricante": "NOKIA",
+        "produto": "ONU"
+      },
+      {
+        "codProduto": "1000178200100",
+        "quantidade": 1,
+        "fabricante": "NOKIA",
+        "produto": "PLACA VSUP"
+      }
+    ],
+    "252398": [
+      {
+        "codProduto": "3000026800053",
+        "quantidade": 17,
+        "fabricante": "GRANDSTREAM",
+        "produto": "TELEFONE"
+      }
+    ],
+    "254525": [
+      {
+        "codProduto": "3000026800074",
+        "quantidade": 11,
+        "fabricante": "GRANDSTREAM",
+        "produto": "SWITCH"
+      }
+    ],
+    "254752": [
+      {
+        "codProduto": "1000133400013",
+        "quantidade": 96,
+        "fabricante": "TPLINK",
+        "produto": "ONU"
+      }
+    ],
+    "255376": [
+      {
+        "codProduto": "1002479",
+        "quantidade": 1,
+        "fabricante": "CONTROL ID",
+        "produto": "LEITOR FACIAL"
+      }
+    ],
+    "255478": [
+      {
+        "codProduto": "3300118",
+        "quantidade": 2,
+        "fabricante": "HUAWEI",
+        "produto": "TRANSPONDER"
+      },
+      {
+        "codProduto": "3800168",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "MODULO"
+      },
+      {
+        "codProduto": "3800263",
+        "quantidade": 4,
+        "fabricante": "HUAWEI",
+        "produto": "CHASSI"
+      }
+    ],
+    "255838": [
+      {
+        "codProduto": "3000178000001",
+        "quantidade": 15,
+        "fabricante": "NOKIA",
+        "produto": "ONU"
+      }
+    ],
+    "256010": [
+      {
+        "codProduto": "3000026800102",
+        "quantidade": 11,
+        "fabricante": "GRANDSTREAM",
+        "produto": "ACCESS POINT"
+      }
+    ],
+    "256121": [
+      {
+        "codProduto": "1200998",
+        "quantidade": 2,
+        "fabricante": "DAHUA",
+        "produto": "ANTENA"
+      }
+    ],
+    "256394": [
+      {
+        "codProduto": "3800139",
+        "quantidade": 1,
+        "fabricante": "HUAWEI",
+        "produto": "FONTE"
+      }
+    ],
+    "257377": [
+      {
+        "codProduto": "3000178800081",
+        "quantidade": 1,
+        "fabricante": "NOKIA",
+        "produto": "ROTEADOR"
+      }
+    ],
+    "257506": [
+      {
+        "codProduto": "3000114800084",
+        "quantidade": 1000,
+        "fabricante": "HUAWEI",
+        "produto": "ONT"
+      }
+    ],
+    "257540": [
+      {
+        "codProduto": "3000114800043",
+        "quantidade": 4,
+        "fabricante": "HUAWEI",
+        "produto": "OLT"
+      }
+    ],
+    "257593": [
+      {
+        "codProduto": "3800038",
+        "quantidade": 100,
+        "fabricante": "HUAWEI",
+        "produto": "ONU GPON"
+      }
+    ]
+  }
+}
