@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Devoluções — WDC Networks</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo-box">
+        <img src="wdc.png" alt="Logo WDC" class="logo-img" style="height: 28px; width: auto; object-fit: contain;">
+        <span class="logo-name">WDC Networks</span>
+      </div>
+      <button class="btn-new" onclick="abrirModal()"><i class="ti ti-plus"></i> Nova devolução</button>
+    </div>
+    <button class="btn-excel" onclick="exportarExcel()"><i class="ti ti-table-export"></i> Exportar Excel</button>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="filter-row">
+    <input type="text" id="busca" placeholder="🔍  Buscar por NF, razão social, vendedor, BU, fabricante, produto..." oninput="filtrar()">
+    <select id="fBuF" onchange="filtrar()">
+      <option value="">Todas as BUs</option>
+      <option>Enterprise</option>
+      <option>Telecom</option>
+      <option>ISP</option>
+      <option>BDM</option>
+      <option>FULLFILMENT SEAL</option>
+    </select>
+    <select id="fStatus" onchange="filtrar()">
+      <option value="">Todos os status</option>
+      <option>Em andamento</option>
+      <option>Finalizado</option>
+      <option>Cancelado</option>
+    </select>
+    <select id="fMod" onchange="filtrar()">
+      <option value="">Todas as modalidades</option>
+      <option>Devolução de compras</option>
+      <option>Retorno de locação</option>
+      <option>Retorno de locação parcial</option>
+    </select>
+    <select id="fTipo" onchange="filtrar()">
+      <option value="">Tipo de devolução</option>
+      <option>Total</option>
+      <option>Parcial</option>
+    </select>
+  </div>
+
+  <div id="exportInfo" style="display:none" class="export-info"></div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-outer">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:70px" onclick="ord('nf')">Nº NF ⇅</th>
+            <th style="width:74px" onclick="ord('abertura')">Abertura ⇅</th>
+            <th style="width:92px" onclick="ord('modalidade')">Modalidade</th>
+            <th style="width:84px" onclick="ord('status')">Status</th>
+            <th style="width:112px" onclick="ord('etapa')">Etapa</th>
+            <th style="width:56px" onclick="ord('bu')">BU</th>
+            <th style="width:100px" onclick="ord('motivo')">Motivo</th>
+            <th style="width:110px" onclick="ord('razao')">Razão social</th>
+            <th style="width:58px" onclick="ord('tipoDev')">Tipo</th>
+            <th style="width:72px" onclick="ord('tipoCli')">Cliente</th>
+            <th style="width:80px" onclick="ord('vendedor')">Vendedor</th>
+            <th style="width:150px">Produtos</th>
+            <th style="width:84px" onclick="ord('valor')">Valor total ⇅</th>
+            <th style="width:72px" onclick="ord('finalizacao')">Finalização</th>
+            <th style="width:70px">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="pg">
+      <span id="pgInfo"></span>
+      <div class="pg-btns" id="pgBtns"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="mTitle">Nova solicitação de devolução</h3>
+      <div class="modal-logo-box">
+        <svg width="24" height="20" viewBox="0 0 28 22" fill="none">
+          <polygon points="0,0 13,11 0,22" fill="#185FA5"/>
+          <polygon points="28,0 15,11 28,22" fill="#1DA8D8"/>
+        </svg>
+        <span class="modal-logo-name">WDC Networks</span>
+      </div>
+    </div>
+    
+    <div class="fg">
+      <div class="sec-div">Identificação</div>
+      <div><label>Número da NF</label><input id="fNf" type="text" placeholder="Ex: 56106"></div>
+      <div><label>Razão social</label><input id="fRazao" type="text" placeholder="Nome da empresa"></div>
+      <div><label>Vendedor</label><input id="fVendedor" type="text" placeholder="Nome do vendedor"></div>
+      <div>
+        <label>BU</label>
+        <select id="fBu">
+          <option value="">Selecione</option>
+          <option>Enterprise</option>
+          <option>Telecom</option>
+          <option>ISP</option>
+          <option>BDM</option>
+          <option>FULLFILMENT SEAL</option>
+        </select>
+      </div>
+      <div>
+        <label>Tipo de cliente</label>
+        <select id="fTipoCli">
+          <option value="">Selecione</option>
+          <option>Cons. Final</option>
+          <option>Revendedor</option>
+          <option>Prospect</option>
+        </select>
+      </div>
+      
+      <div class="sec-div">Processo</div>
+      <div>
+        <label>Modalidade</label>
+        <select id="fModalidade">
+          <option value="">Selecione</option>
+          <option>Devolução de compras</option>
+          <option>Retorno de locação</option>
+          <option>Retorno de locação parcial</option>
+        </select>
+      </div>
+      <div>
+        <label>Tipo de devolução</label>
+        <select id="fTipoDev">
+          <option value="">Selecione</option>
+          <option>Total</option>
+          <option>Parcial</option>
+        </select>
+      </div>
+      <div>
+        <label>Status do processo</label>
+        <select id="fStatusP" onchange="onStatusChange(this.value)">
+          <option>Em andamento</option>
+          <option>Finalizado</option>
+          <option>Cancelado</option>
+        </select>
+      </div>
+      
+      <div id="wrapMotivoCancelamento" style="display:none; grid-column:1/-1">
+        <label style="color:#A32D2D !important">Motivo do cancelamento</label>
+        <select id="fMotivoCancelamento" style="border-color:#A32D2D">
+          <option value="">Selecione o motivo</option>
+          <option>Devolução revertida</option>
+          <option>Pendência sem retorno</option>
+        </select>
+      </div>
+      
+      <div>
+        <label>Etapa atual</label>
+        <select id="fEtapa">
+          <option value="">Selecione</option>
+          <option>Aguardando aprovação</option>
+          <option>Aguardando informação</option>
+          <option>Aguardando material</option>
+          <option>Aguardando nota fiscal</option>
+          <option>Aguardando entrada fiscal</option>
+          <option>Aguardando financeiro</option>
+          <option>Aguardando carta</option>
+        </select>
+      </div>
+      <div><label>Valor total da devolução (R$)</label><input id="fValor" type="number" min="0" step="0.01" placeholder="0,00"></div>
+      
+      <div id="wrapFinalizacao" style="display:none"><label>Data de finalização</label><input id="fFinalizacao" type="date"></div>
+      
+      <div class="full">
+        <label>Motivo da devolução</label>
+        <select id="fMotivo2">
+          <option value="">Selecione</option>
+          <optgroup label="CLI — Cliente">
+            <option>(CLI) Cliente comprou errado</option>
+            <option>(CLI) Cliente desistiu da compra</option>
+            <option>(CLI) Cliente inadimplente</option>
+          </optgroup>
+          <optgroup label="COM — Comercial">
+            <option>(COM) Pedido em duplicidade</option>
+            <option>(COM) Cancelamento do pedido não executado</option>
+            <option>(COM) Não atende a necessidade do cliente</option>
+            <option>(COM) Pedido em desacordo</option>
+          </optgroup>
+          <optgroup label="LOG — Logística">
+            <option>(LOG) Erro de separação</option>
+            <option>(LOG) Produto avariado</option>
+          </optgroup>
+          <optgroup label="PRO — Produto">
+            <option>(PRO) Produto com defeito</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="full"><label>Descrição</label><textarea id="fDesc" placeholder="Descrição detalhada da devolução..."></textarea></div>
+      
+      <div class="sec-div">Produtos</div>
+      <div class="full">
+        <div class="prod-header">
+          <span>Cód. Produto</span>
+          <span>Fabricante</span>
+          <span>Produto</span>
+          <span>Qtd</span>
+          <span></span>
+        </div>
+        <div id="prodList" class="prod-list"></div>
+        <button class="btn-add-prod" type="button" onclick="addProdRow()"><i class="ti ti-plus"></i> Adicionar produto</button>
+      </div>
+    </div>
+    
+    <div class="mf">
+      <button class="btn-cancel" onclick="fecharModal()"><i class="ti ti-x"></i> Cancelar</button>
+      <button class="btn-save" onclick="salvar()"><i class="ti ti-check"></i> Salvar alterações</button>
+    </div>
+  </div>
+</div>
+
+<script src="dados.js"></script>
+<script src="scripts.js"></script>
+</body>
+</html>
