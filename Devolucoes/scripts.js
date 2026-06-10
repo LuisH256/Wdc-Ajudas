@@ -4,7 +4,7 @@
 // ╔══════════════════════════════════════════════════════════╗
 // ║  CONFIGURAÇÃO — Cole seu token do GitHub aqui embaixo   ║
 // ╚══════════════════════════════════════════════════════════╝
-const GITHUB_TOKEN  = 'COLE_SEU_TOKEN_AQUI';
+const GITHUB_TOKEN  = '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';
 const GITHUB_OWNER  = 'LuisH256';
 const GITHUB_REPO   = 'Wdc-Ajudas';
 const GITHUB_FILE   = 'dados.json';
